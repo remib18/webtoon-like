@@ -26,7 +26,7 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 ### Backend
 - PHP (potentiellement laravel)
 - SQL (sqlite pour tester rapidement)
-- API de traduction utilisée : // TODO
+- API de traduction utilisée : Azure Cognitive Student : Translation
 
 ### Frontend
 - ReactJS pour un comportement réactif
