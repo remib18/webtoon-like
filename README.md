@@ -21,6 +21,8 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 - [ ] Système de catégories
 - [ ] Savegarde du dernier chapitre lu / manga pour les utilisateurs connectés
 - [ ] Ajout d'une option de connection interne
+- [ ] Lecture infinie avec le prochain chapitre automatiquement chargé à la fin
+- [ ] Options utilisateur
 
 ## Technologies utilisés (planification)
 ### Backend
