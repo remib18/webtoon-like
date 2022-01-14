@@ -4,7 +4,7 @@ Projet de second semestre de L1 informatique.
 ## Description
 Aujourd'hui, le cycle de publication des webtoons (manga en ligne) dans les pays étrangers est particlièrement long car la truduction doit être faite et insérée manuellement. C'est pourquoi nous proposons un service qui automatise en partie cette tâche ardue en proposant en plus un système communautaire pour l'amélioration des traductions.
 
-## Fonctionnalités prévu
+## Avancement du projet
 V1 est l'objectif de l'état du projet à la fin de semestre.
 ### V0
 - [ ] Réaliser un lecteur de webtoon
