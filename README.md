@@ -30,6 +30,5 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 
 ### Frontend
 - ReactJS pour un comportement réactif
-###En plus ?
 - HTML
 - CSS
