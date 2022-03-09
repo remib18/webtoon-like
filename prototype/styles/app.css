@@ -1,0 +1,376 @@
+:root {
+    --text-primary: #ffffffcd;
+    --accent: #ffffff14;
+}
+
+/***************/
+/*   General   */
+/***************/
+
+body {
+    font-family: '.AppleSystemUIFont', sans-serif;
+    background-color: #3F4848;
+    color: var(--text-primary);
+
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/****************/
+/*    Header    */
+/****************/
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+    background-color: #ffffff0f;
+}
+
+header a {
+    color: inherit;
+    text-decoration: none;
+}
+
+header a:hover {
+    color: #fff;
+}
+
+header #search {
+    margin: 0;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+header label {
+    opacity: 0;
+    width: 0;
+}
+
+header fieldset {
+    display: flex;
+    width: 50%;
+    position: relative;
+}
+
+header .icons {
+    display: flex;
+    gap: 1rem;
+}
+
+fieldset .search-result {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    background-color: #4a5353;
+    z-index: 100;
+    max-height: 30vh;
+    overflow-x: auto;
+    padding: .5rem;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    box-shadow: .125rem 0 .5rem rgba(0,0,0,0.05),
+    .25rem 0 .10rem rgba(0,0,0,0.025);
+}
+
+fieldset:focus .search-result,
+fieldset:focus-within .search-result {
+    display: block;
+}
+
+fieldset .search-result:hover {
+    display: block!important;
+}
+
+.search-result .webtoon {
+    display: flex;
+    align-items: center;
+    margin: .25rem 0;
+    gap: .5rem;
+    background-color: #ffffff0f;
+    border-radius: .5rem;
+}
+.search-result .webtoon:hover {
+    transform: none;
+}
+.search-result .webtoon img {
+    width: calc(9.375rem / 4);
+    height: calc(12.5rem / 4);
+    border-top-left-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+.search-result .webtoon .webtoon-title {
+    position: initial;
+    background-color: transparent;
+    color: #fff;
+    width: 100%;
+    padding: 0;
+}
+.hidden { display: none!important; }
+
+
+/****************/
+/*    Footer    */
+/****************/
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff0f;
+    backdrop-filter: blur(.125rem);
+    width: 100vw;
+    padding: 1rem 0;
+    font-size: .8rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+footer a {
+    color: #ffffffad;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+footer a:hover {
+    text-decoration: underline;
+    color: #fff;
+}
+
+
+/****************/
+/*      App     */
+/****************/
+#app {
+    min-height: calc(100vh - 4.0625rem);
+}
+
+
+/* Icons */
+.icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    transition: all .3s ease;
+}
+
+.icon .fill {
+    fill: var(--text-primary);
+}
+
+.icon .stroke {
+    stroke: var(--text-primary);
+    fill: none;
+}
+
+a:hover .icon {
+    transform: scale(1.1, 1.1);
+}
+
+a:hover .stroke {
+    stroke: #fff;
+}
+
+a:hover .fill {
+    fill: #fff;
+}
+
+/* Titles */
+h2, h3, h4, h5, h6 {
+    margin-left: 1rem;
+    margin-top: 1.2em;
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+h2 { font-size: 140%; }
+
+h3 { font-size: 130%; }
+
+h4 {
+    font-size: 120%;
+    font-weight: normal;
+}
+
+h5 {
+    font-size: 115%;
+    font-weight: normal;
+}
+
+h6 {
+    font-size: 110%;
+    text-decoration: underline;
+    font-weight: lighter;
+}
+
+/* Select */
+.select {
+    width: 100%;
+    position: relative;
+}
+.select select {
+    -webkit-appearance: none;
+    padding: .5rem 1rem;
+    width: 100%;
+
+    border: none;
+    background-color: var(--accent);
+    color: var(--text-primary);
+    font-size: .6675rem;
+
+    display: block;
+    cursor: pointer;
+}
+
+.select::after {
+    content: "";
+    display: block;
+    width: 1rem;
+    height: 1.0625rem;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" fill="none"><path d="M4.34692 5.75L8.84692 10.25L13.3469 5.75" stroke="white" stroke-opacity="0.7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-40%);
+}
+
+/* Separator */
+hr {
+    border: solid .03125rem var(--accent);
+    margin: 1rem 0 0;
+}
+
+/* Button */
+/* label:has(input[type=input]), Experimental on Safari active */
+label.file {
+    position: relative;
+    cursor: pointer;
+}
+/* label:has(input[type=file]) input, Experimental on Safari active */
+label.file input {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 0;
+}
+
+button,
+input[type=submit],
+/* label:has(input[type=file]), Experimental on Safari active */
+label.file,
+a.button {
+    display: block;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: var(--accent);
+    color: var(--text-primary);
+    padding: .5rem 1rem;
+    border: solid .125rem transparent;
+    border-radius: .25rem;
+    margin: 1rem auto;
+    transition: all .3s ease;
+    cursor: pointer;
+    font-size: .8rem;
+}
+
+button.large,
+input[type=submit].large,
+/* label:has(input[type=file]).large, Experimental on Safari active */
+label.file.large,
+a.button.large {
+    padding: .5rem 3rem;
+    width: 60%;
+    font-size: 1rem;
+}
+
+button:hover,
+input[type=submit]:hover,
+/* label:has(input[type=file]):hover, Experimental on Safari active */
+label.file:hover,
+a.button:hover {
+    background-color: transparent;
+    border: solid .125rem var(--accent);
+    color: #fff;
+    text-decoration: none;
+}
+button.outlined,
+input[type=submit].outlined,
+/* label:has(input[type=file]).outlined, Experimental on Safari active */
+label.file.outlined,
+a.button.outlined {
+    background-color: transparent;
+    border: solid .125rem var(--accent);
+}
+button.outlined:hover,
+input[type=submit].outlined:hover,
+/* label:has(input[type=file]).outlined:hover, Experimental on Safari active */
+label.file.outlined:hover,
+a.button.outlined:hover {
+    background-color: var(--accent);
+    border: solid .125rem transparent;
+}
+
+/* Text inputs */
+input[type=text],
+input[type=search],
+input[type=number],
+textarea,
+.false-input {
+    background-color: #656D6D;
+    border: solid 1px #ffffff20;
+    border-radius: .5rem;
+    color: var(--text-primary);
+    box-sizing: border-box;
+
+    display: block;
+    width: 100%;
+
+    line-height: 1rem;
+    font-size: 1rem;
+    padding: .25rem .5rem;
+    margin: .5rem 0;
+}
+
+input[type=text].large,
+input[type=search].large,
+input[type=number].large,
+textarea.large {
+    padding: .5rem 1rem;
+}
+
+input[type=text]::placeholder,
+input[type=search]::placeholder,
+input[type=number]::placeholder,
+textarea::placeholder {
+    color: #ffffffad;
+    transition: all .3s ease;
+}
+
+/* Forms */
+form > * {
+    margin: .5rem 0 !important;
+}
+
+/* Pre */
+pre {
+    white-space: pre-wrap;
+}
+
+/* Only on Safari for better look */
+@media not all and (min-resolution:.001dpcm) {
+    @media {
+
+    }
+}

@@ -1,0 +1,59 @@
+#app {
+    display: grid;
+    grid-template-columns: 18rem auto;
+    grid-template-rows: 100%;
+}
+
+aside {
+    background-color: #00000014;
+    padding: 1rem;
+}
+
+aside .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+aside fieldset {
+    display: flex;
+}
+
+aside fieldset label {
+    opacity: 0;
+    width: 0;
+    position: absolute;
+    left: -100rem;
+}
+
+aside h2,
+aside h3 {
+    margin: 1rem 0 .5rem;
+}
+
+aside .title {
+    font-size: 1rem;
+    font-weight: normal;
+    margin: 0;
+}
+
+aside h3 {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+aside h4 {
+    font-size: .8rem;
+    font-weight: normal;
+}
+
+aside pre,
+aside .genre {
+    font-size: .8rem;
+    line-height: .9rem;
+    letter-spacing: .03125rem;
+    opacity: .8;
+    font-weight: lighter;
+    max-width: 100%;
+    white-space: pre-wrap;
+}
