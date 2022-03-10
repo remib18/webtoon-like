@@ -4,6 +4,8 @@ Projet de second semestre de L1 informatique.
 ## Description
 Aujourd'hui, le cycle de publication des webtoons (manga en ligne) dans les pays étrangers est particlièrement long car la truduction doit être faite et insérée manuellement. C'est pourquoi nous proposons un service qui automatise en partie cette tâche ardue en proposant en plus un système communautaire pour l'amélioration des traductions.
 
+Prototype du design : [Figma](https://www.figma.com/file/9Wa0rJtEdahhpfkFgCEbSF/UI?node-id=0%3A1)
+
 ## Avancement du projet
 V1 est l'objectif de l'état du projet à la fin de semestre.
 ### V0
@@ -31,4 +33,6 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 - API de traduction utilisée : Azure Cognitive Student : Translation
 
 ### Frontend
-- ReactJS pour un comportement réactif
+- HTML / CSS
+- Pure Javascript (V1)
+- ReactJS pour un comportement réactif (V2)
