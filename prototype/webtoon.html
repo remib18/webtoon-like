@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebtoonLike — Lire {{ The Beginning after the end }}</title>
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/app.css">
+    <link rel="stylesheet" href="styles/page-webtoon.css">
+    <meta name="theme-color" content="#4A5353">
+    <script src="scripts/search.js" defer></script>
+</head>
+<body>
+
+<header>
+    <a href="./index.html"><h1 class="logo">WebtoonLike</h1></a>
+    <fieldset>
+        <label for="search">Rechercher</label>
+        <input type="search" name="search" id="search" placeholder="Rechercher" data-searchbar>
+        <div class="search-result" data-search-result></div>
+    </fieldset>
+    <div class="icons">
+        <a href="import-webtoon.html">
+            <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 22.9869H24.75C28.1875 22.9869 31 21.1612 31 17.7619C31 14.3625 27.6875 12.67 25 12.5369C24.4444 7.22062 20.5625 3.98688 16 3.98688C11.6875 3.98688 8.91 6.84875 8 9.68687C4.25 10.0431 1 12.4294 1 16.3369C1 20.2444 4.375 22.9869 8.5 22.9869H12" class="stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M16 28.0132V12.9869M20 15.9869L16 11.9869L12 15.9869H20Z" class="stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </a>
+        <a href="#">
+            <svg class="icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 3C8.83187 3 3 8.83187 3 16C3 23.1681 8.83187 29 16 29C23.1681 29 29 23.1681 29 16C29 8.83187 23.1681 3 16 3ZM12.8612 10.3013C13.6531 9.46188 14.7675 9 16 9C17.2325 9 18.3369 9.465 19.1319 10.3088C19.9375 11.1638 20.3294 12.3125 20.2369 13.5475C20.0519 16 18.1519 18 16 18C13.8481 18 11.9444 16 11.7631 13.5469C11.6713 12.3019 12.0625 11.1494 12.8612 10.3013V10.3013ZM16 27C14.5315 27.001 13.0778 26.7071 11.7251 26.1357C10.3724 25.5643 9.14813 24.7271 8.125 23.6737C8.71097 22.8381 9.4576 22.1276 10.3212 21.5837C11.9144 20.5625 13.9306 20 16 20C18.0694 20 20.0856 20.5625 21.6769 21.5837C22.5412 22.1273 23.2885 22.8379 23.875 23.6737C22.852 24.7272 21.6277 25.5645 20.275 26.1359C18.9222 26.7073 17.4685 27.0011 16 27V27Z" class="fill"/>
+            </svg>
+        </a>
+    </div>
+</header>
+
+<div id="app">
+    <aside>
+        <div class="header">
+            <h2 class="title">The Beginning after the end</h2>
+            <a href="" style="display: none;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 17 16" class="icon">
+                    <path d="M9.65885 7.7513L12.6276 4.78255C12.7685 4.6419 12.8477 4.45104 12.8479 4.25196C12.8481 4.05288 12.7692 3.86188 12.6285 3.72099C12.4879 3.58009 12.297 3.50084 12.0979 3.50066C11.8989 3.50049 11.7079 3.5794 11.567 3.72005L8.59822 6.6888L5.62947 3.72005C5.48858 3.57915 5.29748 3.5 5.09822 3.5C4.89897 3.5 4.70787 3.57915 4.56697 3.72005C4.42608 3.86095 4.34692 4.05204 4.34692 4.2513C4.34692 4.45056 4.42608 4.64165 4.56697 4.78255L7.53572 7.7513L4.56697 10.72C4.42608 10.8609 4.34692 11.052 4.34692 11.2513C4.34692 11.4506 4.42608 11.6417 4.56697 11.7825C4.70787 11.9234 4.89897 12.0026 5.09822 12.0026C5.29748 12.0026 5.48858 11.9234 5.62947 11.7825L8.59822 8.8138L11.567 11.7825C11.7079 11.9234 11.899 12.0026 12.0982 12.0026C12.2975 12.0026 12.4886 11.9234 12.6295 11.7825C12.7704 11.6417 12.8495 11.4506 12.8495 11.2513C12.8495 11.052 12.7704 10.8609 12.6295 10.72L9.65885 7.7513Z" class="fill"/>
+                </svg>
+            </a>
+        </div>
+        <fieldset>
+            <label for="chapter">Sélectionnez le chapitre</label>
+            <span class="select">
+                <select name="chapter" id="chapter">
+                    <option value="1" selected>Chapitre 1</option>
+                    <option value="2">Chapitre 2</option>
+                    <option value="3">Chapitre 3</option>
+                    <option value="4">Chapitre 4</option>
+                </select>
+            </span>
+        </fieldset>
+        <hr>
+        <h3>Description</h3>
+        <pre>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dolor turpis, elementum at ex in, condimentum ornare mi. Integer fermentum risus at placerat scelerisque. Maecenas elit nulla, vestibulum in maximus vestibulum, facilisis a tortor.
+Nam fringilla blandit libero. In pulvinar est sit amet pellentesque facilisis. Aliquam ornare, sem et iaculis fermentum, dolor tortor rutrum neque, vel pretium nunc felis placerat nunc. Nulla facilisi. Phasellus rutrum eros ac sollicitudin pulvinar.
+Nunc est lacus, eleifend sit amet pellentesque nec, porta non urna.</pre>
+        <h3>Genres</h3>
+        <span class="genre">AAA</span>
+        <span>•</span>
+        <span class="genre">BBB</span>
+        <a href="./import-chapter.html" class="button outlined">Importer un nouveau chapitre</a>
+    </aside>
+    <section aria-describedby="content">
+        <!-- Todo: Javascript to load the images of the webtoon -->
+    </section>
+</div>
+
+<footer>
+    <!-- Todo: Compléter -->
+    <p>Projet universitaire par <a href="https://github.com/remib18">Rémi Bernard</a>, ...</p>
+</footer>
+
+<template data-item-result-template>
+    <a href="./webtoon.html" class="webtoon">
+        <img src="https://via.placeholder.com/150x200" alt="cover">
+        <span class="webtoon-title">Title</span>
+    </a>
+</template>
+
+</body>
+</html>

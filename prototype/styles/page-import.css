@@ -1,0 +1,66 @@
+#app, form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#app, form, section {
+    overflow-x: hidden;
+}
+
+h2, h3 {
+    margin-left: 0;
+}
+
+.panel {
+    position: absolute;
+    opacity: 0;
+    transition: all .3s ease;
+    scale: 0;
+}
+.current {
+    position: initial;
+    opacity: 1;
+    display: block;
+    transform: translateX(0);
+    scale: 1;
+}
+
+#step-2 {
+    min-width: 70vw;
+}
+
+.cols-2 {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.list {
+    width: 100%;
+}
+.list li {
+    width: calc(100% - 2rem);
+    display: flex;
+    justify-content: space-between;
+    padding: .5rem 1rem;
+}
+
+.list li:hover {
+    scale: 1.01;
+    background-color: #ffffff0f;
+    border-radius: .5rem;
+}
