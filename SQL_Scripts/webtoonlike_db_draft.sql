@@ -49,8 +49,8 @@ CREATE TABLE Chapter (
 
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
-    pos INT,
-    data TEXT,
+    imagePosition INT,
+    imagePath TEXT,
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
@@ -65,7 +65,7 @@ CREATE TABLE Cell_Position (
 
 CREATE TABLE Availible_Language (
     languageID BIGINT NOT NULL AUTO_INCREMENT,
-    label TEXT,
+    languageName TEXT,
     PRIMARY KEY (languageID)
 )  ENGINE=INNODB; 
 
