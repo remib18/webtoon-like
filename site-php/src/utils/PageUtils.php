@@ -1,6 +1,6 @@
 <?php
 
-namespace WebtoonLike\SitePhp\utils;
+namespace WebtoonLikeSitePhp\utils;
 
 class PageUtils
 {

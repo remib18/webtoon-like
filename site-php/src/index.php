@@ -1,6 +1,6 @@
 <?php
 
-use WebtoonLike\SitePhp\utils\PageUtils;
+use WebtoonLikeSitePhp\utils\PageUtils;
 
 require './utils/PageUtils.php';
 
