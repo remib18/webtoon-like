@@ -17,7 +17,7 @@ CREATE TABLE Report (
     FOREIGN KEY (userID) REFERENCES Users(userID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE Translation_Proposition (
+CREATE TABLE TranslationProposition (
     TranslationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
     proposedTranslation TEXT,
     PRIMARY KEY (TranslationPropositionID)
@@ -27,7 +27,7 @@ CREATE TABLE Propose (
     TranslationPropositionID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID),
-    FOREIGN KEY (TranslationPropositionID) REFERENCES Translation_Proposition(TranslationPropositionID)
+    FOREIGN KEY (TranslationPropositionID) REFERENCES TranslationProposition(TranslationPropositionID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Webtoons (
@@ -56,14 +56,14 @@ CREATE TABLE Image (
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE Cell_Position (
+CREATE TABLE CellPosition (
     cellPositionID BIGINT NOT NULL AUTO_INCREMENT,
     xAxis INT,
     yAxis INT,
     PRIMARY KEY (CellPositionID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE Availible_Language (
+CREATE TABLE AvailibleLanguage (
     languageID BIGINT NOT NULL AUTO_INCREMENT,
     languageName TEXT,
     PRIMARY KEY (languageID)
@@ -77,6 +77,6 @@ CREATE TABLE Cell (
     languageID BIGINT NOT NULL,
     PRIMARY KEY (cellID),
     FOREIGN KEY (imageID) REFERENCES Image(imageID),
-    FOREIGN KEY (cellPositionID) REFERENCES Cell_Position(cellPositionID),
-    FOREIGN KEY (languageID) REFERENCES Availible_Language(languageID)
+    FOREIGN KEY (cellPositionID) REFERENCES CellPosition(cellPositionID),
+    FOREIGN KEY (languageID) REFERENCES AvailibleLanguage(languageID)
 )ENGINE=INNODB; 
