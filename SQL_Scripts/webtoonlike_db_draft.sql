@@ -11,37 +11,37 @@ CREATE TABLE Users (
 
 CREATE TABLE Report (
     reportID BIGINT NOT NULL AUTO_INCREMENT,
-    reportType INT,
+    type INT,
     userID BIGINT NOT NULL,
     PRIMARY KEY (reportID),
     FOREIGN KEY (userID) REFERENCES Users(userID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE TranslationProposition (
-    TranslationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
+    translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
     proposedTranslation TEXT,
-    PRIMARY KEY (TranslationPropositionID)
+    PRIMARY KEY (translationPropositionID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Propose (
-    TranslationPropositionID BIGINT NOT NULL,
+    translationPropositionID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     FOREIGN KEY (userID) REFERENCES Users(userID),
-    FOREIGN KEY (TranslationPropositionID) REFERENCES TranslationProposition(TranslationPropositionID)
+    FOREIGN KEY (translationPropositionID) REFERENCES TranslationProposition(translationPropositionID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Webtoons (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    webtoonName TEXT,
-    webtoonAuthor TEXT,
-    webstonneDescription TEXT,
+    name TEXT,
+    author TEXT,
+    description TEXT,
     PRIMARY KEY (webtoonID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Chapter (
     chapterID BIGINT NOT NULL AUTO_INCREMENT,
-    chapterNumber INT,
-    chapterTitle TEXT,
+    number INT,
+    title TEXT,
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
     FOREIGN KEY (webtoonID) REFERENCES Webtoons(webtoonID)
@@ -49,8 +49,8 @@ CREATE TABLE Chapter (
 
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
-    imagePosition INT,
-    imagePath TEXT,
+    position INT,
+    path TEXT,
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
@@ -60,7 +60,7 @@ CREATE TABLE CellPosition (
     cellPositionID BIGINT NOT NULL AUTO_INCREMENT,
     xAxis INT,
     yAxis INT,
-    PRIMARY KEY (CellPositionID)
+    PRIMARY KEY (cellPositionID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE AvailibleLanguage (
