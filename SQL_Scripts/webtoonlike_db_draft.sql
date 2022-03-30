@@ -3,8 +3,8 @@ USE webtoonlike;
 
 CREATE TABLE Users (
     userID BIGINT NOT NULL AUTO_INCREMENT,
-    username TEXT,
-    email TEXT,
+    username VARCHAR(32),
+    email VARCHAR(256),
     registeredAt DATETIME,
     PRIMARY KEY (userID)
 )  ENGINE=INNODB; 
@@ -32,8 +32,8 @@ CREATE TABLE Propose (
 
 CREATE TABLE Webtoons (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    name TEXT,
-    author TEXT,
+    name VARCHAR(512),
+    author VARCHAR(128),
     description TEXT,
     PRIMARY KEY (webtoonID)
 )  ENGINE=INNODB; 
@@ -41,7 +41,7 @@ CREATE TABLE Webtoons (
 CREATE TABLE Chapter (
     chapterID BIGINT NOT NULL AUTO_INCREMENT,
     number INT,
-    title TEXT,
+    title VARCHAR(512),
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
     FOREIGN KEY (webtoonID) REFERENCES Webtoons(webtoonID)
@@ -50,7 +50,7 @@ CREATE TABLE Chapter (
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
     position INT,
-    path TEXT,
+    path VARCHAR(512),
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
@@ -65,7 +65,7 @@ CREATE TABLE CellPosition (
 
 CREATE TABLE AvailibleLanguage (
     languageID BIGINT NOT NULL AUTO_INCREMENT,
-    languageName TEXT,
+    languageName VARCHAR(256),
     PRIMARY KEY (languageID)
 )  ENGINE=INNODB; 
 
