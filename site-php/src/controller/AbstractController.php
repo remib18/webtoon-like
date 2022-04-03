@@ -29,7 +29,7 @@ abstract class AbstractController {
      * @return mixed
      */
     public function getById(int $id): mixed {
-        $res = $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id = ' . $id . ';');
+        $res = $this->db->query('SELECT * FROM ' . $this->table . ' WHERE ' . $this->table . 'ID = ' . $id . ';');
         return $res->fetch_all();
     }
 
@@ -63,7 +63,7 @@ abstract class AbstractController {
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
     public function removeById(int $id): bool {
-        $res = $this->db->query('DELETE FROM ' . $this->table . ' WHERE id = ' . $id . ';');
+        $res = $this->db->query('DELETE FROM ' . $this->table . ' WHERE ' . $this->table . 'ID = ' . $id . ';');
         return $res->fetch_all();
     }
 
