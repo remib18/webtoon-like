@@ -268,7 +268,7 @@ label.file input {
 
 button,
 input[type=submit],
-/* label:has(input[type=file]), Experimental on Safari active */
+    /* label:has(input[type=file]), Experimental on Safari active */
 label.file,
 a.button {
     display: block;
@@ -287,7 +287,7 @@ a.button {
 
 button.large,
 input[type=submit].large,
-/* label:has(input[type=file]).large, Experimental on Safari active */
+    /* label:has(input[type=file]).large, Experimental on Safari active */
 label.file.large,
 a.button.large {
     padding: .5rem 3rem;
@@ -297,7 +297,7 @@ a.button.large {
 
 button:hover,
 input[type=submit]:hover,
-/* label:has(input[type=file]):hover, Experimental on Safari active */
+    /* label:has(input[type=file]):hover, Experimental on Safari active */
 label.file:hover,
 a.button:hover {
     background-color: transparent;
@@ -307,7 +307,7 @@ a.button:hover {
 }
 button.outlined,
 input[type=submit].outlined,
-/* label:has(input[type=file]).outlined, Experimental on Safari active */
+    /* label:has(input[type=file]).outlined, Experimental on Safari active */
 label.file.outlined,
 a.button.outlined {
     background-color: transparent;
@@ -315,7 +315,7 @@ a.button.outlined {
 }
 button.outlined:hover,
 input[type=submit].outlined:hover,
-/* label:has(input[type=file]).outlined:hover, Experimental on Safari active */
+    /* label:has(input[type=file]).outlined:hover, Experimental on Safari active */
 label.file.outlined:hover,
 a.button.outlined:hover {
     background-color: var(--accent);

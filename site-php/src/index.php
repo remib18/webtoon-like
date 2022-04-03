@@ -2,7 +2,7 @@
 
 use WebtoonLikeSitePhp\utils\PageUtils;
 
-require './utils/PageUtils.php';
+require_once 'utils/PageUtils.php';
 
 $p = new PageUtils();
 ?>
@@ -48,10 +48,11 @@ $p = new PageUtils();
 <footer>
     <!-- Todo: Compléter -->
     <p>
-        Projet universitaire par <a href="https://github.com/remib18">Rémi Bernard</a>,
-        Projet universitaire par <a href="https://github.com/"></a>,
-        Projet universitaire par <a href="https://github.com/"></a>,
-        Projet universitaire par <a href="https://github.com/"></a>
+        Projet universitaire par
+        <a href="https://github.com/remib18">Rémi Bernard</a>,
+        <a href="https://github.com/"></a>,
+        <a href="https://github.com/"></a>,
+        <a href="https://github.com/"></a>.
     </p>
 </footer>
 

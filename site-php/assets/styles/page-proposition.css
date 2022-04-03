@@ -52,7 +52,7 @@ h3, .false-input, .large-1, .action {
         "title-small-2 large large"
         "small-2 large large"
         "none none action"
-    ;
+;
     grid-column-gap: 1.5rem;
     grid-row-gap: 1rem;
     align-items: stretch;
