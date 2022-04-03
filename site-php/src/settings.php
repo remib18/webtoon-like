@@ -1,5 +1,7 @@
 <?php
 
+namespace WebtoonLike\Site;
+
 const SETTINGS = [
     'googleTranslateApi' => '',
     'preTranslateTo' => [

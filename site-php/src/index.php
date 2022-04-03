@@ -1,8 +1,10 @@
 <?php
 
-use WebtoonLikeSitePhp\utils\PageUtils;
+namespace WebtoonLike\Site;
 
-require_once 'utils/PageUtils.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use WebtoonLike\Site\utils\PageUtils;
 
 $p = new PageUtils();
 ?>

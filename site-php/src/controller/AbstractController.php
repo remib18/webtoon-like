@@ -1,8 +1,8 @@
 <?php
 
-namespace WebtoonLikeSitePhp\controller;
+namespace WebtoonLike\Site\controller;
 
-use WebtoonLikeSitePhp\utils\Database;
+use WebtoonLike\Site\utils\Database;
 
 abstract class AbstractController {
 

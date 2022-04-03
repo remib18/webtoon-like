@@ -1,6 +1,6 @@
 <?php
 
-namespace WebtoonLikeSitePhp\utils;
+namespace WebtoonLike\Site\utils;
 
 require_once 'UriUtils.php';
 
