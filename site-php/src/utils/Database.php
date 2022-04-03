@@ -5,14 +5,13 @@ namespace WebtoonLikeSitePhp\utils;
 class Database
 {
     private static \mysqli $db;
+    private static array $settings = SETTINGS['database'];
 
     public static function getDB(): \mysqli {
-        if (!isset(DataBase::$db)) {
-            // TODO: Replace root in production
-            // Use of root user for development convenience
-            DataBase::$db = new \mysqli('localhost', 'root', '', 'webtoonLike');
+        if (!isset(self::$db)) {
+            self::$db = new \mysqli(...self::$settings);
         }
-        return DataBase::$db;
+        return self::$db;
     }
 
 }

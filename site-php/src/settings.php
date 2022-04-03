@@ -1,12 +1,17 @@
 <?php
 
 const SETTINGS = [
-    'GoogleTranslateApi' => '',
-    'PreTranslateTo' => [],
-	'Database' => ['Host' => 'localhost',
-				   'Username' => 'root',
-				   'Password' => null,
-				   'Dbname' => 'webtoonLike',
-				   'Port' => null,
-				   'Socket' => null]
+    'googleTranslateApi' => '',
+    'preTranslateTo' => [
+        'fr-fr',
+        'en-us'
+    ],
+    'database' => [
+        'host' => 'localhost',
+        'username' => 'root',       // TODO: Replace root in production
+        'password' => null,
+        'dbName' => 'webtoonLike',
+        'port' => null,
+        'socket' => null
+    ]
 ];
