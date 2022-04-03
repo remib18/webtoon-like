@@ -17,3 +17,7 @@ const SETTINGS = [
         'socket' => null
     ]
 ];
+
+function getSettings(): array {
+    return SETTINGS;
+}
