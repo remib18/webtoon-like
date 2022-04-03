@@ -1,6 +1,10 @@
-# Utilisation de la base de donnée
+# Configuration du serveur PHP
 
-## Paramétrage MySQL
+Afin d'assurer le bon fonctionnement de l'application, nous recommandons l'utilisation de `PHP 8.1`.
+
+# Paramétrage de la base de donnée
+
+## Configuration du site
 
 Rendez-vous au fichier `site-php/src/settings.php` puis recherchez les ligne suivante :
 
