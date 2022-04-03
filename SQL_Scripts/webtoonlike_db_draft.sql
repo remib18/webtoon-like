@@ -64,9 +64,8 @@ CREATE TABLE CellPosition (
 )  ENGINE=INNODB; 
 
 CREATE TABLE AvailibleLanguage (
-    languageID BIGINT NOT NULL AUTO_INCREMENT,
-    languageName VARCHAR(256),
-    PRIMARY KEY (languageID)
+    languageName VARCHAR(256) NOT NULL,
+    PRIMARY KEY (languageName)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Cell (
@@ -74,9 +73,9 @@ CREATE TABLE Cell (
     content TEXT,
     imageID BIGINT NOT NULL,
     cellPositionID BIGINT NOT NULL,
-    languageID BIGINT NOT NULL,
+    languageName VARCHAR(256) NOT NULL,
     PRIMARY KEY (cellID),
     FOREIGN KEY (imageID) REFERENCES Image(imageID),
     FOREIGN KEY (cellPositionID) REFERENCES CellPosition(cellPositionID),
-    FOREIGN KEY (languageID) REFERENCES AvailibleLanguage(languageID)
+    FOREIGN KEY (languageName) REFERENCES AvailibleLanguage(languageName)
 )ENGINE=INNODB; 
