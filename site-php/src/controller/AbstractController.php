@@ -2,29 +2,43 @@
 
 namespace WebtoonLikeSitePhp\controller;
 
-interface ControllerInterface
-{
+use WebtoonLikeSitePhp\utils\Database;
+
+abstract class AbstractController {
+
+    private \mysqli $db;
+    private string $table;
+
+    public function __construct(string $table) {
+        $this->db = Database::getDB();
+    }
 
     /**
      * Obtention de toutes les ressources
      *
      * @return mixed[]
      */
-    public function getAll(): array;
+    public function getAll(): array {
+        $res = $this->db->query('SELECT * FROM ' . $this->table . ';');
+        return $res->fetch_all();
+    }
 
     /**
      * Obtention de la ressource avec l'identifiant correspondant.
      * @param int $id Identifiant rechercher
      * @return mixed
      */
-    public function getById(int $id): mixed;
+    public function getById(int $id): mixed {
+        $res = $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id = ' . $id . ';');
+        return $res->fetch_all();
+    }
 
     /**
      * Obtention de la ressource avec le nom correspondant.
      * @param string $name Nom rechercher
      * @return mixed
      */
-    public function getByName(string $name): mixed;
+    abstract public function getByName(string $name): mixed;
 
     /**
      * Enregistre une ressource et retourne son identifiant ou <code>false</code> en cas d'erreur.
@@ -32,7 +46,7 @@ interface ControllerInterface
      * @param array $params
      * @return int|false
      */
-    public function create(array $params): int | false;
+    abstract public function create(array $params): int | false;
 
     /**
      * Modifie la ressource correspondant à l'identifiant <code>id</code> avec les paramètres donnés.
@@ -41,13 +55,16 @@ interface ControllerInterface
      * @param array $params Données à modifier. (Partiel de la donnée)
      * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
-    public function edit(int $id, array $params): bool;
+    abstract public function edit(int $id, array $params): bool;
 
     /**
      * Supprime la ressource correspondant à l'identifiant fournit.
      * @param int $id L'identifiant de la ressource à supprimer.
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    public function remove(int $id): bool;
+    public function removeById(int $id): bool {
+        $res = $this->db->query('DELETE FROM ' . $this->table . ' WHERE id = ' . $id . ';');
+        return $res->fetch_all();
+    }
 
 }
