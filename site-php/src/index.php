@@ -42,9 +42,9 @@ $p = new PageUtils();
     <p>
         Projet universitaire par
         <a href="https://github.com/remib18">Rémi Bernard</a>,
-        <a href="https://github.com/"></a>,
-        <a href="https://github.com/"></a>,
-        <a href="https://github.com/"></a>.
+        <a href="https://github.com/onetrickwolfy">Gabriel Berthel</a>,
+        <a href="https://github.com/MPXH">Hugo Remy</a>,
+        <a href="https://github.com/YacineHB">Yacine Hbada</a>.
     </p>
 </footer>
 
