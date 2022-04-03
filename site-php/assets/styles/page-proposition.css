@@ -1,0 +1,95 @@
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+}
+
+h3, .false-input, .large-1, .action {
+    margin: 0 !important;
+}
+
+.logged-as,
+.profile {
+    display: inline-flex;
+    align-items: center;
+    gap: .8rem;
+}
+
+.logged-as {
+    margin-bottom: 3rem;
+}
+
+.profile {
+    gap: 1rem;
+    border-radius: .5rem;
+    vertical-align: middle;
+}
+
+.profile:hover {
+    background-color: var(--accent);
+}
+
+.profile input {
+    opacity: 0;
+    position: absolute;
+    left: -100rem;
+}
+
+.profile img {
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1.5rem 1fr 1.5rem 1fr auto;
+    grid-template-areas:
+        "title-small-1 title-large title-large"
+        "small-1 large large"
+        "title-small-2 large large"
+        "small-2 large large"
+        "none none action"
+;
+    grid-column-gap: 1.5rem;
+    grid-row-gap: 1rem;
+    align-items: stretch;
+    max-width: 90vw;
+}
+
+.title-small-1,
+.title-small-2,
+.title-large {
+    margin-top: .5rem;
+}
+
+.title-small-1 {
+    grid-area: title-small-1;
+}
+
+.title-small-2 {
+    grid-area: title-small-2;
+}
+
+.title-large {
+    grid-area: title-large;
+}
+
+.small-1 {
+    grid-area: small-1;
+}
+
+.small-2 {
+    grid-area: small-2;
+}
+
+.large-1 {
+    grid-area: large;
+}
+
+.action {
+    grid-area: action;
+    justify-self: end;
+}

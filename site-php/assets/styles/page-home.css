@@ -1,0 +1,47 @@
+.webtoons-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.375rem, 1fr));
+    grid-gap: 1rem;
+    margin: 0 1rem 2rem;
+}
+
+fieldset:focus .search-result,
+fieldset:focus-within .search-result {
+    display: none;
+}
+
+.webtoon {
+    position: relative;
+    transition: all .3s ease;
+    aspect-ratio: 3 / 4;
+    display: block;
+}
+
+.webtoon, .webtoon img {
+    border-radius: .5rem;
+}
+
+.webtoon:hover {
+    transform: scale(1.1);
+}
+
+.webtoon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.webtoon .webtoon-title {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    right: 0;
+    padding: .5rem;
+    background-color: #ffffffb2;
+    backdrop-filter: blur(.125rem);
+    -webkit-backdrop-filter: blur(.125rem);
+    color: #000000cd;
+    border-bottom-right-radius: .5rem;
+    border-bottom-left-radius: .5rem;
+}
+
