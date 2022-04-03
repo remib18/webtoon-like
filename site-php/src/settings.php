@@ -1,6 +1,12 @@
 <?php
 
 const SETTINGS = [
-    'GoogleTranslateApiKey' => '',
-    'PreTranslateTo' => []
+    'GoogleTranslateApi' => '',
+    'PreTranslateTo' => [],
+	'Database' => ['Host' => 'localhost',
+				   'Username' => 'root',
+				   'Password' => null,
+				   'Dbname' => 'webtoonLike',
+				   'Port' => null,
+				   'Socket' => null]
 ];
