@@ -2,7 +2,7 @@
 
 namespace WebtoonLikeSitePhp\utils;
 
-class DataBase
+class Database
 {
     private static \mysqli $db;
 
