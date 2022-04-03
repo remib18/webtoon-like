@@ -64,11 +64,17 @@ class PageUtils
      * Retourne la page demandée
      *
      * @todo Mini-routeur @gabey
-     * 
-     * @return string
      */
-    public function getPage(): string {
-        return '';
+    public function getPage(): void {
+        $path = dirname(__DIR__) . '/pages/' . $this->pageType . '.php';
+        if (!file_exists($path)) {
+            header(
+                'Location: /error?code=500&msg='
+                . urlencode('Un problème est survenu lors de la création de la page, le template n\'existe pas.')
+            );
+            die;
+        }
+        require $path;
     }
     
 }
