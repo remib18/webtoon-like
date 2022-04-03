@@ -32,7 +32,7 @@ CREATE TABLE Propose (
 
 CREATE TABLE Webtoons (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(512),
+    name VARCHAR(256),
     author VARCHAR(128),
     description TEXT,
     PRIMARY KEY (webtoonID)
@@ -41,7 +41,7 @@ CREATE TABLE Webtoons (
 CREATE TABLE Chapter (
     chapterID BIGINT NOT NULL AUTO_INCREMENT,
     number INT,
-    title VARCHAR(512),
+    title VARCHAR(256),
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
     FOREIGN KEY (webtoonID) REFERENCES Webtoons(webtoonID)
@@ -50,7 +50,7 @@ CREATE TABLE Chapter (
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
     position INT,
-    path VARCHAR(512),
+    path VARCHAR(256),
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
