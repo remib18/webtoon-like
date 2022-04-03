@@ -33,7 +33,7 @@ class UriUtils
 
         // Obtention du type de page
         $this->pageType = match ($pageType[0]) {
-            '/', '/home', '/webtoons' => 'home',
+            '/', '/home', '/webtoons', '/index.php' => 'home',
             default => substr($pageType[0], 1),
         };
 
