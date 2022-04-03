@@ -20,11 +20,12 @@ class PageUtils
 
     /**
      * Retourne le titre de la page
-     * 
+     *
+     * @todo : if pageType = webtoon then "WebtoonLike — {webtoon-title}"
      * @return string
      */
     public function getPageTitle(): string {
-        return '';
+        return 'WebtoonLike — ' . ucfirst($this->pageType);
     }
 
     /**
