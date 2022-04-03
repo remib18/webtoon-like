@@ -1,0 +1,28 @@
+{
+    "name": "remib18/webtoon-like",
+    "description": "Projet de second semestre de L1 informatique.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "WebtoonLike\\Site\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Rémi Bernard",
+            "email": "remib18@outlook.fr"
+        },
+        {
+            "name": "Gabriel Berthel",
+            "email": "berthelgabriel@gmail.com"
+        },
+        {
+            "name": "Hugo Rémy"
+        },
+        {
+            "name": "Yacine Hbada"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
