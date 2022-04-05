@@ -4,7 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "WebtoonLike\\Site\\": "src/"
+            "WebtoonLike\\Site\\": "src/",
+            "Root\\": "/"
         }
     },
     "authors": [
@@ -25,6 +26,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "thiagoalessio/tesseract_ocr": "dev-main"
+        "thiagoalessio/tesseract_ocr": "dev-main",
+        "greeflas/php-image-downloader": "dev-master"
     }
 }
