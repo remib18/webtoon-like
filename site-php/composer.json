@@ -24,5 +24,7 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "thiagoalessio/tesseract_ocr": "dev-main"
+    }
 }
