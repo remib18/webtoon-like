@@ -2,22 +2,29 @@
 
 namespace WebtoonLike\Site;
 
-const SETTINGS = [
-    'googleTranslateApi' => '',
-    'preTranslateTo' => [
-        'fr-fr',
-        'en-us'
-    ],
-    'database' => [
-        'host' => 'localhost',
-        'username' => 'root',       // TODO: Replace root in production
-        'password' => null,
-        'dbName' => 'webtoonLike',
-        'port' => null,
-        'socket' => null
-    ]
-];
+use JetBrains\PhpStorm\ArrayShape;
 
-function getSettings(): array {
-    return SETTINGS;
+#[ArrayShape([
+    'googleTranslateApi' => "string",
+    'preTranslateTo' => "string[]",
+    'webtoonsImagesBaseFolder' => "string",
+    'database' => "array"
+])]
+function getSettings(): array{
+    return [
+        'googleTranslateApi' => '',
+        'preTranslateTo' => [
+            'fr',
+            'en'
+        ],
+        'webtoonsImagesBaseFolder' => dirname(__DIR__) . '/assets/webtoons-imgs',
+        'database' => [
+            'host' => 'localhost',
+            'username' => 'root',       // TODO: Replace root in production
+            'password' => null,
+            'dbName' => 'webtoonLike',
+            'port' => null,
+            'socket' => null
+        ]
+    ];
 }
