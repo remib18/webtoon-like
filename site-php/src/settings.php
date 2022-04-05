@@ -17,7 +17,7 @@ function getSettings(): array{
             'fr',
             'en'
         ],
-        'webtoonsImagesBaseFolder' => dirname(__DIR__) . '/assets/webtoons-imgs',
+        'webtoonsImagesBaseFolder' => dirname(__DIR__) . '/assets/webtoons-imgs/',
         'database' => [
             'host' => 'localhost',
             'username' => 'root',       // TODO: Replace root in production
