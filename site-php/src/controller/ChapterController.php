@@ -42,7 +42,12 @@ class ChapterController extends AbstractController
      */
     public function create(array $params): int|false
     {
-        // TODO: Implement create() method.
+        $sql = 'INSERT INTO Chapter (number, title, webtoonID) VALUE (?, ?, ?);';
+        $stmt = Database::getDB()->prepare($sql);
+        $stmt->bind_param('isi', $params['number'], $params['title'], $params['webtoonId']);
+        $res = $stmt->execute();
+        $stmt->close();
+        return $res;
     }
 
     /**
