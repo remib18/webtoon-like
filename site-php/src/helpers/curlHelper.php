@@ -45,8 +45,6 @@ class curlHelper {
     public static function httpPost(array $params): array {
 
         $jsonData = json_encode($params['query']);
-
-
         $curlSession = curl_init($params['url']);
             curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curlSession, CURLOPT_POST, true);
