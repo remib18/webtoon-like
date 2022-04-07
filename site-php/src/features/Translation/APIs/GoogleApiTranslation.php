@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
+use function WebtoonLike\Site\getSettings;
+
 
 class GoogleApiTranslation implements TranslationInterface
 {
@@ -11,7 +13,23 @@ class GoogleApiTranslation implements TranslationInterface
     */
     public static function buildRequest(string $text, Language $source, Language $target): array 
     {
-        // TODO: Implement buildRequest() method.
+        $uri = 'https://www.googleapis.com/language/translate/v2';
+        $options = [
+            'key' => getSettings()['googleTranslateApi'],
+            'q' => rawurlencode($text),
+            'source' => $source,
+            'target' => $target
+        ];
+        $req = $uri . '?';
+        foreach ($options as $key => $value) {
+            $req .= $key . '=' . $value . '&';
+        }
+        $response = [
+            'method' => 'GET',
+            'url' => substr($req, 0, -1)
+        ];
+
+        return $response;
     }
 
     /**
