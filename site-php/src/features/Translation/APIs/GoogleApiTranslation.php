@@ -3,8 +3,10 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\exceptions\InvalidRequestException;
+use WebtoonLike\Site\exceptions\InvalidApiKeyException;
+use WebtoonLike\Site\exceptions\TranslationErrorException;
 use function WebtoonLike\Site\getSettings;
-
 
 class GoogleApiTranslation implements TranslationInterface
 {
@@ -38,7 +40,33 @@ class GoogleApiTranslation implements TranslationInterface
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
-        // TODO: Implement translate() method.
+        $url = self::prepareURL($text, $source, $target);
+        $response = curlHelper::httpGet($url);
+
+        $code = $response['httpCode'];
+        $decodedResponse = $response['response']['decodedResponse'];
+        if($code == 200)
+        {
+            return $decodedResponse['data']['translations'][0]['translatedText'];
+        }
+        else
+        {
+            $error = $decodedResponse['error']['errors'][0]['message'];
+            if( $code == 400 )
+            {
+                throw new InvalidRequestException($error);
+            }
+            else if( $code == 403 )
+            {
+                throw new InvalidApiKeyException($error);
+            }
+            else if( $code == 500 )
+            {
+                throw new TranslationErrorException($error);
+            }
+            return '';
+        }
+
     }
 
     /**
@@ -46,6 +74,14 @@ class GoogleApiTranslation implements TranslationInterface
      */
     public static function translateMany(array $texts, Language $source, Language $target): array
     {
-        // TODO: Implement translateMany() method.
+        $response = [];
+        foreach ($texts as $text) {
+            try
+            {
+                $response[] = self::translate($text, $source, $target);
+            }
+            catch (InvalidApiKeyException|TranslationErrorException|InvalidRequestException $e) {}
+        }
+        return $response;
     }
 }
