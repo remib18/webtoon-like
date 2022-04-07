@@ -3,7 +3,10 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
-use WebtoonLike\Site\exceptions;
+use WebtoonLike\Site\exceptions\InvalidRequestException;
+use WebtoonLike\Site\exceptions\InvalidApiKeyException;
+use WebtoonLike\Site\exceptions\TranslationErrorException;
+use WebtoonLike\Site\exceptions\SlowDownException;
 use WebtoonLike\Site\helpers\curlHelper;
 
 class LibreTranslateTranslation implements TranslationInterface
@@ -76,7 +79,10 @@ class LibreTranslateTranslation implements TranslationInterface
     {
         $response = [];
         foreach ($texts as $text) {
-            $response[] = self::translate($text, $source, $target);
+            try
+            {
+                $response[] = self::translate($text, $source, $target);
+            } catch (InvalidApiKeyException|TranslationErrorException|SlowDownException|InvalidRequestException $e) {}
         }
         return $response;
     }
