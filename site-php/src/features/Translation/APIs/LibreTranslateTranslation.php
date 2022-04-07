@@ -7,6 +7,16 @@ use WebtoonLike\Site\entities\Language;
 class LibreTranslateTranslation implements TranslationInterface
 {
 
+
+    
+    /**
+    * @inheritDoc
+    */
+    public static function buildRequest(string $text, Language $source, Language $target): array 
+    {
+        // TODO: Implement buildRequest() method.
+    }
+
     /**
      * @inheritDoc
      */
