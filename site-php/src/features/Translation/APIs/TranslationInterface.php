@@ -8,6 +8,17 @@ interface TranslationInterface
 {
 
     /**
+     * Construit la requete.
+     *
+     * @param string $text Texte à traduire
+     * @param Language $source Langue d'origine
+     * @param Language $target Langue vers laquelle traduire
+     *
+     * @return array<string> Elements de la requete.
+     */
+    public static function buildRequest(string $text, Language $source, Language $target): array;
+
+    /**
      * Traduit un texte
      *
      * @param string $text Texte à traduire
