@@ -27,6 +27,7 @@
     "minimum-stability": "dev",
     "require": {
         "greeflas/php-image-downloader": "dev-master",
-        "google/cloud-vision": "dev-main"
+        "google/cloud-vision": "dev-main",
+      "ext-curl": "*"
     }
 }
