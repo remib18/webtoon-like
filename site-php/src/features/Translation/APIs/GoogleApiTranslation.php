@@ -16,7 +16,7 @@ class GoogleApiTranslation implements TranslationInterface
      * @param Language $target
      * @return url
      */
-    public static function buildRequest(string $text, Language $source, Language $target): string
+    public static function prepareURL(string $text, Language $source, Language $target): string
     {
         $uri = 'https://www.googleapis.com/language/translate/v2';
         $options = [
