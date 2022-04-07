@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/site-php/vendor/composer" />
+      <path value="$PROJECT_DIR$/site-php/vendor/greeflas/php-image-downloader" />
+      <path value="$PROJECT_DIR$/site-php/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/site-php/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/site-php/vendor/rize/uri-template" />
+      <path value="$PROJECT_DIR$/site-php/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/site-php/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/site-php/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/site-php/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/site-php/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/site-php/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/common-protos" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/cloud-vision" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/gax" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/grpc-gcp" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/protobuf" />
+      <path value="$PROJECT_DIR$/site-php/vendor/google/cloud-core" />
+      <path value="$PROJECT_DIR$/site-php/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/site-php/vendor/grpc/grpc" />
+      <path value="$PROJECT_DIR$/site-php/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/site-php/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/site-php/vendor/guzzlehttp/guzzle" />
+    </include_path>
+  </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="8.1" />
+</project>
