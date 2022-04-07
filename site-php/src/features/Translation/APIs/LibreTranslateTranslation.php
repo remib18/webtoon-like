@@ -3,13 +3,11 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\exceptions;
+use WebtoonLike\Site\helpers\curlHelper;
 
-/**
- *
- */
 class LibreTranslateTranslation implements TranslationInterface
 {
-
     /**
      * Prepare POST requests.
      *
@@ -19,14 +17,14 @@ class LibreTranslateTranslation implements TranslationInterface
      * @param string $endpoint
      * @return array
      */
-    public static function preparePostRequest(string $text, Language $source, Language $target, string $endpoint): array
+    public static function preparePostRequest(string $text, string $source, string $target, string $endpoint): array
     {
         $request = [
             'url' => 'https://libretranslate.com/' . $endpoint,
             'query' => [
                 'q' => $text,
-                '$source' => $source,
-                '$target' => $target,
+                'source' => $source,
+                'target' => $target,
                 'format' => 'text'
             ]
         ];
@@ -36,9 +34,39 @@ class LibreTranslateTranslation implements TranslationInterface
     /**
      * @inheritDoc
      */
-    public static function translate(string $text, Language $source, Language $target): string
+    public static function translate(string $text, string $source, string $target): string
     {
+        $data = self::preparePostRequest($text, $source, $target, 'translate');
+        $response = curlHelper::httpPost($data);
 
+        $code = $response['httpCode'];
+        if($code == 200)
+        {
+            return $response['response'];
+        }
+        else
+        {
+            $error = $response['response']['error'];
+            if( $code == 400 )
+            {
+                throw new InvalidRequestException($error);
+            }
+            else if( $code == 403 )
+            {
+                throw new InvalidApiKeyException($error);
+            }
+            else if( $code == 429 )
+            {
+                throw new SlowDownException($error);
+            }
+            else if( $code == 500 )
+            {
+                throw new TranslationErrorException($error);
+            }
+            return '';
+        }
+
+        return $response['response'];
     }
 
     /**
@@ -46,6 +74,10 @@ class LibreTranslateTranslation implements TranslationInterface
      */
     public static function translateMany(array $texts, Language $source, Language $target): array
     {
-        // TODO: Implement translateMany() method.
+        $response = [];
+        foreach ($texts as $text) {
+            $response[] = self::translate($text, $source, $target);
+        }
+        return $response;
     }
 }
