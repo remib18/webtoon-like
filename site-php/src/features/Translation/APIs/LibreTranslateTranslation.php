@@ -4,14 +4,33 @@ namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
 
+/**
+ *
+ */
 class LibreTranslateTranslation implements TranslationInterface
-{ 
+{
+
     /**
-    * @inheritDoc
-    */
-    public static function buildRequest(string $text, Language $source, Language $target): array 
+     * Prepare POST requests.
+     *
+     * @param string $text
+     * @param Language $source
+     * @param Language $target
+     * @param string $endpoint
+     * @return array
+     */
+    public static function preparePostRequest(string $text, Language $source, Language $target, string $endpoint): array
     {
-        // TODO: Implement buildRequest() method.
+        $request = [
+            'url' => 'https://libretranslate.com/' . $endpoint,
+            'query' => [
+                'q' => $text,
+                '$source' => $source,
+                '$target' => $target,
+                'format' => 'text'
+            ]
+        ];
+        return $request;
     }
 
     /**
@@ -19,7 +38,7 @@ class LibreTranslateTranslation implements TranslationInterface
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
-        // TODO: Implement translate() method.
+
     }
 
     /**
