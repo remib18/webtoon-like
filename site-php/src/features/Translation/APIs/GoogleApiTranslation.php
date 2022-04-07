@@ -4,8 +4,8 @@ namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
 
-class LibreTranslateTranslation implements TranslationInterface
-{ 
+class GoogleApiTranslation implements TranslationInterface
+{
     /**
     * @inheritDoc
     */
