@@ -2,13 +2,16 @@
 
 namespace WebtoonLike\Site\helpers;
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 class curlHelper {
 
     /**
      * Retourne la reponse d'une requete GET.
      *
      * @param array $params
-     * @return array
+     * @return array : code reponse HTTP et contenu.
      */
     public static function httpGet(array $params): array
     {
@@ -33,9 +36,35 @@ class curlHelper {
         return ['httpCode' => $responseCode, 'response' => $decodedResponse];
     }
 
-    public static function httpPost(): array {
+    /**
+     * Retourne la reponse d'une requete POST
+     *
+     * @param array $params
+     * @return array : code reponse HTTP et contenu.
+     */
+    public static function httpPost(array $params): array {
+
+        $jsonData = json_encode($params['query']);
 
 
-        return [];
+        $curlSession = curl_init($params['url']);
+            curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curlSession, CURLOPT_POST, true);
+            curl_setopt($curlSession, CURLOPT_POSTFIELDS, $jsonData);
+
+            // use while testing
+            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($curlSession, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($jsonData))
+            );
+
+            $response = curl_exec($curlSession);
+            $decodedResponse = json_decode( $response, true );
+            $responseCode = curl_getinfo($curlSession, CURLINFO_HTTP_CODE);
+        curl_close($curlSession);
+
+        return ['httpCode' => $responseCode, 'response' => $decodedResponse];
     }
 }
