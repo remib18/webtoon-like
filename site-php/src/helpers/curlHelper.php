@@ -42,21 +42,20 @@ class curlHelper {
      * @param array $params
      * @return array : code reponse HTTP et contenu.
      */
-    public static function httpPost(array $params): array {
-
+    public static function httpPost(array $params): array
+    {
         $jsonData = json_encode($params['query']);
         $curlSession = curl_init($params['url']);
             curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curlSession, CURLOPT_POST, true);
             curl_setopt($curlSession, CURLOPT_POSTFIELDS, $jsonData);
-
-            // use while testing
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
             curl_setopt($curlSession, CURLOPT_HTTPHEADER, array(
                     'Content-Type: application/json',
                     'Content-Length: ' . strlen($jsonData))
             );
+            // use while testing
+            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
 
             $response = curl_exec($curlSession);
             $decodedResponse = json_decode( $response, true );
