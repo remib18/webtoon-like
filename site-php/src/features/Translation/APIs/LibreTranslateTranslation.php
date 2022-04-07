@@ -17,7 +17,7 @@ class LibreTranslateTranslation implements TranslationInterface
      * @param string $endpoint
      * @return array
      */
-    public static function preparePostRequest(string $text, string $source, string $target, string $endpoint): array
+    public static function preparePostRequest(string $text, Language $source, Language $target, string $endpoint): array
     {
         $request = [
             'url' => 'https://libretranslate.com/' . $endpoint,
@@ -34,7 +34,7 @@ class LibreTranslateTranslation implements TranslationInterface
     /**
      * @inheritDoc
      */
-    public static function translate(string $text, string $source, string $target): string
+    public static function translate(Language $text, Language $source, Language $target): string
     {
         $data = self::preparePostRequest($text, $source, $target, 'translate');
         $response = curlHelper::httpPost($data);
