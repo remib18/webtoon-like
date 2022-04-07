@@ -9,9 +9,14 @@ use function WebtoonLike\Site\getSettings;
 class GoogleApiTranslation implements TranslationInterface
 {
     /**
-    * @inheritDoc
-    */
-    public static function buildRequest(string $text, Language $source, Language $target): array 
+     * Generate URL for the translate method.
+     *
+     * @param string $text
+     * @param Language $source
+     * @param Language $target
+     * @return url
+     */
+    public static function buildRequest(string $text, Language $source, Language $target): string
     {
         $uri = 'https://www.googleapis.com/language/translate/v2';
         $options = [
@@ -24,12 +29,8 @@ class GoogleApiTranslation implements TranslationInterface
         foreach ($options as $key => $value) {
             $req .= $key . '=' . $value . '&';
         }
-        $response = [
-            'method' => 'GET',
-            'url' => substr($req, 0, -1)
-        ];
 
-        return $response;
+        return substr($req, 0, -1);
     }
 
     /**
