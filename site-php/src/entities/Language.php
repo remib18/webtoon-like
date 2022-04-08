@@ -2,15 +2,36 @@
 
 namespace WebtoonLike\Site\entities;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class Language implements EntityInterface
 {
-
+    private string $id;
     private string $name;
 
+    #[ArrayShape(['id' => "string", 'name' => "string"])]
     public function __toArray(): array
     {
-        // TODO: Implement __toArray() method.
-        return [];
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getId(): string
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param string $id
+     */
+    public function setId(string $id): void
+    {
+        $this->id = $id;
     }
 
     /**
