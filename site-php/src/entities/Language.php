@@ -9,6 +9,11 @@ class Language implements EntityInterface
     private string $id;
     private string $name;
 
+    function __construct($id, $name) {
+        $this->id = $id;
+        $this->name = $name;
+    }
+
     #[ArrayShape(['id' => "string", 'name' => "string"])]
     public function __toArray(): array
     {
