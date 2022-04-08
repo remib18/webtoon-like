@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\Site\controller;
 
+use WebtoonLike\Site\entities\Webtoon;
 use WebtoonLike\Site\utils\Database;
 
 class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
@@ -21,7 +22,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function getByName(string $name): mixed
+    public function getByName(string $name): Webtoon
     {
         // TODO: Implement getByName() method.
     }
@@ -29,7 +30,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function create(array $params): int|false
+    public function create(Webtoon $entity): int|false
     {
         // TODO: Implement create() method.
     }
@@ -37,8 +38,32 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function edit(int $id, array $params): bool
+    public function edit(Webtoon $entity): bool
     {
         // TODO: Implement edit() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAll(): array
+    {
+        // TODO: Implement getAll() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getById(int $id): Webtoon
+    {
+        // TODO: Implement getById() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeById(int $id): bool
+    {
+        // TODO: Implement removeById() method.
     }
 }

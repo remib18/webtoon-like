@@ -8,5 +8,6 @@ class Chapter implements EntityInterface
     public function __toArray(): array
     {
         // TODO: Implement __toArray() method.
+        return [];
     }
 }

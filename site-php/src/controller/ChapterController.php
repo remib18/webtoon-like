@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\Site\controller;
 
+use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\utils\Database;
 
@@ -32,7 +33,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getByName(string $name): mixed
+    public function getByName(string $name): Chapter
     {
         // TODO: Implement getByName() method.
     }
@@ -40,11 +41,11 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function create(array $params): int|false
+    public function create(Chapter $entity): int|false
     {
         $sql = 'INSERT INTO Chapter (number, title, webtoonID) VALUE (?, ?, ?);';
         $stmt = Database::getDB()->prepare($sql);
-        $stmt->bind_param('isi', $params['number'], $params['title'], $params['webtoonId']);
+        $stmt->bind_param('isi', $entity['number'], $entity['title'], $entity['webtoonId']);
         $res = $stmt->execute();
         $stmt->close();
         return $res;
@@ -53,8 +54,32 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function edit(int $id, array $params): bool
+    public function edit(Chapter $entity): bool
     {
         // TODO: Implement edit() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getAll(): array
+    {
+        // TODO: Implement getAll() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getById(int $id): Chapter
+    {
+        // TODO: Implement getById() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function removeById(int $id): bool
+    {
+        // TODO: Implement removeById() method.
     }
 }
