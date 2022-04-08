@@ -64,25 +64,31 @@ class LibreTranslateTranslation implements TranslationInterface
             {
                 return $response['response'];
             }
-            else if( $code == 403 ) {
+            else if( $code == 403 )
+            {
                 throw new InvalidApiKeyException('Invalid Api Key For ' . $data['url']);
             }
             else
             {
                 $error = $response['response']['error'];
-                if( $code == 400 )
+                if( $code == 500 )
                 {
-                    throw new InvalidRequestException($error);
-                }
-                else if( $code == 429 )
-                {
-                    throw new SlowDownException($error);
-                }
-                else if( $code == 500 )
-                {
+                    // TO-DO: verify the language was available.
+                    // Return if it was.
                     throw new TranslationErrorException($error);
                 }
-                return '';
+                else
+                {
+                    if( $code == 400 )
+                    {
+                        throw new InvalidRequestException($error);
+                    }
+                    else if( $code == 429 )
+                    {
+                        throw new SlowDownException($error);
+                    }
+                    return '';
+                }
             }
         }
         throw new NoApiAvailableException('No Translation Api Was Up');
