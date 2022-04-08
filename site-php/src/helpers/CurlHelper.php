@@ -2,19 +2,29 @@
 
 namespace WebtoonLike\Site\helpers;
 
+use InvalidArgumentException;
+use JetBrains\PhpStorm\ArrayShape;
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-class curlHelper {
+class CurlHelper {
 
     /**
-     * Retourne la reponse d'une requete GET.
+     * Retourne la réponse d'une requête GET.
      *
      * @param array $params
-     * @return array : code reponse HTTP et contenu.
+     *
+     * @return array Code réponse HTTP et contenu.
+     *
+     * @throws InvalidArgumentException
      */
+    #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpGet(array $params): array
     {
+        if (isset($params['url'])) {
+            throw new InvalidArgumentException('Missing params url key.');
+        }
         $url = $params['url'];
         $curlSession = curl_init($url);
             curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
@@ -37,13 +47,20 @@ class curlHelper {
     }
 
     /**
-     * Retourne la reponse d'une requete POST
+     * Retourne la réponse d'une requête POST
      *
      * @param array $params
-     * @return array : code reponse HTTP et contenu.
+     * @return array Code réponse HTTP et contenu.
      */
+    #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpPost(array $params): array
     {
+        if (isset($params['url'])) {
+            throw new InvalidArgumentException('Missing params url key.');
+        }
+        if (isset($params['query'])) {
+            throw new InvalidArgumentException('Missing params query key.');
+        }
         $jsonData = json_encode($params['query']);
         $curlSession = curl_init($params['url']);
             curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
