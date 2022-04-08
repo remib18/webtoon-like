@@ -11,6 +11,12 @@ use WebtoonLike\Site\helpers\curlHelper;
 
 class LibreTranslateTranslation implements TranslationInterface
 {
+    private static array $mirrors = ['https://libretranslate.de/',
+    'https://translate.argosopentech.com/',
+    'https://libretranslate.pussthecat.org/',
+    'https://translate.fortytwo-it.com/'
+    ];
+
     /**
      * Prepare POST requests.
      *
@@ -22,54 +28,65 @@ class LibreTranslateTranslation implements TranslationInterface
      */
     public static function preparePostRequest(string $text, Language $source, Language $target, string $endpoint): array
     {
-        $request = [
-            'url' => 'https://libretranslate.com/' . $endpoint,
-            'query' => [
-                'q' => $text,
-                'source' => $source,
-                'target' => $target,
-                'format' => 'text'
-            ]
-        ];
+        $request = [];
+        foreach (self::$mirrors as $mirror)
+        {
+            $request[] = [
+                'url' => $mirror . $endpoint,
+                'query' => [
+                    'q' => $text,
+                    'source' => $source,
+                    'target' => $target,
+                    'format' => 'text'
+                ]
+            ];
+        }
+
         return $request;
     }
 
     /**
      * @inheritDoc
+     * @throws InvalidApiKeyException
+     * @throws InvalidRequestException
+     * @throws SlowDownException
+     * @throws TranslationErrorException
      */
-    public static function translate(Language $text, Language $source, Language $target): string
+    public static function translate(string $text, Language $source, Language $target): string
     {
-        $data = self::preparePostRequest($text, $source, $target, 'translate');
-        $response = curlHelper::httpPost($data);
+        $requests = self::preparePostRequest($text, $source, $target, 'translate');
 
-        $code = $response['httpCode'];
-        if($code == 200)
+        foreach ($requests as $data)
         {
-            return $response['response'];
+            $response = curlHelper::httpPost($data);
+            $code = $response['httpCode'];
+            if($code == 200)
+            {
+                return $response['response'];
+            }
+            else if( $code == 403 ) {
+                throw new InvalidApiKeyException('Invalid Api Key For ' . $data['url']);
+            }
+            else
+            {
+                $error = $response['response']['error'];
+                if( $code == 400 )
+                {
+                    throw new InvalidRequestException($error);
+                }
+                else if( $code == 429 )
+                {
+                    throw new SlowDownException($error);
+                }
+                else if( $code == 500 )
+                {
+                    throw new TranslationErrorException($error);
+                }
+                return '';
+            }
         }
-        else
-        {
-            $error = $response['response']['error'];
-            if( $code == 400 )
-            {
-                throw new InvalidRequestException($error);
-            }
-            else if( $code == 403 )
-            {
-                throw new InvalidApiKeyException($error);
-            }
-            else if( $code == 429 )
-            {
-                throw new SlowDownException($error);
-            }
-            else if( $code == 500 )
-            {
-                throw new TranslationErrorException($error);
-            }
-            return '';
-        }
-
-        return $response['response'];
+        throw new NoApiAvailableException('No Translation Api Was Up');
+        return '';
     }
 
     /**
