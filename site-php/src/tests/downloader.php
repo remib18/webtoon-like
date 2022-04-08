@@ -1,8 +1,8 @@
 <?php
 
-namespace Root;
+namespace WebtoonLike\tests;
 
-require_once __DIR__ . '/vendor/autoload.php';
+require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 function BC_C2_dwl(int $frame) {
     $uri = 'https://cdn.bakihanma.com/file/Zolyvmanga/black-clover/Chapter-2-:-The-Magic-Knights-Entrance-Exam/' . $frame . '.jpg';

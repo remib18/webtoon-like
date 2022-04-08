@@ -4,8 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "WebtoonLike\\Site\\": "src/",
-            "Root\\": "/"
+            "WebtoonLike\\Site\\": "src/"
         }
     },
     "authors": [
