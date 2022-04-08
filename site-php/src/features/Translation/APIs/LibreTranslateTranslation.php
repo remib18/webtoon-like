@@ -46,7 +46,13 @@ class LibreTranslateTranslation implements TranslationInterface
     }
 
     /**
-     * @inheritDoc
+     * Traduit un texte
+     *
+     * @param string $text Texte à traduire
+     * @param Language $source Langue d'origine
+     * @param Language $target Langue vers laquelle traduire
+     * @return string Traduction
+     *
      * @throws InvalidApiKeyException
      * @throws InvalidRequestException
      * @throws SlowDownException

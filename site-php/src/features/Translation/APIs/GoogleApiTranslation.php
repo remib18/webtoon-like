@@ -36,7 +36,18 @@ class GoogleApiTranslation implements TranslationInterface
     }
 
     /**
-     * @inheritDoc
+     * Traduit un texte
+     *
+     * @param string $text Texte à traduire
+     * @param Language $source Langue d'origine
+     * @param Language $target Langue vers laquelle traduire
+     *
+     * @return string Traduction
+     *
+     *
+     * @throws InvalidRequestException
+     * @throws InvalidApiKeyException
+     * @throws TranslationErrorException
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
