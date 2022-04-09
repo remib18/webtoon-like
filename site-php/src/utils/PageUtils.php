@@ -54,11 +54,11 @@ class PageUtils
      * @return string
      */
     public function getStylesheets(): string {
-        $reset = '<link rel="stylesheet" href="/assets/styles/reset.css">';
-        $app = '<link rel="stylesheet" href="/assets/styles/app.css">';
+        $reset = '<link rel="stylesheet" href="assets/styles/reset.css">';
+        $app = '<link rel="stylesheet" href="assets/styles/app.css">';
         $page = '';
         if (file_exists(dirname(__DIR__, 2) . '/assets/styles/page-' . $this->pageType . '.css')) {
-            $page = '<link rel="stylesheet" href="/assets/styles/page-' . $this->pageType . '.css">';
+            $page = '<link rel="stylesheet" href="assets/styles/page-' . $this->pageType . '.css">';
         }
         return $reset . $app . $page;
     }
