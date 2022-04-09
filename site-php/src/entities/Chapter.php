@@ -88,8 +88,16 @@ class Chapter implements EntityInterface
     /**
      * @return int
      */
-    public function getWebtoon(): int
+    public function getWebtoonid(): int
     {
         return $this->webtoon->getId();
+    }
+
+    /**
+     * @return Webtoon
+     */
+    public function getWebtoon(): Webtoon
+    {
+        return $this->webtoon;
     }
 }
