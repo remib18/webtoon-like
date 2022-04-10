@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS webtoonlike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE webtoonlike;
+CREATE DATABASE IF NOT EXISTS webtoonLike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE webtoonLike;
 
 CREATE TABLE User (
     userID BIGINT NOT NULL AUTO_INCREMENT,
