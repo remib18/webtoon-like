@@ -18,21 +18,21 @@ abstract class AbstractController {
      *
      * @return EntityInterface[]
      */
-    abstract public function getAll(): array;
+    abstract public static function getAll(): array;
 
     /**
      * Obtention de la ressource avec l'identifiant correspondant.
      * @param int $id Identifiant rechercher
      * @return mixed
      */
-    abstract public function getById(int $id): EntityInterface;
+    abstract public static function getById(int $id): EntityInterface;
 
     /**
      * Obtention de la ressource avec le nom correspondant.
      * @param string $name Nom rechercher
      * @return mixed
      */
-    abstract public function getByName(string $name): EntityInterface;
+    abstract public static function getByName(string $name): EntityInterface;
 
     /**
      * Enregistre une ressource et retourne son identifiant ou <code>false</code> en cas d'erreur.
@@ -40,7 +40,7 @@ abstract class AbstractController {
      * @param EntityInterface $entity
      * @return int|false
      */
-    abstract public function create(EntityInterface $entity): int | false;
+    abstract public static function create(EntityInterface $entity): int | false;
 
     /**
      * Modifie la ressource
@@ -48,13 +48,13 @@ abstract class AbstractController {
      * @param EntityInterface $entity La ressource modifiée
      * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
-    abstract public function edit(EntityInterface $entity): bool;
+    abstract public static function edit(EntityInterface $entity): bool;
 
     /**
      * Supprime la ressource correspondant à l'identifiant fournit.
      * @param int $id L'identifiant de la ressource à supprimer.
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    abstract public function removeById(int $id): bool;
+    abstract public static function removeById(int $id): bool;
 
 }

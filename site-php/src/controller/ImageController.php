@@ -10,7 +10,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getByName(string $name): Image
+    public static function getByName(string $name): Image
     {
         // TODO: Implement getByName() method.
     }
@@ -18,7 +18,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function create(Image $entity): int|false
+    public static function create(Image $entity): int|false
     {
         // TODO: Implement create() method.
     }
@@ -26,7 +26,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function edit(Image $entity): bool
+    public static function edit(Image $entity): bool
     {
         // TODO: Implement edit() method.
     }
@@ -34,7 +34,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getAll(): array
+    public static function getAll(): array
     {
         // TODO: Implement getAll() method.
     }
@@ -42,7 +42,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getById(int $id): Image
+    public static function getById(int $id): Image
     {
         // TODO: Implement getById() method.
     }
@@ -50,7 +50,7 @@ class ImageController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function removeById(int $id): bool
+    public static function removeById(int $id): bool
     {
         // TODO: Implement removeById() method.
     }

@@ -3,29 +3,31 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\controller\WebtoonController;
 
 class Chapter implements EntityInterface
 {
     private int $id;
     private int $number;
     private string $title;
-    private Webtoon $webtoon;
+    private int $webtoonId;
 
-    function __construct($id, $number, $title, $webtoon) {
+    function __construct(int $id, int $number, string $title, int $webtoonId) {
         $this->id = $id;
         $this->number = $number;
         $this->title = $title;
-        $this->webtoon = $webtoon;
+        $this->webtoonId = $webtoonId;
     }
 
-    #[ArrayShape(['id' => "int", 'number' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
+    #[Pure] #[ArrayShape(['id' => "int", 'number' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
     public function __toArray(): array
     {
         return [
             'id' => $this->id,
-            'number' => $this->name,
+            'number' => $this->number,
             'title' => $this->title,
-            'webtoonId' => $this->webtoon->getId()
+            'webtoonId' => $this->webtoonId
         ];
     }
 
@@ -78,19 +80,19 @@ class Chapter implements EntityInterface
     }
 
     /**
-     * @param Webtoon $webtoon
+     * @param int $webtoonId
      */
-    public function setWebtoon(Webtoon $webtoon): void
+    public function setWebtoonId(int $webtoonId): void
     {
-        $this->webtoon = $webtoon;
+        $this->webtoonId = $webtoonId;
     }
 
     /**
      * @return int
      */
-    public function getWebtoonid(): int
+    #[Pure] public function getWebtoonId(): int
     {
-        return $this->webtoon->getId();
+        return $this->webtoonId;
     }
 
     /**
@@ -98,6 +100,6 @@ class Chapter implements EntityInterface
      */
     public function getWebtoon(): Webtoon
     {
-        return $this->webtoon;
+        return WebtoonController::getById($this->webtoonId);
     }
 }

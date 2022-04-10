@@ -26,14 +26,14 @@ class ChapterController extends AbstractController
      * @param int $chapterId
      * @return array<int, Image> Liste des images indexées par leur position
      */
-    public static function getAllImages(int $chapterId): array {
+    public static static function getAllImages(int $chapterId): array {
 
     }
 
     /**
      * @inheritDoc
      */
-    public function getByName(string $name): Chapter
+    public static function getByName(string $name): Chapter
     {
         // TODO: Implement getByName() method.
     }
@@ -41,7 +41,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function create(Chapter $entity): int|false
+    public static function create(Chapter $entity): int|false
     {
         $sql = 'INSERT INTO Chapter (number, title, webtoonID) VALUE (?, ?, ?);';
         $stmt = Database::getDB()->prepare($sql);
@@ -54,7 +54,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function edit(Chapter $entity): bool
+    public static function edit(Chapter $entity): bool
     {
         // TODO: Implement edit() method.
     }
@@ -62,7 +62,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getAll(): array
+    public static function getAll(): array
     {
         // TODO: Implement getAll() method.
     }
@@ -70,7 +70,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function getById(int $id): Chapter
+    public static function getById(int $id): Chapter
     {
         // TODO: Implement getById() method.
     }
@@ -78,7 +78,7 @@ class ChapterController extends AbstractController
     /**
      * @inheritDoc
      */
-    public function removeById(int $id): bool
+    public static function removeById(int $id): bool
     {
         // TODO: Implement removeById() method.
     }

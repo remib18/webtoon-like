@@ -22,7 +22,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function getByName(string $name): Webtoon
+    public static function getByName(string $name): Webtoon
     {
         // TODO: Implement getByName() method.
     }
@@ -30,7 +30,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function create(Webtoon $entity): int|false
+    public static function create(Webtoon $entity): int|false
     {
         // TODO: Implement create() method.
     }
@@ -38,7 +38,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function edit(Webtoon $entity): bool
+    public static function edit(Webtoon $entity): bool
     {
         // TODO: Implement edit() method.
     }
@@ -46,7 +46,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function getAll(): array
+    public static function getAll(): array
     {
         // TODO: Implement getAll() method.
     }
@@ -54,7 +54,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function getById(int $id): Webtoon
+    public static function getById(int $id): Webtoon
     {
         // TODO: Implement getById() method.
     }
@@ -62,7 +62,7 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
     /**
      * @inheritDoc
      */
-    public function removeById(int $id): bool
+    public static function removeById(int $id): bool
     {
         // TODO: Implement removeById() method.
     }
