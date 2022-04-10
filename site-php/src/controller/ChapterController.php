@@ -26,7 +26,7 @@ class ChapterController extends AbstractController
      * @param int $chapterId
      * @return array<int, Image> Liste des images indexées par leur position
      */
-    public static static function getAllImages(int $chapterId): array {
+    public static function getAllImages(int $chapterId): array {
 
     }
 
