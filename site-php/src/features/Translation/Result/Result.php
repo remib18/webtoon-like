@@ -4,7 +4,7 @@ namespace WebtoonLike\Site\features\Translation\Result;
 
 class Result
 {
-    
+
     /** @var array<Bubble> $bubbles */
     private array $bubbles = [];
 
