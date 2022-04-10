@@ -49,8 +49,9 @@ class ChapterController extends AbstractController
         $res = $stmt->execute();
         $stmt->close();
         return $res;
+        
     }
-
+    
     /**
      * @inheritDoc
      */

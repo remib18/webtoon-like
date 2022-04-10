@@ -1,7 +1,7 @@
-CREATE DATABASE webtoonlike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE IF NOT EXISTS webtoonlike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE webtoonlike;
 
-CREATE TABLE Users (
+CREATE TABLE User (
     userID BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32),
     email VARCHAR(256),
@@ -14,7 +14,7 @@ CREATE TABLE Report (
     type INT,
     userID BIGINT NOT NULL,
     PRIMARY KEY (reportID),
-    FOREIGN KEY (userID) REFERENCES Users(userID)
+    FOREIGN KEY (userID) REFERENCES User(userID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE TranslationProposition (
@@ -26,11 +26,11 @@ CREATE TABLE TranslationProposition (
 CREATE TABLE Propose (
     translationPropositionID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
-    FOREIGN KEY (userID) REFERENCES Users(userID),
+    FOREIGN KEY (userID) REFERENCES User(userID),
     FOREIGN KEY (translationPropositionID) REFERENCES TranslationProposition(translationPropositionID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE Webtoons (
+CREATE TABLE Webtoon (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(256),
     author VARCHAR(128),
@@ -44,7 +44,7 @@ CREATE TABLE Chapter (
     title VARCHAR(256),
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
-    FOREIGN KEY (webtoonID) REFERENCES Webtoons(webtoonID)
+    FOREIGN KEY (webtoonID) REFERENCES Webtoon(webtoonID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Image (
