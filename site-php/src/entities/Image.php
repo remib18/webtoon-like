@@ -2,36 +2,66 @@
 
 namespace WebtoonLike\Site\entities;
 
+use JetBrains\PhpStorm\ArrayShape;
+use JetBrains\PhpStorm\Pure;
+
 class Image implements EntityInterface
 {
 
+    public function __construct(
+        private int $id,
+        private int $index,
+        private string $path,
+        private int $chapterId
+    ) {}
+
+    /**
+     * @return int
+     */
     public function getId(): int {
-        return 0;
-    }
-
-    public function getIndex(): int {
-        return 0;
-    }
-
-    public function getImageSrc(): string {
-        return '';
-    }
-
-    public function getOriginalLanguage(): Language {
-        return new Language();
+        return $this->id;
     }
 
     /**
-     * @return array<Language>
+     * @return int
      */
-    public function getAlreadyTranslatedLanguages(): array {
-        return [];
+    public function getIndex(): int {
+        return $this->index;
     }
 
+    /**
+     * @return string
+     */
+    public function getPath(): string {
+        return $this->path;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChapterId(): int
+    {
+        return $this->chapterId;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    #[Pure]
+    #[ArrayShape([
+        'imageId' => "int",
+        'index' => "int",
+        'path' => "string",
+        'chapterId' => "int"
+    ])]
     public function __toArray(): array
     {
-        // TODO: Implement __toArray() method.
-        return [];
+        return [
+            'imageId' => $this->id,
+            'index' => $this->index,
+            'path' => $this->path,
+            'chapterId' => $this->chapterId
+        ];
     }
 
     /**
@@ -39,7 +69,7 @@ class Image implements EntityInterface
      *
      * @return string
      */
-    public function getImage(): string
+    public function getBinaryCode(): string
     {
         /*
          * TODO:
