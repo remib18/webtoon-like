@@ -3,7 +3,7 @@
 namespace WebtoonLike\Site\features\Translation\OCR;
 
 use WebtoonLike\Site\entities\Image;
-use WebtoonLike\Site\features\Translation\Result;
+use WebtoonLike\Site\features\Translation\entities;
 
 interface OCRInterface
 {

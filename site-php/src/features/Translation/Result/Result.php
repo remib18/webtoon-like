@@ -1,12 +1,10 @@
 <?php
 
-namespace WebtoonLike\Site\features\Translation\OCR\Result;
+namespace WebtoonLike\Site\features\Translation\Result;
 
-class OCRFinalResult
+class Result
 {
-
-
-
+    
     /** @var array<Bubble> $bubbles */
     private array $bubbles = [];
 
