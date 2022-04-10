@@ -42,7 +42,7 @@ CREATE TABLE Chapter (
 
 CREATE TABLE Image (
      imageID BIGINT NOT NULL AUTO_INCREMENT,
-     position INT,
+     `index` INT,
      path VARCHAR(256),
      chapterID BIGINT NOT NULL,
      PRIMARY KEY (imageID),
