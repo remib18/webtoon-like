@@ -33,4 +33,19 @@ class Image implements EntityInterface
         // TODO: Implement __toArray() method.
         return [];
     }
+
+    /**
+     * Obtenir le code source de l'image
+     *
+     * @return string
+     */
+    public function getImage(): string
+    {
+        /*
+         * TODO:
+         * 1. Déterminer si la source de l'image est url ou fichier (
+         *     Commence soit par 'http://' / 'https://' / 'file://'
+         * 2. En fonction de la méthode, récupérer le fichier et le lire (file_read)
+         */
+    }
 }
