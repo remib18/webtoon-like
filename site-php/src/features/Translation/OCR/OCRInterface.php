@@ -1,6 +1,6 @@
 <?php
 
-namespace WebtoonLike\Site\features\Translation\APIs;
+namespace WebtoonLike\Site\features\Translation\OCR;
 
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\features\Translation\Result;
