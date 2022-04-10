@@ -45,6 +45,7 @@ class TranslationProposition implements EntityInterface
         $this->proposedTranslation = $proposedTranslation;
     }
 
+    #[ArrayShape(['id' => "int", 'proposedTranslation' => "string"])]
     public function __toArray(): array {
         return [
             'id' => $this->id,
