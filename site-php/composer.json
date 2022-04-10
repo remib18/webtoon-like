@@ -27,6 +27,7 @@
     "require": {
         "greeflas/php-image-downloader": "dev-master",
         "google/cloud-vision": "dev-main",
-      "ext-curl": "*"
+        "ext-curl": "*",
+        "ext-gd": "*"
     }
 }
