@@ -23,13 +23,6 @@ CREATE TABLE TranslationProposition (
     PRIMARY KEY (translationPropositionID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE Propose (
-    translationPropositionID BIGINT NOT NULL,
-    userID BIGINT NOT NULL,
-    FOREIGN KEY (userID) REFERENCES User(userID),
-    FOREIGN KEY (translationPropositionID) REFERENCES TranslationProposition(translationPropositionID)
-)  ENGINE=INNODB; 
-
 CREATE TABLE Webtoon (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
     name VARCHAR(256),
