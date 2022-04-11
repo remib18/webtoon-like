@@ -29,6 +29,7 @@
         "google/cloud-vision": "dev-main",
         "ext-curl": "*",
         "ext-gd": "*",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "ext-mysqli": "*"
     }
 }
