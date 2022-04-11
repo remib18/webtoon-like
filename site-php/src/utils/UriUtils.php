@@ -2,6 +2,8 @@
 
 namespace WebtoonLike\Site\utils;
 
+use JetBrains\PhpStorm\ArrayShape;
+
 class UriUtils
 {
     private string $pageType;
@@ -66,5 +68,23 @@ class UriUtils
      */
     public function getArrayOptions(): array {
         return $this->options;
+    }
+
+    /**
+     * Détermine le protocole d'une uri et la ressource demandée.
+     *
+     * @param string $uri
+     * @return array
+     */
+    #[ArrayShape([
+        'protocol' => 'string',
+        'ressource' => 'string'
+    ])]
+    public static function uriProtocol(string $uri): array {
+        [$protocol, $ressource] = mb_split('://', $uri);
+        return [
+            'protocol' => $protocol,
+            'ressource' => $ressource
+        ];
     }
 }
