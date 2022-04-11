@@ -28,11 +28,11 @@ class GoogleOCR implements OCRInterface
     private array $results= [];
 
     /** @var array<string> $texts */
-    private array $texts;
+    private array $texts = [];
 
-    private int $workingIndex;
+    private ?int $workingIndex;
 
-    private AnnotateImageResponse $response;
+    private ?AnnotateImageResponse $response;
 
     /**
      * @throws ValidationException
@@ -94,10 +94,20 @@ class GoogleOCR implements OCRInterface
 
     }
 
+    /**
+     * @throws InvalidProtocolException
+     * @throws \Google\ApiCore\ApiException
+     */
     private function runBatch(): void {
-        // TODO: Implement batch call
+        // TODO: Optimize batch call
         // See : https://stackoverflow.com/questions/71827453/google-cloud-vision-php-make-batch-request
         // See : https://cloud.google.com/vision/docs/batch#sample_code
+
+        // Temporary implementation
+        for ($i = 0; $i < sizeof($this->images); $i++) {
+            $this->runSingle($i);
+            $this->resetForNext();
+        }
     }
 
     private function setTexts(): void {
@@ -161,5 +171,11 @@ class GoogleOCR implements OCRInterface
             }
         }
         $this->results[$this->workingIndex]->setBlocs($blocs);
+    }
+
+    private function resetForNext(): void {
+        $this->texts = [];
+        $this->workingIndex = null;
+        $this->response = null;
     }
 }
