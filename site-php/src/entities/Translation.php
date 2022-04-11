@@ -7,41 +7,25 @@ use JetBrains\PhpStorm\ArrayShape;
 class Translation
 {
     public function __construct(
-        private int $id,
+        private int $languageId,
         private string $blockId,
         private string $content
     ) {}
 
     /**
-     * @return string
-     */
-    public function getBlockId(): string
-    {
-        return $this->blockId;
-    }
-
-    /**
-     * @param string $blockId
-     */
-    public function setBlockId(string $blockId): void
-    {
-        $this->blockId = $blockId;
-    }
-
-    /**
      * @return int
      */
-    public function getId(): int
+    public function getLanguageId(): int
     {
-        return $this->id;
+        return $this->languageId;
     }
 
     /**
-     * @param int $id
+     * @param string $content
      */
-    public function setId(int $id): void
+    public function setContent(string $content): void
     {
-        $this->id = $id;
+        $this->content = $content;
     }
 
     /**
@@ -53,17 +37,33 @@ class Translation
     }
 
     /**
-     * @param string $content
+     * @param string $blockId
      */
-    public function setContent(string $content): void
+    public function setBlockId(string $blockId): void
     {
-        $this->content = $content;
+        $this->blockId = $blockId;
     }
 
-    #[ArrayShape(['id' => "int", 'blockId' => "string", 'content' => "string"])]
+    /**
+     * @return string
+     */
+    public function getBlockId(): string
+    {
+        return $this->blockId;
+    }
+
+    /**
+     * @param int $languageId
+     */
+    public function setLanguageId(int $languageId): void
+    {
+        $this->languageId = $languageId;
+    }
+
+    #[ArrayShape(['languageId' => "int", 'blockId' => "string", 'content' => "string"])]
     public function __toArray(): array {
         return [
-            'id' => $this->id,
+            'languageId' => $this->languageId,
             'blockId' => $this->blockId,
             'content' => $this->content
         ];
