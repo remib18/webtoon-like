@@ -67,10 +67,10 @@ CREATE TABLE Block (
 )ENGINE=INNODB;
 
 CREATE TABLE Translation (
-    translationID BIGINT NOT NULL AUTO_INCREMENT,
+    languageId BIGINT NOT NULL AUTO_INCREMENT,
     blockID BIGINT NOT NULL,
     content TEXT,
-    PRIMARY KEY (translationID),
+    PRIMARY KEY (languageId),
     FOREIGN KEY (blockID) REFERENCES Block(blockID)
 )  ENGINE=INNODB;
 
