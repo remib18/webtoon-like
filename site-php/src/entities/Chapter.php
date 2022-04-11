@@ -11,7 +11,7 @@ class Chapter implements EntityInterface
 
     public function __construct(
         private int $id,
-        private int $number,
+        private int $index,
         private string $title,
         private int $webtoonId
     ){}
@@ -33,19 +33,19 @@ class Chapter implements EntityInterface
     }
 
     /**
-     * @param int $number
+     * @param int $index
      */
-    public function setNumber(int $number): void
+    public function setIndex(int $index): void
     {
-        $this->number = $number;
+        $this->index = $index;
     }
 
     /**
      * @return int
      */
-    public function getNumber(): int
+    public function getIndex(): int
     {
-        return $this->number;
+        return $this->index;
     }
 
     /**
@@ -88,12 +88,12 @@ class Chapter implements EntityInterface
         return WebtoonController::getById($this->webtoonId);
     }
 
-    #[Pure] #[ArrayShape(['id' => "int", 'number' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
+    #[Pure] #[ArrayShape(['id' => "int", 'index' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
     public function __toArray(): array
     {
         return [
             'id' => $this->id,
-            'number' => $this->number,
+            'index' => $this->index,
             'title' => $this->title,
             'webtoonId' => $this->webtoonId
         ];
