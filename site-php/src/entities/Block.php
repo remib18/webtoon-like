@@ -11,7 +11,7 @@ class Block implements EntityInterface
     public function __construct(
         private int $id,
         private int $imageId,
-        private int $cellPosition,
+        private int $cellPositionId,
     ) {}
 
     /**
@@ -49,25 +49,25 @@ class Block implements EntityInterface
     /**
      * @return int
      */
-    public function getCellPosition(): int
+    public function getCellPositionId(): int
     {
-        return $this->cellPosition;
+        return $this->cellPositionId;
     }
 
     /**
-     * @param int $cellPosition
+     * @param int $cellPositionId
      */
-    public function setCellPosition(int $cellPosition): void
+    public function setCellPositionId(int $cellPositionId): void
     {
-        $this->cellPosition = $cellPosition;
+        $this->cellPositionId= $cellPositionId;
     }
 
-    #[ArrayShape(['id' => "int", 'imageId' => "int", 'cellPosition' => "int"])]
+    #[ArrayShape(['id' => "int", 'imageId' => "int", 'cellPositionId' => "int"])]
     public function __toArray(): array {
         return [
             'id' => $this->id,
             'imageId' => $this->imageId,
-            'cellPosition' => $this->cellPosition
+            'cellPositionId' => $this->cellPositionId
         ];
     }
 
