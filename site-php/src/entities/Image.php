@@ -4,6 +4,9 @@ namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\exceptions\InvalidProtocolException;
+use WebtoonLike\Site\utils\UriUtils;
+use function WebtoonLike\Site\getSettings;
 
 class Image implements EntityInterface
 {
@@ -67,15 +70,26 @@ class Image implements EntityInterface
     /**
      * Obtenir le code source de l'image
      *
-     * @return string
+     * @return mixed <PHP base type ressource>
+     * @throws InvalidProtocolException
      */
-    public function getBinaryCode(): string
+    public function getRessource(): mixed
     {
-        /*
-         * TODO:
-         * 1. Déterminer si la source de l'image est url ou fichier (
-         *     Commence soit par 'http://' / 'https://' / 'file://'
-         * 2. En fonction de la méthode, récupérer le fichier et le lire (file_read)
-         */
+        $dir = dirname(__DIR__, 2) . getSettings()['webtoonsImagesBaseFolder'];
+        [$protocol, $ressource] = UriUtils::uriProtocol($this->path);
+        switch ($protocol) {
+            case 'http':
+            case 'https':
+                // TODO: load image from uri
+                break;
+            case 'file':
+                return fopen($dir . $ressource, 'r');
+            case 'gc':
+                // Todo: implement GoogleCloud Storage Option
+            default:
+                throw new InvalidProtocolException(
+                    'The protocol ' . $protocol . ' can not bu used to reference an image.'
+                );
+        }
     }
 }
