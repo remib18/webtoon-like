@@ -4,6 +4,7 @@ namespace WebtoonLike\Site\features\Translation\OCR;
 
 use Google\Cloud\Vision\V1\AnnotateImageResponse;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\exceptions\ApiException;
 use WebtoonLike\Site\features\Translation\Result\Result;
 
 interface OCRInterface
@@ -17,6 +18,8 @@ interface OCRInterface
 
     /**
      * @return array<Result>
+     *
+     * @throws ApiException
      */
     public function runOCR(): array;
 
