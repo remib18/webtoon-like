@@ -2,15 +2,16 @@
 
 namespace WebtoonLike\Site\utils;
 
-use function WebtoonLike\Site\getSettings;
+use mysqli;
+use WebtoonLike\Site\Settings;
 
 class Database
 {
-    private static \mysqli $db;
+    private static mysqli $db;
 
-    public static function getDB(): \mysqli {
+    public static function getDB(): mysqli {
         if (!isset(self::$db)) {
-            self::$db = new \mysqli(...getSettings()['database']);
+            self::$db = new mysqli(...Settings::get('database'));
         }
         return self::$db;
     }
