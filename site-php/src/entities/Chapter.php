@@ -9,7 +9,7 @@ use WebtoonLike\Site\controller\WebtoonController;
 class Chapter implements EntityInterface
 {
 
-    function __construct(
+    public function __construct(
         private int $id,
         private int $number,
         private string $title,
