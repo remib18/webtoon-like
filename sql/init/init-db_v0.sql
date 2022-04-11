@@ -15,13 +15,7 @@ CREATE TABLE Report (
     userID BIGINT NOT NULL,
     PRIMARY KEY (reportID),
     FOREIGN KEY (userID) REFERENCES User(userID)
-)  ENGINE=INNODB; 
-
-CREATE TABLE TranslationProposition (
-    translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
-    proposedTranslation TEXT,
-    PRIMARY KEY (translationPropositionID)
-)  ENGINE=INNODB; 
+)  ENGINE=INNODB;
 
 CREATE TABLE Webtoon (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
@@ -50,26 +44,40 @@ CREATE TABLE Image (
 )  ENGINE=INNODB; 
 
 CREATE TABLE CellPosition (
-    cellPositionID BIGINT NOT NULL AUTO_INCREMENT,
+    CellPositionID BIGINT NOT NULL AUTO_INCREMENT,
     xAxis INT,
     yAxis INT,
-    PRIMARY KEY (cellPositionID)
+    PRIMARY KEY (CellPositionID)
 )  ENGINE=INNODB; 
 
-CREATE TABLE AvailableLanguage (
+CREATE TABLE Language (
     languageID VARCHAR(256) NOT NULL,
     languageName VARCHAR(256) NOT NULL,
     PRIMARY KEY (languageID)
-)  ENGINE=INNODB; 
+)  ENGINE=INNODB;
 
-CREATE TABLE Cell (
-    cellID BIGINT NOT NULL AUTO_INCREMENT,
+CREATE TABLE Block (
+    blockID BIGINT NOT NULL AUTO_INCREMENT,
     content TEXT,
     imageID BIGINT NOT NULL,
-    cellPositionID BIGINT NOT NULL,
-    languageID VARCHAR(256) NOT NULL,
-    PRIMARY KEY (cellID),
+    CellPositionID BIGINT NOT NULL,
+    PRIMARY KEY (blockID),
     FOREIGN KEY (imageID) REFERENCES Image(imageID),
-    FOREIGN KEY (cellPositionID) REFERENCES CellPosition(cellPositionID),
-    FOREIGN KEY (languageID) REFERENCES AvailableLanguage(languageID)
-)ENGINE=INNODB; 
+    FOREIGN KEY (CellPositionID) REFERENCES CellPosition(CellPositionID)
+)ENGINE=INNODB;
+
+CREATE TABLE Translation (
+    translationID BIGINT NOT NULL AUTO_INCREMENT,
+    blockID BIGINT NOT NULL,
+    content TEXT,
+    PRIMARY KEY (translationID),
+    FOREIGN KEY (blockID) REFERENCES Block(blockID)
+)  ENGINE=INNODB;
+
+CREATE TABLE TranslationProposition (
+    translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
+    proposedTranslation TEXT,
+    blockID BIGINT NOT NULL,
+    PRIMARY KEY (translationPropositionID),
+    FOREIGN KEY (blockID) REFERENCES Block(blockID)
+)  ENGINE=INNODB;
