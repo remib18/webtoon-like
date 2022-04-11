@@ -13,7 +13,7 @@ class Image implements EntityInterface
 
     public function __construct(
         private int $id,
-        private int $index,
+        private int $imgPosition,
         private string $path,
         private int $chapterId
     ) {}
@@ -26,10 +26,26 @@ class Image implements EntityInterface
     }
 
     /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @return int
      */
-    public function getIndex(): int {
-        return $this->index;
+    public function getImgPosition(): int {
+        return $this->imgPosition;
+    }
+
+    /**
+     * @param int $imgPosition
+     */
+    public function setImgPosition(int $imgPosition): void
+    {
+        $this->imgPosition = $imgPosition;
     }
 
     /**
@@ -37,6 +53,14 @@ class Image implements EntityInterface
      */
     public function getPath(): string {
         return $this->path;
+    }
+
+    /**
+     * @param string $path
+     */
+    public function setPath(string $path): void
+    {
+        $this->path = $path;
     }
 
     /**
@@ -48,12 +72,20 @@ class Image implements EntityInterface
     }
 
     /**
+     * @param int $chapterId
+     */
+    public function setChapterId(int $chapterId): void
+    {
+        $this->chapterId = $chapterId;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     #[Pure]
     #[ArrayShape([
         'imageId' => "int",
-        'index' => "int",
+        'imgPosition' => "int",
         'path' => "string",
         'chapterId' => "int"
     ])]
@@ -61,7 +93,7 @@ class Image implements EntityInterface
     {
         return [
             'imageId' => $this->id,
-            'index' => $this->index,
+            'imgPosition' => $this->imgPosition,
             'path' => $this->path,
             'chapterId' => $this->chapterId
         ];
