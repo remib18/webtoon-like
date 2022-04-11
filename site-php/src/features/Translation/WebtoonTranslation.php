@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\features\Translation;
 use WebtoonLike\Site\controller\ChapterController;
 use WebtoonLike\Site\controller\WebtoonController;
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\exceptions\AlreadyExistingRessourceException;
 use WebtoonLike\Site\exceptions\NotFoundException;
 use WebtoonLike\Site\exceptions\UnableToLoadImageException;
 use WebtoonLike\Site\features\Import\Import;
@@ -26,7 +27,7 @@ TODO: Steps for now :
     3. Inscription de toutes les images
     4. Execution de l'GoogleOCR sur chaque image
     5. Traduction de chaque résultat
-    6. Construction d'un objet `Result` qui contient:
+    6. Construction d'un objet `OCRRawResult` qui contient:
         - Le chemin d'accès d'une image
         - La liste des bulles et de leurs positions contenant le text original et la traduction avec la position de chaque blocs
     7. Exécution du script constructeur du rendu
@@ -45,7 +46,9 @@ class WebtoonTranslation
      *
      * @return array<Result>
      *
-     * @throws NotFoundException|UnableToLoadImageException
+     * @throws NotFoundException
+     * @throws UnableToLoadImageException
+     * @throws AlreadyExistingRessourceException
      */
     public function getTranslatedWebtoonImages(int $id, int $chapter, Language $lang): array {
         if(!WebtoonController::exists($id)) throw new NotFoundException('Webtoon introuvable.', 001);
