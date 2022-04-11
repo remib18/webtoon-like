@@ -78,6 +78,8 @@ CREATE TABLE TranslationProposition (
     translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
     proposedTranslation TEXT,
     blockID BIGINT NOT NULL,
+    userID BIGINT NOT NULL,
     PRIMARY KEY (translationPropositionID),
-    FOREIGN KEY (blockID) REFERENCES Block(blockID)
+    FOREIGN KEY (blockID) REFERENCES Block(blockID),
+    FOREIGN KEY (userID) REFERENCES User(userID)
 )  ENGINE=INNODB;
