@@ -11,7 +11,8 @@ class TranslationProposition implements EntityInterface
     public function __construct(
         private int $id,
         private string $proposedTranslation,
-        private int $blockId
+        private int $blockId,
+        private int $userId
     ) {}
 
     /**
@@ -62,12 +63,29 @@ class TranslationProposition implements EntityInterface
         $this->blockId = $blockId;
     }
 
-    #[ArrayShape(['id' => "int", 'proposedTranslation' => "string", 'blockId' => "int"])]
+    /**
+     * @return int
+     */
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    #[ArrayShape(['id' => "int", 'proposedTranslation' => "string", 'blockId' => "int", 'userId' => "int"])]
     public function __toArray(): array {
         return [
             'id' => $this->id,
             'proposedTranslation' => $this->proposedTranslation,
-            'blockId' => $this->blockId
+            'blockId' => $this->blockId,
+            'userId' => $this->userId
         ];
     }
 
