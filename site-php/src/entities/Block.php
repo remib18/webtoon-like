@@ -10,10 +10,8 @@ class Block implements EntityInterface
 
     public function __construct(
         private int $id,
-        private string $content,
         private int $imageId,
-        private int $chapterId,
-        private int $languageId
+        private int $cellPosition,
     ) {}
 
     /**
@@ -35,38 +33,6 @@ class Block implements EntityInterface
     /**
      * @return int
      */
-    public function getChapterId(): int
-    {
-        return $this->chapterId;
-    }
-
-    /**
-     * @param int $chapterId
-     */
-    public function setChapterId(int $chapterId): void
-    {
-        $this->chapterId = $chapterId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    /**
-     * @param string $content
-     */
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
-    }
-
-    /**
-     * @return int
-     */
     public function getImageId(): int
     {
         return $this->imageId;
@@ -83,27 +49,25 @@ class Block implements EntityInterface
     /**
      * @return int
      */
-    public function getLanguageId(): int
+    public function getCellPosition(): int
     {
-        return $this->languageId;
+        return $this->cellPosition;
     }
 
     /**
-     * @param int $languageId
+     * @param int $cellPosition
      */
-    public function setLanguageId(int $languageId): void
+    public function setCellPosition(int $cellPosition): void
     {
-        $this->languageId = $languageId;
+        $this->cellPosition = $cellPosition;
     }
 
-    #[ArrayShape(['id' => "int", 'content' => "string", 'imageId' => "int", 'chapterId' => "int", 'languageId' => "int"])]
+    #[ArrayShape(['id' => "int", 'imageId' => "int", 'cellPosition' => "int"])]
     public function __toArray(): array {
         return [
             'id' => $this->id,
-            'content' => $this->content,
             'imageId' => $this->imageId,
-            'chapterId' => $this->chapterId,
-            'languageId' => $this->languageId,
+            'cellPosition' => $this->cellPosition
         ];
     }
 
