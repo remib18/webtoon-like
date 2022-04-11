@@ -84,7 +84,7 @@ class Image implements EntityInterface
                 break;
             case 'file':
                 return fopen($dir . $ressource, 'r');
-            case 'gc':
+            case 'gs':
                 // Todo: implement GoogleCloud Storage Option
             default:
                 throw new InvalidProtocolException(
