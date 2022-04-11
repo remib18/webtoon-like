@@ -5,8 +5,11 @@ namespace WebtoonLike\Site\features\Translation\Result;
 class Result
 {
 
-    /** @var array<Bubble> $bubbles */
-    private array $bubbles = [];
+    /** @var array<Bloc> $blocs */
+    private array $blocs = [];
+
+    /** @var int $fontSize in pixels */
+    private int $fontSize;
 
     /**
      * @param string|null $imagePath Le chemin de l'image à partir du dossier de webtoons. Null si une image manque
@@ -15,8 +18,20 @@ class Result
         private ?string $imagePath
     ) {}
 
-    public function appendBubble(Bubble $bubble): void {
-        $this->bubbles[] = $bubble;
+    /**
+     * @param Bloc $bloc
+     * @return void
+     */
+    public function appendBloc(Bloc $bloc): void {
+        $this->blocs[] = $bloc;
+    }
+
+    /**
+     * @param int $fontSize
+     */
+    public function setFontSize(int $fontSize): void
+    {
+        $this->fontSize = $fontSize;
     }
 
     /**
@@ -28,11 +43,27 @@ class Result
     }
 
     /**
-     * @return Bubble[]
+     * @return Bloc[]
      */
-    public function getBubbles(): array
+    public function getBlocs(): array
     {
-        return $this->bubbles;
+        return $this->blocs;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFontSize(): int
+    {
+        return $this->fontSize;
+    }
+
+    /**
+     * @param Bloc[] $blocs
+     */
+    public function setBlocs(array $blocs): void
+    {
+        $this->blocs = $blocs;
     }
 
 }

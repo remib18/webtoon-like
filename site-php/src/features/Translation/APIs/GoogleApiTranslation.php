@@ -6,7 +6,7 @@ use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\exceptions\InvalidRequestException;
 use WebtoonLike\Site\exceptions\InvalidApiKeyException;
 use WebtoonLike\Site\exceptions\TranslationErrorException;
-use function WebtoonLike\Site\getSettings;
+use WebtoonLike\Site\Settings;
 
 class GoogleApiTranslation implements TranslationInterface
 {
@@ -22,7 +22,7 @@ class GoogleApiTranslation implements TranslationInterface
     {
         $uri = 'https://www.googleapis.com/language/translate/v2';
         $options = [
-            'key' => getSettings()['googleTranslateApi'],
+            'key' => Settings::get('googleTranslateApi'),
             'q' => rawurlencode($text),
             'source' => $source,
             'target' => $target
