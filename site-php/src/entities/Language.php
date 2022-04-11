@@ -6,22 +6,11 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Language implements EntityInterface
 {
-    private string $id;
-    private string $name;
 
-    function __construct($id, $name) {
-        $this->id = $id;
-        $this->name = $name;
-    }
-
-    #[ArrayShape(['id' => "string", 'name' => "string"])]
-    public function __toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name
-        ];
-    }
+    public function __construct(
+        private string $id,
+        private string $name
+    ){}
 
     /**
      * @return string
@@ -53,5 +42,14 @@ class Language implements EntityInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    #[ArrayShape(['id' => "string", 'name' => "string"])]
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name
+        ];
     }
 }

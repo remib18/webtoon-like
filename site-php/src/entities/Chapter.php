@@ -8,28 +8,13 @@ use WebtoonLike\Site\controller\WebtoonController;
 
 class Chapter implements EntityInterface
 {
-    private int $id;
-    private int $number;
-    private string $title;
-    private int $webtoonId;
 
-    function __construct(int $id, int $number, string $title, int $webtoonId) {
-        $this->id = $id;
-        $this->number = $number;
-        $this->title = $title;
-        $this->webtoonId = $webtoonId;
-    }
-
-    #[Pure] #[ArrayShape(['id' => "int", 'number' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
-    public function __toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'number' => $this->number,
-            'title' => $this->title,
-            'webtoonId' => $this->webtoonId
-        ];
-    }
+    function __construct(
+        private int $id,
+        private int $number,
+        private string $title,
+        private int $webtoonId
+    ){}
 
     /**
      * @param int $id
@@ -101,5 +86,16 @@ class Chapter implements EntityInterface
     public function getWebtoon(): Webtoon
     {
         return WebtoonController::getById($this->webtoonId);
+    }
+
+    #[Pure] #[ArrayShape(['id' => "int", 'number' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'number' => $this->number,
+            'title' => $this->title,
+            'webtoonId' => $this->webtoonId
+        ];
     }
 }

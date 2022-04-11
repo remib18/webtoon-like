@@ -6,28 +6,13 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Webtoon implements EntityInterface
 {
-    private int $id;
-    private string $name;
-    private string $author;
-    private string $description;
 
-    function __construct($id, $name, $author, $description) {
-        $this->id = $id;
-        $this->name = $name;
-        $this->author = $author;
-        $this->description = $description;
-    }
-
-    #[ArrayShape(['id' => "int", 'name' => "string", 'author' => "string", 'description' => "string"])]
-    public function __toArray(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'author' => $this->author,
-            'description' => $this->description
-        ];
-    }
+    public function __construct(
+        private int $id,
+        private string $name,
+        private string $author,
+        private string $description
+    ) {}
 
     /**
      * @return int
@@ -91,5 +76,16 @@ class Webtoon implements EntityInterface
     public function setName(string $name): void
     {
         $this->name = $name;
+    }
+
+    #[ArrayShape(['id' => "int", 'name' => "string", 'author' => "string", 'description' => "string"])]
+    public function __toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'author' => $this->author,
+            'description' => $this->description
+        ];
     }
 }
