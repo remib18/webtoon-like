@@ -29,6 +29,22 @@ class Position implements EntityInterface
         return $this->y;
     }
 
+    /**
+     * @param int $x
+     */
+    public function setX(int $x): void
+    {
+        $this->x = $x;
+    }
+
+    /**
+     * @param int $y
+     */
+    public function setY(int $y): void
+    {
+        $this->y = $y;
+    }
+
     #[Pure] #[ArrayShape(['x' => "int", 'y' => "int"])]
     public function __toArray(): array
     {
