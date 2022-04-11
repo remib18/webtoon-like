@@ -4,15 +4,17 @@ namespace WebtoonLike\Site;
 
 use JetBrains\PhpStorm\ArrayShape;
 
+// Noter que tous les paths sont relatifs au dossier site-php
+
 #[ArrayShape([
-    'googleTranslateApi' => "string",
+    'GT_API_KEY_FILE' => "string",
     'preTranslateTo' => "string[]",
     'webtoonsImagesBaseFolder' => "string",
     'database' => "array"
 ])]
 function getSettings(): array{
     return [
-        'googleTranslateApi' => '',
+        'GT_API_KEY_FILE' => '/google-key.json',
         'preTranslateTo' => [
             'fr',
             'en'
