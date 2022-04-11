@@ -27,7 +27,7 @@ CREATE TABLE Webtoon (
 
 CREATE TABLE Chapter (
     chapterID BIGINT NOT NULL AUTO_INCREMENT,
-    number INT,
+    `index` INT,
     title VARCHAR(256),
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
@@ -36,7 +36,7 @@ CREATE TABLE Chapter (
 
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
-    `index` INT,
+    imgPosition INT,
     path VARCHAR(256),
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
