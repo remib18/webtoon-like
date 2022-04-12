@@ -10,8 +10,12 @@ class Block implements EntityInterface
 
     public function __construct(
         private int $id,
-        private int $imageId,
-        private int $startPositionId,
+        private string $originalContent,
+        private int $startX,
+        private int $startY,
+        private int $endX,
+        private int $endY,
+        private int $imageId
     ) {}
 
     /**
@@ -49,25 +53,99 @@ class Block implements EntityInterface
     /**
      * @return int
      */
-    public function getStartPositionId(): int
+    public function getEndX(): int
     {
-        return $this->startPositionId;
+        return $this->endX;
     }
 
     /**
-     * @param int $startPositionId
+     * @param int $endX
      */
-    public function setStartPositionId(int $startPositionId): void
+    public function setEndX(int $endX): void
     {
-        $this->startPositionId= $startPositionId;
+        $this->endX = $endX;
     }
 
-    #[ArrayShape(['id' => "int", 'imageId' => "int", 'startPositionId' => "int"])]
+    /**
+     * @return int
+     */
+    public function getEndY(): int
+    {
+        return $this->endY;
+    }
+
+    /**
+     * @param int $endY
+     */
+    public function setEndY(int $endY): void
+    {
+        $this->endY = $endY;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalContent(): string
+    {
+        return $this->originalContent;
+    }
+
+    /**
+     * @param string $originalContent
+     */
+    public function setOriginalContent(string $originalContent): void
+    {
+        $this->originalContent = $originalContent;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartX(): int
+    {
+        return $this->startX;
+    }
+
+    /**
+     * @param int $startX
+     */
+    public function setStartX(int $startX): void
+    {
+        $this->startX = $startX;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStartY(): int
+    {
+        return $this->startY;
+    }
+
+    /**
+     * @param int $startY
+     */
+    public function setStartY(int $startY): void
+    {
+        $this->startY = $startY;
+    }
+
+    #[ArrayShape(['id' => "int",
+        'startX' => "int",
+        'startY' => "int",
+        'endX' => "int",
+        'endY' => "int",
+        'originalContent' => "string",
+        'imageId' => "int"])]
     public function __toArray(): array {
         return [
             'id' => $this->id,
-            'imageId' => $this->imageId,
-            'startPositionId' => $this->startPositionId
+            'startX' => $this->startX,
+            'startY' => $this->startY,
+            'endX' => $this->endX,
+            'endY' => $this->endY,
+            'originalContent' => $this->originalContent,
+            'imageId' => $this->imageId
         ];
     }
 
