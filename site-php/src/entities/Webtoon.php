@@ -84,4 +84,13 @@ class Webtoon implements EntityInterface
             'description' => $this->description
         ];
     }
+
+    public static function getColumnsKeys(): array {
+        return [
+            'webtoonID',
+            'name',
+            'author',
+            'description'
+        ];
+    }
 }
