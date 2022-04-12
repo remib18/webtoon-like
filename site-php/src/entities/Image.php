@@ -113,6 +113,16 @@ class Image implements EntityInterface
         ];
     }
 
+    public static function getColumnsKeys(): array {
+        return [
+            'imageID',
+            'index',
+            'path',
+            'needOCR',
+            'chapterID'
+        ];
+    }
+
     /**
      * Obtenir le code source de l'image
      *
