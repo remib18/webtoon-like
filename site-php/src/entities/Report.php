@@ -69,4 +69,12 @@ class Report implements EntityInterface
         ];
     }
 
+    public static function getColumnsKeys(): array {
+        return [
+            'reportID',
+            'type',
+            'userID'
+        ];
+    }
+
 }
