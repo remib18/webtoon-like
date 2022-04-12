@@ -2,11 +2,47 @@
 
 namespace WebtoonLike\Site\controller;
 
+use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Webtoon;
 use WebtoonLike\Site\utils\Database;
 
-class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
+class WebtoonController
 {
+
+    /**
+     * Obtenir la liste des webtoons
+     *
+     * @param string|array $col
+     * @param array $where
+     *
+     * @return array
+     */
+    public static function getAll(string|array $col = '*', array $where = []): array
+    {
+        return Database::getAll('Webtoon', Webtoon::class, $col, $where);
+    }
+
+    /**
+     * Obtention du webtoon avec l'identifiant correspondant.
+     *
+     * @param int $id Identifiant rechercher
+     * @return Webtoon|null
+     */
+    public static function getById(int $id): ?Webtoon
+    {
+        return Database::getFirst('Webtoon', Webtoon::class, '*', ['webtoonID' => "webtoonID = $id"]);
+    }
+
+    /**
+     * Obtention du webtoon avec le nom correspondant.
+     *
+     * @param string $name Nom rechercher
+     * @return EntityInterface[]
+     */
+    public static function getByName(string $name): array
+    {
+        return Database::getAll('Webtoon', Webtoon::class, '*', ['name' => "name = '$name'"]);
+    }
 
     /**
      * La ressource fournit existe-t-elle ?
@@ -15,55 +51,49 @@ class WebtoonController extends \WebtoonLike\Site\controller\AbstractController
      * @return bool
      */
     public static function exists(int $id): bool {
-        $q = Database::getDB()->query('SELECT webtoonId FROM Webtoon WHERE webtoonId = ' . $id . ';');
-        return sizeof($q->fetch_assoc()) > 0;
+        $q = "SELECT webtoonId FROM Webtoon WHERE webtoonId = $id";
+        $res = Database::getDB()->query($q)->fetch_assoc();
+        return sizeof($res ?? []) > 0;
     }
 
     /**
-     * @inheritDoc
-     */
-    public static function getByName(string $name): Webtoon
-    {
-        // TODO: Implement getByName() method.
-    }
-
-    /**
-     * @inheritDoc
+     * Enregistre un webtoon et retourne son identifiant ou <code>false</code> en cas d'erreur.
+     *
+     * @param Webtoon $entity
+     * @return int|false Faux en cas d'erreur
      */
     public static function create(Webtoon $entity): int|false
     {
-        // TODO: Implement create() method.
+        $name = $entity->getName();
+        $author = $entity->getAuthor();
+        $desc = $entity->getDescription();
+        $q = "INSERT INTO Webtoon(`name`, author, description) VALUE ('$name', '$author', '$desc');";
+        $res = Database::getDB()->query($q);
+        if (!$res) return false;
+        return Database::getLastInsertedId();
     }
 
     /**
-     * @inheritDoc
+     * Modifie le webtoon
+     *
+     * @param Webtoon $entity Le webtoon modifié
+     * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
     public static function edit(Webtoon $entity): bool
     {
-        // TODO: Implement edit() method.
+        return Database::edit('Webtoon', $entity);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public static function getAll(): array
-    {
-        // TODO: Implement getAll() method.
-    }
+
 
     /**
-     * @inheritDoc
+     * Supprime le webtoon correspondant à l'identifiant fournit.
+     *
+     * @param Webtoon $entity L'identifiant du webtoon à supprimer.
+     * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    public static function getById(int $id): Webtoon
+    public static function remove(Webtoon $entity): bool
     {
-        // TODO: Implement getById() method.
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function removeById(int $id): bool
-    {
-        // TODO: Implement removeById() method.
+        return Database::remove('Webtoon', $entity);
     }
 }

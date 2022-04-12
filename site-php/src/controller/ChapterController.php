@@ -6,7 +6,7 @@ use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\utils\Database;
 
-class ChapterController extends AbstractController
+class ChapterController
 {
 
     public static function existsById(int $id): bool {
