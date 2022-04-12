@@ -8,7 +8,7 @@ class Language implements EntityInterface
 {
 
     public function __construct(
-        private string $id,
+        private string $identifier,
         private string $name
     ){}
 
@@ -17,15 +17,15 @@ class Language implements EntityInterface
      */
     public function getId(): string
     {
-        return $this->id;
+        return $this->identifier;
     }
 
     /**
-     * @param string $id
+     * @param string $identifier
      */
-    public function setId(string $id): void
+    public function setId(string $identifier): void
     {
-        $this->id = $id;
+        $this->identifier = $identifier;
     }
 
     /**
@@ -44,11 +44,11 @@ class Language implements EntityInterface
         $this->name = $name;
     }
 
-    #[ArrayShape(['id' => "string", 'name' => "string"])]
+    #[ArrayShape(['identifier' => "string", 'name' => "string"])]
     public function __toArray(): array
     {
         return [
-            'id' => $this->id,
+            'identifier' => $this->identifier,
             'name' => $this->name
         ];
     }
