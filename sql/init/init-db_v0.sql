@@ -1,7 +1,7 @@
-CREATE DATABASE IF NOT EXISTS webtoonlike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE webtoonlike;
+CREATE DATABASE IF NOT EXISTS webtoonLike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE webtoonLike;
 
-CREATE TABLE User (
+CREATE TABLE `User` (
     userID BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32),
     email VARCHAR(256),
@@ -19,9 +19,9 @@ CREATE TABLE Report (
 
 CREATE TABLE Webtoon (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(256),
+    `name` VARCHAR(256),
     author VARCHAR(128),
-    description TEXT,
+    `description` TEXT,
     PRIMARY KEY (webtoonID)
 )  ENGINE=INNODB; 
 
@@ -44,13 +44,13 @@ CREATE TABLE Image (
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
 )  ENGINE=INNODB;
 
-CREATE TABLE Language (
+CREATE TABLE `Language` (
     identifier VARCHAR(256) NOT NULL,
-    name VARCHAR(256) NOT NULL,
+    `name` VARCHAR(256) NOT NULL,
     PRIMARY KEY (identifier)
 )  ENGINE=INNODB;
 
-CREATE TABLE Block (
+CREATE TABLE `Block` (
     blockID BIGINT NOT NULL AUTO_INCREMENT,
     originalContent TEXT,
     startX int,
@@ -62,7 +62,7 @@ CREATE TABLE Block (
     FOREIGN KEY (imageID) REFERENCES Image(imageID)
 )ENGINE=INNODB;
 
-CREATE TABLE Translation (
+CREATE TABLE `Translation` (
     identifier BIGINT NOT NULL AUTO_INCREMENT,
     blockID BIGINT NOT NULL,
     content TEXT,
