@@ -57,4 +57,12 @@ class Translation
             'content' => $this->content
         ];
     }
+
+    public static function getColumnsKeys(): array {
+        return [
+            'languageIdentifier',
+            'blockID',
+            'content'
+        ];
+    }
 }
