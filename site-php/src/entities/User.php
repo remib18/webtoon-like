@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\Site\entities;
 
+use DateTime;
 use Google\Type\Date;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
@@ -9,15 +10,26 @@ use JetBrains\PhpStorm\Pure;
 class User implements EntityInterface
 {
 
+    private array $fieldsToSave = [];
+
     private ?int $id;
+    private string $username;
+    private string $email;
+    private DateTime $registeredAt;
 
     public function __construct(
         ?int $userID,
-        private string $username,
-        private string $email,
-        private \DateTime $registeredAt
+        string $username,
+        string $email,
+        DateTime $registeredAt,
+        bool $fromDB = true
     ){
         $this->id = $userID;
+        $this->setUsername($username);
+        $this->setEmail($email);
+
+        if ($fromDB) $this->AllFieldsSaved();
+        else $this->fieldsToSave['registeredAt'] = $registeredAt;
     }
 
     /**
@@ -41,23 +53,16 @@ class User implements EntityInterface
      */
     public function setEmail(string $email): void
     {
+        $this->fieldsToSave['email'] = $email;
         $this->email = $email;
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getRegisteredAt(): \DateTime
+    public function getRegisteredAt(): DateTime
     {
         return $this->registeredAt;
-    }
-
-    /**
-     * @param \DateTime $registeredAt
-     */
-    public function setRegisteredAt(\DateTime $registeredAt): void
-    {
-        $this->registeredAt = $registeredAt;
     }
 
     /**
@@ -73,19 +78,31 @@ class User implements EntityInterface
      */
     public function setUsername(string $username): void
     {
+        $this->fieldsToSave['username'] = $username;
         $this->username = $username;
     }
 
-    #[ArrayShape(['id' => "int", 'username' => "string", 'email' => "string", 'registeredAt' => "\DateTime"])]
+    /**
+     * @inheritDoc
+     */
+    #[ArrayShape([
+        'userID' => "int",
+        'username' => "string",
+        'email' => "string",
+        'registeredAt' => "\DateTime"
+    ])]
     public function __toArray(): array {
         return [
-            'id' => $this->id,
+            'userID' => $this->id,
             'username' => $this->username,
             'email' => $this->email,
             'registeredAt' => $this->registeredAt
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getColumnsKeys(): array {
         return [
             'userID',
@@ -93,5 +110,42 @@ class User implements EntityInterface
             'email',
             'registeredAt'
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['userID'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'userID' => "int",
+            'username' => "string",
+            'email' => "string",
+            'registeredAt' => "\DateTime"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
     }
 }

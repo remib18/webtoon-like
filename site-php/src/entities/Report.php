@@ -8,16 +8,23 @@ use JetBrains\PhpStorm\Pure;
 class Report implements EntityInterface
 {
 
+    private array $fieldsToSave = [];
+
     private ?int $id;
+    private int $type;
     private int $userId;
 
     public function __construct(
         ?int $reportID,
-        private int $type,
-        int $userID
+        int $type,
+        int $userID,
+        bool $fromDB = true
     ) {
         $this->id = $reportID;
-        $this->userId = $userID;
+        $this->setType($type);
+        $this->setUserId($userID);
+
+        if ($fromDB) $this->AllFieldsSaved();
     }
 
     /**
@@ -41,6 +48,7 @@ class Report implements EntityInterface
      */
     public function setType(int $type): void
     {
+        $this->fieldsToSave['$type'] = $type;
         $this->type = $type;
     }
 
@@ -57,18 +65,29 @@ class Report implements EntityInterface
      */
     public function setUserId(int $userId): void
     {
+        $this->fieldsToSave['userID'] = $userId;
         $this->userId = $userId;
     }
 
-    #[ArrayShape(['id' => "int", 'type' => "int", 'userId' => "int"])]
+    /**
+     * @inheritDoc
+     */
+    #[ArrayShape([
+        'reportID' => "int",
+        'type' => "int",
+        'userID' => "int"
+    ])]
     public function __toArray(): array {
         return [
-            'id' => $this->id,
+            'reportID' => $this->id,
             'type' => $this->type,
-            'userId' => $this->userId
+            'userID' => $this->userId
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getColumnsKeys(): array {
         return [
             'reportID',
@@ -77,4 +96,39 @@ class Report implements EntityInterface
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['reportID'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'reportID' => "int",
+            'type' => "int",
+            'userID' => "int"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
+    }
 }

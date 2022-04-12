@@ -25,7 +25,7 @@ class Webtoon implements EntityInterface
         $this->setName($name);
         $this->setAuthor($author);
         $this->setDescription($description);
-        
+
         if ($fromDB) $this->AllFieldsSaved();
     }
 
@@ -142,12 +142,6 @@ class Webtoon implements EntityInterface
     /**
      * @inheritDoc
      */
-    #[ArrayShape([
-        'webtoonID' => "string",
-        'name' => "string",
-        'author' => "string",
-        'description' => "string"
-    ])]
     public static function getTypes(): array
     {
         return [

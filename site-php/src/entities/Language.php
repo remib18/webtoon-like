@@ -7,10 +7,22 @@ use JetBrains\PhpStorm\ArrayShape;
 class Language implements EntityInterface
 {
 
+    private array $fieldsToSave = [];
+
+    private string $identifier;
+    private string $name;
+
     public function __construct(
-        private string $identifier,
-        private string $name
-    ){}
+        string $identifier,
+        string $name,
+        bool $fromDB = true
+    ){
+        $this->identifier = $identifier;
+        $this->setName($name);
+
+        if ($fromDB) $this->AllFieldsSaved();
+        else $this->fieldsToSave['identifier'] = $identifier; // Not generated field
+    }
 
     /**
      * @return string
@@ -33,10 +45,17 @@ class Language implements EntityInterface
      */
     public function setName(string $name): void
     {
+        $this->fieldsToSave['name'] = $name;
         $this->name = $name;
     }
 
-    #[ArrayShape(['identifier' => "string", 'name' => "string"])]
+    /**
+     * @inheritDoc
+     */
+    #[ArrayShape([
+        'identifier' => "string",
+        'name' => "string"
+    ])]
     public function __toArray(): array
     {
         return [
@@ -45,10 +64,48 @@ class Language implements EntityInterface
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getColumnsKeys(): array {
         return [
             'identifier',
             'name'
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['identifier'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'identifier' => "string",
+            'name' => "string"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
     }
 }

@@ -10,18 +10,30 @@ use WebtoonLike\Site\utils\UriUtils;
 
 class Image implements EntityInterface
 {
+
+    private array $fieldsToSave = [];
+
     private ?int $id;
+    private int $index;
+    private string $path;
+    private bool $needOCR;
     private int $chapterId;
 
     public function __construct(
         ?int $imageID,
-        private int    $index,
-        private string $path,
+        int $index,
+        string $path,
         int $chapterID,
-        private bool   $needOCR = true
+        bool $needOCR = true,
+        bool $fromDB = true
     ) {
         $this->id = $imageID;
-        $this->chapterId = $chapterID;
+        $this->setIndex($index);
+        $this->setPath($path);
+        $this->setNeedOCR($needOCR);
+        $this->setChapterId($chapterID);
+
+        if ($fromDB) $this->AllFieldsSaved();
     }
 
     /**
@@ -43,6 +55,7 @@ class Image implements EntityInterface
      */
     public function setIndex(int $index): void
     {
+        $this->fieldsToSave['index'] = $index;
         $this->index = $index;
     }
 
@@ -58,6 +71,7 @@ class Image implements EntityInterface
      */
     public function setPath(string $path): void
     {
+        $this->fieldsToSave['index'] = $index;
         $this->path = $path;
     }
 
@@ -74,6 +88,7 @@ class Image implements EntityInterface
      */
     public function setChapterId(int $chapterId): void
     {
+        $this->fieldsToSave['index'] = $index;
         $this->chapterId = $chapterId;
     }
 
@@ -90,37 +105,8 @@ class Image implements EntityInterface
      */
     public function setNeedOCR(bool $needOCR): void
     {
+        $this->fieldsToSave['index'] = $index;
         $this->needOCR = $needOCR;
-    }
-
-    /**
-     * @return array<string, mixed>
-     */
-    #[Pure]
-    #[ArrayShape([
-        'imageId' => "int",
-        'imgPosition' => "int",
-        'path' => "string",
-        'chapterId' => "int"
-    ])]
-    public function __toArray(): array
-    {
-        return [
-            'imageId' => $this->id,
-            'imgPosition' => $this->index,
-            'path' => $this->path,
-            'chapterId' => $this->chapterId
-        ];
-    }
-
-    public static function getColumnsKeys(): array {
-        return [
-            'imageID',
-            'index',
-            'path',
-            'needOCR',
-            'chapterID'
-        ];
     }
 
     /**
@@ -149,5 +135,77 @@ class Image implements EntityInterface
                     'The protocol ' . $protocol . ' can not bu used to reference an image.'
                 );
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    #[Pure] #[ArrayShape([
+        'imageID' => "int|null",
+        'index' => "int",
+        'path' => "string",
+        'needOCR' => "bool",
+        'chapterID' => "int"
+    ])]
+    public function __toArray(): array
+    {
+        return [
+            'imageID' => $this->id,
+            'index' => $this->index,
+            'path' => $this->path,
+            'needOCR' => $this->needOCR,
+            'chapterID' => $this->chapterId
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getColumnsKeys(): array {
+        return [
+            'imageID',
+            'index',
+            'path',
+            'needOCR',
+            'chapterID'
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['imageID'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'imageID' => "int|null",
+            'index' => "int",
+            'path' => "string",
+            'needOCR' => "bool",
+            'chapterID' => "int"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
     }
 }

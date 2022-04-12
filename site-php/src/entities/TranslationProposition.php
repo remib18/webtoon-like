@@ -8,19 +8,26 @@ use JetBrains\PhpStorm\Pure;
 class TranslationProposition implements EntityInterface
 {
 
+    private array $fieldsToSave = [];
+
     private ?int $id;
+    private string $proposedTranslation;
     private int $blockId;
     private int $userId;
 
     public function __construct(
         ?int $translationPropositionID,
-        private string $proposedTranslation,
+        string $proposedTranslation,
         int $blockID,
-        int $userID
+        int $userID,
+        bool $fromDB = true
     ) {
         $this->id = $translationPropositionID;
-        $this->blockId = $blockID;
-        $this->userId = $userID;
+        $this->setProposedTranslation($proposedTranslation);
+        $this->setBlockId($blockID);
+        $this->setUserId($userID);
+
+        if ($fromDB) $this->AllFieldsSaved();
     }
 
     /**
@@ -44,6 +51,7 @@ class TranslationProposition implements EntityInterface
      */
     public function setProposedTranslation(string $proposedTranslation): void
     {
+        $this->fieldsToSave['proposedTranslation'] = $proposedTranslation;
         $this->proposedTranslation = $proposedTranslation;
     }
 
@@ -60,6 +68,7 @@ class TranslationProposition implements EntityInterface
      */
     public function setBlockId(int $blockId): void
     {
+        $this->fieldsToSave['blockID'] = $blockId;
         $this->blockId = $blockId;
     }
 
@@ -76,19 +85,31 @@ class TranslationProposition implements EntityInterface
      */
     public function setUserId(int $userId): void
     {
+        $this->fieldsToSave['userID'] = $userId;
         $this->userId = $userId;
     }
 
-    #[ArrayShape(['id' => "int", 'proposedTranslation' => "string", 'blockId' => "int", 'userId' => "int"])]
+    /**
+     * @inheritDoc
+     */
+    #[ArrayShape([
+        'translationPropositionID' => "int",
+        'proposedTranslation' => "string",
+        'blockID' => "int",
+        'userID' => "int"
+    ])]
     public function __toArray(): array {
         return [
-            'id' => $this->id,
+            'translationPropositionID' => $this->id,
             'proposedTranslation' => $this->proposedTranslation,
-            'blockId' => $this->blockId,
-            'userId' => $this->userId
+            'blockID' => $this->blockId,
+            'userID' => $this->userId
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getColumnsKeys(): array {
         return [
             'translationPropositionID',
@@ -98,4 +119,40 @@ class TranslationProposition implements EntityInterface
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['translationPropositionID'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'translationPropositionID' => "int",
+            'proposedTranslation' => "string",
+            'blockID' => "int",
+            'userID' => "int"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
+    }
 }

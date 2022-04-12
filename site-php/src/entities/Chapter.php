@@ -8,17 +8,27 @@ use WebtoonLike\Site\controller\WebtoonController;
 
 class Chapter implements EntityInterface
 {
+
+    private array $fieldsToSave = [];
+
     private ?int $id;
+    private int $index;
+    private string $title;
     private int $webtoonId;
 
     public function __construct(
         ?int $chapterID,
-        private int $index,
-        private string $title,
-        int $webtoonID
+        int $index,
+        string $title,
+        int $webtoonID,
+        bool $fromDB = true
     ) {
         $this->id = $chapterID;
-        $this->webtoonId = $webtoonID;
+        $this->setIndex($index);
+        $this->setTitle($title);
+        $this->setWebtoonId($webtoonID);
+
+        if ($fromDB) $this->AllFieldsSaved();
     }
 
     /**
@@ -34,6 +44,7 @@ class Chapter implements EntityInterface
      */
     public function setIndex(int $index): void
     {
+        $this->fieldsToSave['index'] = $index;
         $this->index = $index;
     }
 
@@ -50,6 +61,7 @@ class Chapter implements EntityInterface
      */
     public function setTitle(string $title): void
     {
+        $this->fieldsToSave['title'] = $title;
         $this->title = $title;
     }
 
@@ -66,6 +78,7 @@ class Chapter implements EntityInterface
      */
     public function setWebtoonId(int $webtoonId): void
     {
+        $this->fieldsToSave['webtoonID'] = $webtoonId;
         $this->webtoonId = $webtoonId;
     }
 
@@ -85,17 +98,28 @@ class Chapter implements EntityInterface
         return WebtoonController::getById($this->webtoonId);
     }
 
-    #[Pure] #[ArrayShape(['id' => "int", 'index' => "mixed", 'title' => "string", 'webtoonId' => "int"])]
+    /**
+     * @inheritDoc
+     */
+    #[Pure] #[ArrayShape([
+        'chapterID' => "int",
+        'index' => "mixed",
+        'title' => "string",
+        'webtoonID' => "int"
+    ])]
     public function __toArray(): array
     {
         return [
-            'id' => $this->id,
+            'chapterID' => $this->id,
             'index' => $this->index,
             'title' => $this->title,
-            'webtoonId' => $this->webtoonId
+            'webtoonID' => $this->webtoonId
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public static function getColumnsKeys(): array {
         return [
             'chapterID',
@@ -103,5 +127,42 @@ class Chapter implements EntityInterface
             'title',
             'webtoonID'
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getIdentifiers(): array
+    {
+        return ['chapterID'];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public static function getTypes(): array
+    {
+        return [
+            'chapterID' => "int",
+            'index' => "mixed",
+            'title' => "string",
+            'webtoonID' => "int"
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFieldsToSave(): array
+    {
+        return $this->fieldsToSave;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function AllFieldsSaved(): void
+    {
+        $this->fieldsToSave = [];
     }
 }
