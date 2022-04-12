@@ -12,11 +12,11 @@ class Image implements EntityInterface
 {
 
     public function __construct(
-        private int $id,
-        private int $imgPosition,
+        private int    $id,
+        private int    $index,
         private string $path,
-        private int $chapterId,
-        private bool $needOCR = true
+        private int    $chapterId,
+        private bool   $needOCR = true
     ) {}
 
     /**
@@ -37,16 +37,16 @@ class Image implements EntityInterface
     /**
      * @return int
      */
-    public function getImgPosition(): int {
-        return $this->imgPosition;
+    public function getIndex(): int {
+        return $this->index;
     }
 
     /**
-     * @param int $imgPosition
+     * @param int $index
      */
-    public function setImgPosition(int $imgPosition): void
+    public function setIndex(int $index): void
     {
-        $this->imgPosition = $imgPosition;
+        $this->index = $index;
     }
 
     /**
@@ -110,7 +110,7 @@ class Image implements EntityInterface
     {
         return [
             'imageId' => $this->id,
-            'imgPosition' => $this->imgPosition,
+            'imgPosition' => $this->index,
             'path' => $this->path,
             'chapterId' => $this->chapterId
         ];
