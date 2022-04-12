@@ -7,8 +7,10 @@ use WebtoonLike\Site\entities\Position;
 class Bloc
 {
 
+    private ?string $translatedText = null;
+
     public function __construct(
-        private string $text,
+        private string   $originalText,
         private Position $start,
         private Position $end
     ) {}
@@ -16,9 +18,17 @@ class Bloc
     /**
      * @return string
      */
-    public function getText(): string
+    public function getOriginalText(): string
     {
-        return $this->text;
+        return $this->originalText;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslatedText(): string
+    {
+        return $this->translatedText;
     }
 
     /**
@@ -38,11 +48,19 @@ class Bloc
     }
 
     /**
-     * @param string $text
+     * @param string $originalText
      */
-    public function setText(string $text): void
+    public function setOriginalText(string $originalText): void
     {
-        $this->text = $text;
+        $this->originalText = $originalText;
+    }
+
+    /**
+     * @param string $translatedText
+     */
+    public function setTranslatedText(string $translatedText): void
+    {
+        $this->translatedText = $translatedText;
     }
 
     /**
@@ -92,8 +110,8 @@ class Bloc
             $bloc1->setEnd($bloc2->getEnd()->getY(), BlocPositionOption::Y);
         }
 
-        $bloc1->setText(
-            $bloc1->getText() . ' ' . $bloc2->getText()
+        $bloc1->setOriginalText(
+            $bloc1->getOriginalText() . ' ' . $bloc2->getOriginalText()
         );
 
         return $bloc1;
