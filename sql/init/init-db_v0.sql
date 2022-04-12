@@ -63,10 +63,11 @@ CREATE TABLE `Block` (
 )ENGINE=INNODB;
 
 CREATE TABLE `Translation` (
-    identifier BIGINT NOT NULL AUTO_INCREMENT,
+    languageIdentifier VARCHAR(256) NOT NULL,
     blockID BIGINT NOT NULL,
     content TEXT,
-    PRIMARY KEY (identifier),
+    PRIMARY KEY (languageIdentifier, blockID),
+    FOREIGN KEY (languageIdentifier) REFERENCES Language(identifier),
     FOREIGN KEY (blockID) REFERENCES Block(blockID)
 )  ENGINE=INNODB;
 
