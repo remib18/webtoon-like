@@ -8,15 +8,21 @@ use JetBrains\PhpStorm\Pure;
 class Block implements EntityInterface
 {
 
+    private int $id;
+    private int $imageId;
+
     public function __construct(
-        private int $id,
+        int $blockID,
         private string $originalContent,
         private int $startX,
         private int $startY,
         private int $endX,
         private int $endY,
-        private int $imageId
-    ) {}
+        int $imageID
+    ) {
+        $this->id = $blockID;
+        $this->imageId = $imageID;
+    }
 
     /**
      * @return int
@@ -24,14 +30,6 @@ class Block implements EntityInterface
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

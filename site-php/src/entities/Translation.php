@@ -6,26 +6,23 @@ use JetBrains\PhpStorm\ArrayShape;
 
 class Translation
 {
-    public function __construct(
-        private int $identifier,
-        private string $blockId,
-        private string $content
-    ) {}
 
-    /**
-     * @return int
-     */
-    public function getIdentifier(): int
-    {
-        return $this->identifier;
+    private int $blockId;
+
+    public function __construct(
+        private string    $languageIdentifier,
+        int $blockID,
+        private string $content
+    ) {
+        $this->blockId = $blockID;
     }
 
     /**
-     * @param int $identifier
+     * @return string
      */
-    public function setIdentifier(int $identifier): void
+    public function getLanguageIdentifier(): string
     {
-        $this->identifier = $identifier;
+        return $this->languageIdentifier;
     }
 
     /**
@@ -45,14 +42,6 @@ class Translation
     }
 
     /**
-     * @param string $blockId
-     */
-    public function setBlockId(string $blockId): void
-    {
-        $this->blockId = $blockId;
-    }
-
-    /**
      * @return string
      */
     public function getBlockId(): string
@@ -60,18 +49,10 @@ class Translation
         return $this->blockId;
     }
 
-    /**
-     * @param int $languageId
-     */
-    public function setLanguageId(int $languageId): void
-    {
-        $this->languageId = $languageId;
-    }
-
     #[ArrayShape(['identifier' => "int", 'blockId' => "string", 'content' => "string"])]
     public function __toArray(): array {
         return [
-            'identifier' => $this->identifier,
+            'identifier' => $this->languageIdentifier,
             'blockId' => $this->blockId,
             'content' => $this->content
         ];

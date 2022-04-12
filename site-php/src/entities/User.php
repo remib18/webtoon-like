@@ -8,12 +8,17 @@ use JetBrains\PhpStorm\Pure;
 
 class User implements EntityInterface
 {
+
+    private int $id;
+
     public function __construct(
-        private int $id,
+        int $userID,
         private string $username,
         private string $email,
         private \DateTime $registeredAt
-    ){}
+    ){
+        $this->id = $userID;
+    }
 
     /**
      * @return int
@@ -21,14 +26,6 @@ class User implements EntityInterface
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

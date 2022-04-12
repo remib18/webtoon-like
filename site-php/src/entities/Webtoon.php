@@ -7,12 +7,16 @@ use JetBrains\PhpStorm\ArrayShape;
 class Webtoon implements EntityInterface
 {
 
+    private int $id;
+
     public function __construct(
-        private int $id,
+        int $webtoonID,
         private string $name,
         private string $author,
         private string $description
-    ) {}
+    ) {
+        $this->id = $webtoonID;
+    }
 
     /**
      * @return int
@@ -20,14 +24,6 @@ class Webtoon implements EntityInterface
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

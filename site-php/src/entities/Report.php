@@ -7,11 +7,18 @@ use JetBrains\PhpStorm\Pure;
 
 class Report implements EntityInterface
 {
+
+    private int $id;
+    private int $userId;
+
     public function __construct(
-        private int $id,
+        int $reportID,
         private int $type,
-        private int $userId
-    ){}
+        int $userID
+    ) {
+        $this->id = $reportID;
+        $this->userId = $userID;
+    }
 
     /**
      * @return int
@@ -19,14 +26,6 @@ class Report implements EntityInterface
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

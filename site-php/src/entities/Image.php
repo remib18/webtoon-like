@@ -10,28 +10,25 @@ use WebtoonLike\Site\utils\UriUtils;
 
 class Image implements EntityInterface
 {
+    private int $id;
+    private int $chapterId;
 
     public function __construct(
-        private int    $id,
+        int $imageID,
         private int    $index,
         private string $path,
-        private int    $chapterId,
+        int $chapterID,
         private bool   $needOCR = true
-    ) {}
+    ) {
+        $this->id = $imageID;
+        $this->chapterId = $chapterID;
+    }
 
     /**
      * @return int
      */
     public function getId(): int {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**

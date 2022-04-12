@@ -8,20 +8,17 @@ use WebtoonLike\Site\controller\WebtoonController;
 
 class Chapter implements EntityInterface
 {
+    private int $id;
+    private int $webtoonId;
 
     public function __construct(
-        private int $id,
+        int $chapterID,
         private int $index,
         private string $title,
-        private int $webtoonId
-    ){}
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
+        int $webtoonID
+    ) {
+        $this->id = $chapterID;
+        $this->webtoonId = $webtoonID;
     }
 
     /**

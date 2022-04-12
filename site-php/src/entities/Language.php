@@ -21,11 +21,11 @@ class Language implements EntityInterface
     }
 
     /**
-     * @param string $identifier
+     * @return string
      */
-    public function setId(string $identifier): void
+    public function getIdentifier(): string
     {
-        $this->identifier = $identifier;
+        return $this->identifier;
     }
 
     /**
