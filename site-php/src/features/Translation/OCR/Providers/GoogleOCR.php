@@ -1,6 +1,6 @@
 <?php
 
-namespace WebtoonLike\Site\features\Translation\OCR\Providers\Google;
+namespace WebtoonLike\Site\features\Translation\OCR\Providers;
 
 use Exception;
 use Google\ApiCore\ValidationException;
@@ -13,8 +13,8 @@ use WebtoonLike\Site\exceptions\InvalidProtocolException;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
 use WebtoonLike\Site\features\Translation\Result\Bloc;
 use WebtoonLike\Site\features\Translation\Result\Result;
-use WebtoonLike\Site\utils\OCRUtils;
 use WebtoonLike\Site\Settings;
+use WebtoonLike\Site\utils\OCRUtils;
 
 class GoogleOCR implements OCRInterface
 {
@@ -82,16 +82,23 @@ class GoogleOCR implements OCRInterface
         if (!isset($this->images[$index])) {
             throw new InvalidArgumentException('Index ' . $index . ' does not exist.');
         }
+
         $image = $this->images[$index];
-        $this->workingIndex = $image->getIndex();
-        $this->results[$this->workingIndex] = new Result($image->getPath());
 
-        $this->response = $this->ocrClient->textDetection($image->getRessource());
-        $this->setFontSize();
-        $this->setTexts();
-        $this->makeBlocs();
-        $this->fixBlocs();
+        if ($image->doesNeedOCR()) {
+            $this->workingIndex = $image->getIndex();
+            $this->results[$this->workingIndex] = new Result($image->getPath());
 
+            $this->response = $this->ocrClient->textDetection($image->getRessource());
+            $this->setFontSize();
+            $this->setTexts();
+            $this->makeBlocs();
+            $this->fixBlocs();
+
+            $image->setNeedOCR(false);
+        } else {
+            $this->loadImageOCRResult();
+        }
     }
 
     /**
@@ -177,5 +184,11 @@ class GoogleOCR implements OCRInterface
         $this->texts = [];
         $this->workingIndex = null;
         $this->response = null;
+    }
+
+    // TODO
+    private function loadImageOCRResult()
+    {
+
     }
 }
