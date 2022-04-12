@@ -15,7 +15,8 @@ class Image implements EntityInterface
         private int $id,
         private int $imgPosition,
         private string $path,
-        private int $chapterId
+        private int $chapterId,
+        private bool $needOCR = true
     ) {}
 
     /**
@@ -77,6 +78,22 @@ class Image implements EntityInterface
     public function setChapterId(int $chapterId): void
     {
         $this->chapterId = $chapterId;
+    }
+
+    /*
+     * @return bool
+     */
+    public function doesNeedOCR(): bool
+    {
+        return $this->needOCR;
+    }
+
+    /**
+     * @param bool $needOCR
+     */
+    public function setNeedOCR(bool $needOCR): void
+    {
+        $this->needOCR = $needOCR;
     }
 
     /**
