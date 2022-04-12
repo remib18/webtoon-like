@@ -1,11 +1,8 @@
 <?php
 
-namespace WebtoonLike\Site\entities;
+namespace WebtoonLike\Site\features\Translation\Result;
 
-use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-
-class Position implements EntityInterface
+class Position
 {
 
     public function __construct(
@@ -43,14 +40,5 @@ class Position implements EntityInterface
     public function setY(int $y): void
     {
         $this->y = $y;
-    }
-
-    #[Pure] #[ArrayShape(['x' => "int", 'y' => "int"])]
-    public function __toArray(): array
-    {
-        return [
-            'x' => $this->x,
-            'y' => $this->y
-        ];
     }
 }
