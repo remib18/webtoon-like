@@ -85,4 +85,13 @@ class User implements EntityInterface
             'registeredAt' => $this->registeredAt
         ];
     }
+
+    public static function getColumnsKeys(): array {
+        return [
+            'userID',
+            'username',
+            'email',
+            'registeredAt'
+        ];
+    }
 }
