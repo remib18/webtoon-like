@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\Site\utils;
 
+use InvalidArgumentException;
 use mysqli;
 use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\Settings;
@@ -76,19 +77,39 @@ class Database
             ->query($q);
     }
 
-    public static function edit(string $table, EntityInterface $entity): bool {
+    public static function create(string $table, EntityInterface &$entity): bool {
+        $fields = '';
+        $values = '';
+        foreach ($entity->getFieldsToSave() as $key => $value) {
+            $fields .= "`$key`, ";
+            $values .= self::normalizeValue($value) . ', ';
+        }
+        $fields = substr($fields, 0, -2);
+        $values = substr($values, 0, -2);
+        $q = "INSERT INTO `$table`($fields) VALUE ($values)";
+        $res = Database::getDB()->query($q);
+        if ($res) {
+            $entity->AllFieldsSaved();
+        }
+        return $res;
+    }
+
+    public static function edit(string $table, EntityInterface &$entity): bool {
         $sets = self::buildEditSet($entity);
         $where = self::whereIds($entity);
         $q = "UPDATE `$table` SET $sets WHERE $where;";
-        return self::getDB()->query($q);
+        $res =  self::getDB()->query($q);
+        if ($res) {
+            $entity->AllFieldsSaved();
+        }
+        return $res;
     }
-
 
     private static function whereIds(EntityInterface $entity): string {
         $where = '';
         foreach ($entity::getIdentifiers() as $id) {
             $value = $entity->__toArray()[$id];
-            $where .= "$id = $value" . ' AND ';
+            $where .= "`$id` = $value" . ' AND ';
         }
         return substr($where, 0, -5);
     }
@@ -96,23 +117,27 @@ class Database
     private static function buildEditSet(EntityInterface $entity): string {
         $res = '';
         foreach ($entity->getFieldsToSave() as $key => $value) {
-            $value = is_string($value) ? "'$value'" : $value;
-            $res .= $key . ' = ' . $value . ', ';
+            $value = self::normalizeValue($value);
+            $res .= "`$key` = $value, ";
         }
         return substr($res, 0, -2);
+    }
+
+    private static function normalizeValue(mixed $value): mixed {
+        return is_string($value) ? "'$value'" : $value;
     }
 
     private static function testIfColumnKeysExistsOnEntity(array $keys, string $entityClass): void {
         foreach ($keys as $key) {
             if (!in_array($key, $entityClass::getColumnsKeys())) {
-                throw new \InvalidArgumentException("Key $key does not exist on entity $entityClass.");
+                throw new InvalidArgumentException("Key $key does not exist on entity $entityClass.");
             }
         }
     }
 
     private static function getSelectedColumns(string|array $select, string $entityClass): string {
         if ($select === '*') return $select;
-        if (is_string($select)) throw new \InvalidArgumentException('Select can only be \'*\' or an array of columns.');
+        if (is_string($select)) throw new InvalidArgumentException('Select can only be \'*\' or an array of columns.');
         self::testIfColumnKeysExistsOnEntity($select, $entityClass);
         return join(', ', $select);
     }

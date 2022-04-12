@@ -18,12 +18,15 @@ class Webtoon implements EntityInterface
         ?int $webtoonID,
         string $name,
         string $author,
-        string $description
+        string $description,
+        bool $fromDB = true
     ) {
         $this->id = $webtoonID;
         $this->setName($name);
         $this->setAuthor($author);
         $this->setDescription($description);
+        
+        if ($fromDB) $this->AllFieldsSaved();
     }
 
     /**

@@ -62,15 +62,9 @@ class WebtoonController
      * @param Webtoon $entity
      * @return int|false Faux en cas d'erreur
      */
-    public static function create(Webtoon $entity): int|false
+    public static function create(Webtoon &$entity): int|false
     {
-        $name = $entity->getName();
-        $author = $entity->getAuthor();
-        $desc = $entity->getDescription();
-        $q = "INSERT INTO Webtoon(`name`, author, description) VALUE ('$name', '$author', '$desc');";
-        $res = Database::getDB()->query($q);
-        if (!$res) return false;
-        return Database::getLastInsertedId();
+        return Database::create('Webtoon', $entity);
     }
 
     /**
@@ -79,7 +73,7 @@ class WebtoonController
      * @param Webtoon $entity Le webtoon modifié
      * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
-    public static function edit(Webtoon $entity): bool
+    public static function edit(Webtoon &$entity): bool
     {
         return Database::edit('Webtoon', $entity);
     }
