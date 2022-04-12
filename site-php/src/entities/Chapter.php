@@ -95,4 +95,13 @@ class Chapter implements EntityInterface
             'webtoonId' => $this->webtoonId
         ];
     }
+
+    public static function getColumnsKeys(): array {
+        return [
+            'chapterID',
+            'index',
+            'title',
+            'webtoonID'
+        ];
+    }
 }
