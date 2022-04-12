@@ -36,41 +36,37 @@ CREATE TABLE Chapter (
 
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
-    imgPosition INT,
+    `index` INT,
     path VARCHAR(256),
+    needOCR bool,
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
-)  ENGINE=INNODB; 
-
-CREATE TABLE CellPosition (
-    CellPositionID BIGINT NOT NULL AUTO_INCREMENT,
-    xAxis INT,
-    yAxis INT,
-    PRIMARY KEY (CellPositionID)
-)  ENGINE=INNODB; 
+)  ENGINE=INNODB;
 
 CREATE TABLE Language (
-    languageID VARCHAR(256) NOT NULL,
-    languageName VARCHAR(256) NOT NULL,
-    PRIMARY KEY (languageID)
+    identifier VARCHAR(256) NOT NULL,
+    name VARCHAR(256) NOT NULL,
+    PRIMARY KEY (identifier)
 )  ENGINE=INNODB;
 
 CREATE TABLE Block (
     blockID BIGINT NOT NULL AUTO_INCREMENT,
-    content TEXT,
+    originalContent TEXT,
+    startX int,
+    startY int,
+    endX int,
+    endY int,
     imageID BIGINT NOT NULL,
-    CellPositionID BIGINT NOT NULL,
     PRIMARY KEY (blockID),
-    FOREIGN KEY (imageID) REFERENCES Image(imageID),
-    FOREIGN KEY (CellPositionID) REFERENCES CellPosition(CellPositionID)
+    FOREIGN KEY (imageID) REFERENCES Image(imageID)
 )ENGINE=INNODB;
 
 CREATE TABLE Translation (
-    languageId BIGINT NOT NULL AUTO_INCREMENT,
+    identifier BIGINT NOT NULL AUTO_INCREMENT,
     blockID BIGINT NOT NULL,
     content TEXT,
-    PRIMARY KEY (languageId),
+    PRIMARY KEY (identifier),
     FOREIGN KEY (blockID) REFERENCES Block(blockID)
 )  ENGINE=INNODB;
 
