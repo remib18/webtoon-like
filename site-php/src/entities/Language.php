@@ -44,4 +44,11 @@ class Language implements EntityInterface
             'name' => $this->name
         ];
     }
+
+    public static function getColumnsKeys(): array {
+        return [
+            'identifier',
+            'name'
+        ];
+    }
 }
