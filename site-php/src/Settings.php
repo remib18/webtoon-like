@@ -15,11 +15,11 @@ class Settings {
             'en'
         ],
         'webtoonsImagesBaseFolder' => baseDirectory . '/assets/webtoons-imgs/',
-        'database' => [
-            'host' => 'localhost',
+        'DATABASE' => [
+            'hostname' => 'localhost',
             'username' => 'root',       // TODO: Replace root in production
             'password' => null,
-            'dbName' => 'webtoonLike',
+            'database' => 'webtoonLike',
             'port' => null,
             'socket' => null
         ]
@@ -35,7 +35,7 @@ class Settings {
         'GT_API_KEY_FILE' => "string",
         'preTranslateTo' => "string[]",
         'webtoonsImagesBaseFolder' => "string",
-        'database' => "array"
+        'DATABASE' => "array"
     ])]
     public static function getAll(): array {
         return self::$settings;
