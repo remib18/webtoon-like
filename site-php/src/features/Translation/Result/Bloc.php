@@ -2,8 +2,6 @@
 
 namespace WebtoonLike\Site\features\Translation\Result;
 
-use WebtoonLike\Site\entities\Position;
-
 class Bloc
 {
 

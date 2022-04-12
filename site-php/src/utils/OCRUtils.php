@@ -4,8 +4,8 @@ namespace WebtoonLike\Site\utils;
 
 use Google\Cloud\Vision\V1\Vertex;
 use JetBrains\PhpStorm\Pure;
-use WebtoonLike\Site\entities\Position;
 use WebtoonLike\Site\features\Translation\Result\Bloc;
+use WebtoonLike\Site\features\Translation\Result\Position;
 
 class OCRUtils
 {
