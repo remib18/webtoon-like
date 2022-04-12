@@ -89,4 +89,13 @@ class TranslationProposition implements EntityInterface
         ];
     }
 
+    public static function getColumnsKeys(): array {
+        return [
+            'translationPropositionID',
+            'proposedTranslation',
+            'blockID',
+            'userID'
+        ];
+    }
+
 }
