@@ -147,4 +147,16 @@ class Block implements EntityInterface
         ];
     }
 
+    public static function getColumnsKeys(): array {
+        return [
+            'blockID',
+            'originalContent',
+            'startX',
+            'startY',
+            'endX',
+            'endY',
+            'imageID'
+        ];
+    }
+
 }
