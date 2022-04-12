@@ -15,14 +15,6 @@ class Language implements EntityInterface
     /**
      * @return string
      */
-    public function getId(): string
-    {
-        return $this->identifier;
-    }
-
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;

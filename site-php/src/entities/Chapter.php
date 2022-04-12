@@ -8,11 +8,11 @@ use WebtoonLike\Site\controller\WebtoonController;
 
 class Chapter implements EntityInterface
 {
-    private int $id;
+    private ?int $id;
     private int $webtoonId;
 
     public function __construct(
-        int $chapterID,
+        ?int $chapterID,
         private int $index,
         private string $title,
         int $webtoonID
@@ -22,9 +22,9 @@ class Chapter implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

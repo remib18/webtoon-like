@@ -9,10 +9,10 @@ use JetBrains\PhpStorm\Pure;
 class User implements EntityInterface
 {
 
-    private int $id;
+    private ?int $id;
 
     public function __construct(
-        int $userID,
+        ?int $userID,
         private string $username,
         private string $email,
         private \DateTime $registeredAt
@@ -21,9 +21,9 @@ class User implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

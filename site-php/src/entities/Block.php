@@ -8,11 +8,11 @@ use JetBrains\PhpStorm\Pure;
 class Block implements EntityInterface
 {
 
-    private int $id;
+    private ?int $id;
     private int $imageId;
 
     public function __construct(
-        int $blockID,
+        ?int $blockID,
         private string $originalContent,
         private int $startX,
         private int $startY,
@@ -25,9 +25,9 @@ class Block implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

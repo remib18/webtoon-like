@@ -10,11 +10,11 @@ use WebtoonLike\Site\utils\UriUtils;
 
 class Image implements EntityInterface
 {
-    private int $id;
+    private ?int $id;
     private int $chapterId;
 
     public function __construct(
-        int $imageID,
+        ?int $imageID,
         private int    $index,
         private string $path,
         int $chapterID,
@@ -25,9 +25,9 @@ class Image implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int {
+    public function getId(): ?int {
         return $this->id;
     }
 

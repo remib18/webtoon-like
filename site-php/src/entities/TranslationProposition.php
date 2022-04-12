@@ -8,12 +8,12 @@ use JetBrains\PhpStorm\Pure;
 class TranslationProposition implements EntityInterface
 {
 
-    private int $id;
+    private ?int $id;
     private int $blockId;
     private int $userId;
 
     public function __construct(
-        int $translationPropositionID,
+        ?int $translationPropositionID,
         private string $proposedTranslation,
         int $blockID,
         int $userID
@@ -24,9 +24,9 @@ class TranslationProposition implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

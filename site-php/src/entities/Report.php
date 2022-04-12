@@ -8,11 +8,11 @@ use JetBrains\PhpStorm\Pure;
 class Report implements EntityInterface
 {
 
-    private int $id;
+    private ?int $id;
     private int $userId;
 
     public function __construct(
-        int $reportID,
+        ?int $reportID,
         private int $type,
         int $userID
     ) {
@@ -21,9 +21,9 @@ class Report implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }

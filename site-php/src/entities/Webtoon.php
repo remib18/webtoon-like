@@ -7,10 +7,10 @@ use JetBrains\PhpStorm\ArrayShape;
 class Webtoon implements EntityInterface
 {
 
-    private int $id;
+    private ?int $id;
 
     public function __construct(
-        int $webtoonID,
+        ?int $webtoonID,
         private string $name,
         private string $author,
         private string $description
@@ -19,9 +19,9 @@ class Webtoon implements EntityInterface
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
