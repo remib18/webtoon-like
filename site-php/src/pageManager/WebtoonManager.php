@@ -29,4 +29,12 @@ class WebtoonManager
         return self::getWebtoon()->getName();
     }
 
+    public static function getNbChap():array {
+        return self::getWebtoon()->getNbChap();
+    }
+
+    public static function getDescription():stringSSSSSSSS {
+        return self::getWebtoon()->getDescription();
+    }
+
 }
