@@ -9,7 +9,7 @@ use WebtoonLike\Site\exceptions\TranslationErrorException;
 use WebtoonLike\Site\exceptions\SlowDownException;
 use WebtoonLike\Site\helpers\curlHelper;
 
-class  LibreTranslateTranslation implements TranslationInterface
+class LibreTranslateTranslation implements TranslationInterface
 {
     private static array $mirrors = ['https://libretranslate.de/',
     'https://translate.argosopentech.com/',

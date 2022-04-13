@@ -33,7 +33,7 @@ class CurlHelper {
             }
 
             // use while testing
-            if( Settings::get('production') == false ) {
+            if( Settings::get('production') === false ) {
                 curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
                 curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
             }
@@ -72,7 +72,7 @@ class CurlHelper {
             );
 
             // use while testing
-            if( Settings::get('production') == false ) {
+            if( Settings::get('production') === false ) {
                 curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
                 curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
             }
