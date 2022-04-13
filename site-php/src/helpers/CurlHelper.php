@@ -20,7 +20,7 @@ class CurlHelper {
     #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpGet(array $params): array
     {
-        if (isset($params['url'])) {
+        if (!isset($params['url'])) {
             throw new InvalidArgumentException('Missing params url key.');
         }
         $url = $params['url'];
@@ -55,10 +55,10 @@ class CurlHelper {
     #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpPost(array $params): array
     {
-        if (isset($params['url'])) {
+        if (!isset($params['url'])) {
             throw new InvalidArgumentException('Missing params url key.');
         }
-        if (isset($params['query'])) {
+        if (!isset($params['query'])) {
             throw new InvalidArgumentException('Missing params query key.');
         }
         $jsonData = json_encode($params['query']);
