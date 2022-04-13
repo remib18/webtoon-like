@@ -66,4 +66,12 @@ class WebtoonManager
         return self::getWebtoon()->getDescription();
     }
 
+    public static function getNbChap():array {
+        return self::getWebtoon()->getNbChap();
+    }
+
+    public static function getDescription():stringSSSSSSSS {
+        return self::getWebtoon()->getDescription();
+    }
+
 }
