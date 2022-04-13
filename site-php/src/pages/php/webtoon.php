@@ -20,9 +20,7 @@ require dirname(__DIR__, 2) . '/components/header.php';
             <label for="chapter">Sélectionnez le chapitre</label>
             <span class="select">
                 <select name="chapter" id="chapter">
-                    <?php foreach(WebtoonManager::getNbChap() as $Chap){?>
-                    <option value="<?=(int)$Chap?>" selected>Chapitre <?=$Chap?></option>
-                    <?php } ?>
+                    <?=WebtoonManager::getChapters()?>
                 </select>
             </span>
         </fieldset>
