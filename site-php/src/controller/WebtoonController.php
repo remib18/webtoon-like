@@ -51,7 +51,7 @@ class WebtoonController
      * @return bool
      */
     public static function exists(int $id): bool {
-        $q = "SELECT webtoonId FROM Webtoon WHERE webtoonId = $id";
+        $q = "SELECT webtoonID FROM Webtoon WHERE webtoonID = $id";
         $res = Database::getDB()->query($q)->fetch_assoc();
         return sizeof($res ?? []) > 0;
     }
