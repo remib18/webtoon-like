@@ -2,82 +2,92 @@
 
 namespace WebtoonLike\Site\controller;
 
+use WebtoonLike\Site\entities\Chapter;
+use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
-use WebtoonLike\Site\exceptions\UnImplementedMethodException;
 use WebtoonLike\Site\utils\Database;
 
 class ImageController
 {
-
     /**
-     * @inheritDoc
+     * Obtenir la liste des image
+     *
+     * @param string|array $col
+     * @param array $where
+     *
+     * @return Image[]
      */
-    public static function getAll(): array
+    public static function getAll(string|array $col = '*', array $where = []): array
     {
-        $q = 'SELECT * FROM `Image`;';
-        $res = Database::getDB()
-            ->query($q)
-            ->fetch_all(MYSQLI_ASSOC);
-        return Database::responseToObjects($res, Image::class);
+        return Database::getAll('Image', Image::class, $col, $where);
     }
 
     /**
-     * @inheritDoc
+     * Obtention de l'image avec l'identifiant correspondant.
+     *
+     * @param int $id Identifiant recherché
+     * @return Image|null
      */
-    public static function getById(int $id): Image
+    public static function getById(int $id): ?Image
     {
-        $q = "SELECT * FROM `Image` WHERE imageID = $id;";
-        $res = Database::getDB()
-            ->query($q)
-            ->fetch_all(MYSQLI_ASSOC);
-        return Database::responseToObjects($res, Image::class)[0];
+        return Database::getFirst('Image', Image::class, '*', ['imageID' => "imageID = $id"]);
     }
 
     /**
-     * @inheritDoc
-     * @throws UnImplementedMethodException
+     * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
+     *
+     * @param int $index index recherché
+     * @return Image|null
      */
-    public static function getByName(string $name): Image
+    public static function getByIndex(Chapter $chapterID, int $index): ?Image
     {
-        throw new UnImplementedMethodException();
+        return Database::getFirst('Chapter', Chapter::class, '*', [
+            'index,chapterID' => "index = $index AND chapterID' = $chapterID"
+        ]);
     }
 
     /**
-     * @inheritDoc
+     * La ressource fournit existe-t-elle ?
+     *
+     * @param int $id Ressource correspondante
+     * @return bool
      */
-    public static function create(Image $entity): int|false
-    {
-        $q = 'INSERT INTO Image(`index`, `path`, needOCR, chapterID) VALUE (?, ?, ?, ?);';
-        $req = Database::getDB()->prepare($q);
-        $req->bind_param('isii',
-                $index,
-                $path,
-                $doesNeedOCR,
-                $chapterId
-            );
-        $index = $entity->getIndex();
-        $path = $entity->getPath();
-        $doesNeedOCR = $entity->doesNeedOCR();
-        $chapterId = $entity->getChapterId();
-        $res = $req->execute();
-        var_dump($res);
-        if (!$res) return false;
-        return 1;
+    public static function exists(int $id): bool {
+        $q = "SELECT imageID FROM Image WHERE imageID = $id";
+        $res = Database::getDB()->query($q)->fetch_assoc();
+        return sizeof($res ?? []) > 0;
     }
 
     /**
-     * @inheritDoc
+     * Enregistre une image et retourne son identifiant ou <code>false</code> en cas d'erreur.
+     *
+     * @param Image $entity
+     * @return int|false Faux en cas d'erreur
      */
-    public static function edit(Image $entity): bool
+    public static function create(Image &$entity): int|false
     {
-        // TODO: Implement edit() method.
+        return Database::create('Image', $entity);
     }
 
     /**
-     * @inheritDoc
+     * Modifie l'image
+     *
+     * @param Image $entity L'image modifié
+     * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
-    public static function removeById(int $id): bool
+    public static function edit(Image &$entity): bool
     {
-        // TODO: Implement removeById() method.
+        return Database::edit('Image', $entity);
+    }
+
+    /**
+     * Supprime l'image correspondant à l'identifiant fournit.
+     *
+     * @param Image $entity L'identifiant de l'image à supprimer.
+     * @return bool Retourne vrai si la suppression a été effectuée avec succès.
+     */
+    public static function remove(Image $entity): bool
+    {
+        return Database::remove('Image', $entity);
     }
 }

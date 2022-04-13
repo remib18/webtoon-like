@@ -15,7 +15,7 @@ class WebtoonController
      * @param string|array $col
      * @param array $where
      *
-     * @return array
+     * @return Webtoon[]
      */
     public static function getAll(string|array $col = '*', array $where = []): array
     {
@@ -37,7 +37,7 @@ class WebtoonController
      * Obtention du webtoon avec le nom correspondant.
      *
      * @param string $name Nom rechercher
-     * @return EntityInterface[]
+     * @return Webtoon[]
      */
     public static function getByName(string $name): array
     {
