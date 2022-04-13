@@ -18,18 +18,15 @@ use WebtoonLike\Site\pageManager\WebtoonManager;
             <label for="chapter">Sélectionnez le chapitre</label>
             <span class="select">
                 <select name="chapter" id="chapter">
-                    <option value="1" selected>Chapitre 1</option>
-                    <option value="2">Chapitre 2</option>
-                    <option value="3">Chapitre 3</option>
-                    <option value="4">Chapitre 4</option>
+                    <?php foreach(WebtoonManager::getNbChap() as $Chap){?>
+                    <option value="<?=(int)$Chap?>" selected>Chapitre <?=$Chap?></option>
+                    <?php } ?>
                 </select>
             </span>
         </fieldset>
         <hr>
         <h3>Description</h3>
-        <pre>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dolor turpis, elementum at ex in, condimentum ornare mi. Integer fermentum risus at placerat scelerisque. Maecenas elit nulla, vestibulum in maximus vestibulum, facilisis a tortor.
-Nam fringilla blandit libero. In pulvinar est sit amet pellentesque facilisis. Aliquam ornare, sem et iaculis fermentum, dolor tortor rutrum neque, vel pretium nunc felis placerat nunc. Nulla facilisi. Phasellus rutrum eros ac sollicitudin pulvinar.
-Nunc est lacus, eleifend sit amet pellentesque nec, porta non urna.</pre>
+        <pre><?=WebtoonManager::getDescription()?></pre>
         <!--<h3>Genres</h3>
         <span class="genre">AAA</span>
         <span>•</span>
