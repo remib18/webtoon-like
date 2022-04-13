@@ -4,6 +4,7 @@ namespace WebtoonLike\Site\helpers;
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\Settings;
 
 class CurlHelper {
 
@@ -19,7 +20,7 @@ class CurlHelper {
     #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpGet(array $params): array
     {
-        if (isset($params['url'])) {
+        if (!isset($params['url'])) {
             throw new InvalidArgumentException('Missing params url key.');
         }
         $url = $params['url'];
@@ -32,8 +33,10 @@ class CurlHelper {
             }
 
             // use while testing
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            if( Settings::get('production') === false ) {
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            }
 
             $response = curl_exec($curlSession);
             $decodedResponse = json_decode( $response, true );
@@ -52,10 +55,10 @@ class CurlHelper {
     #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
     public static function httpPost(array $params): array
     {
-        if (isset($params['url'])) {
+        if (!isset($params['url'])) {
             throw new InvalidArgumentException('Missing params url key.');
         }
-        if (isset($params['query'])) {
+        if (!isset($params['query'])) {
             throw new InvalidArgumentException('Missing params query key.');
         }
         $jsonData = json_encode($params['query']);
@@ -67,9 +70,12 @@ class CurlHelper {
                     'Content-Type: application/json',
                     'Content-Length: ' . strlen($jsonData))
             );
+
             // use while testing
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            if( Settings::get('production') === false ) {
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            }
 
             $response = curl_exec($curlSession);
             $decodedResponse = json_decode( $response, true );
