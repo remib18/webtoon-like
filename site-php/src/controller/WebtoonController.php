@@ -26,7 +26,7 @@ class WebtoonController
      * Obtention du webtoon avec l'identifiant correspondant.
      *
      * @param int $id Identifiant rechercher
-     * @return Webtoon[]|null
+     * @return Webtoon|null
      */
     public static function getById(int $id): ?Webtoon
     {
