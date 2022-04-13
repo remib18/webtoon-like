@@ -1,4 +1,5 @@
 # Configuration du serveur WEB
+
 Si vous utilisez Apache:
   - localiser `httpd.conf` (CentOS/RHEL/Fedora/MAMP) ou `apache2.conf` (Ubuntu/Debian)
   - trouver la directive `<Directory {chemin vers la racine du site}></Directory>`
