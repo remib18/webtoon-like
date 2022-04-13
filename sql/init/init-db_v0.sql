@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS webtoonLike;
-CREATE DATABASE IF NOT EXISTS webtoonLike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE DATABASE webtoonLike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE webtoonLike;
 
 CREATE TABLE `User` (
