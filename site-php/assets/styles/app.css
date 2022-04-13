@@ -140,7 +140,7 @@ footer {
     justify-content: center;
     background-color: #ffffff0f;
     backdrop-filter: blur(.125rem);
-    width: 100%;
+    width: calc(100vw-2rem);
     padding: 1rem 0;
     font-size: .8rem;
 }
