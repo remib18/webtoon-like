@@ -39,7 +39,7 @@ class ImageController
      * @param int $index index recherché
      * @return Image|null
      */
-    public static function getByIndex(Chapter $chapterID, int $index):  ?Image
+    public static function getByIndex(Chapter $chapterID, int $index): ?Image
     {
         return Database::getFirst('Chapter', Chapter::class, '*', [
             'index,chapterID' => "index = $index AND chapterID' = $chapterID"
