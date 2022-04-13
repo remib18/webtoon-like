@@ -4,7 +4,7 @@ Si vous utilisez Apache:
   - trouver la directive `<Directory {chemin vers la racine du site}></Directory>`
   - changer `AllowOverride None` pour `AllowOverride All`
 
-Changer la racine pour deservir le dossier `/site-php`
+Changer la racine pour desservir le dossier `/site-php`
 
 # Obtention et installation
 

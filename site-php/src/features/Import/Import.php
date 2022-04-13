@@ -7,11 +7,12 @@ use greeflas\tools\ImageDownloader;
 use greeflas\tools\validators\ImageValidator;
 use WebtoonLike\Site\controller\ChapterController;
 use WebtoonLike\Site\controller\ImageController;
+use WebtoonLike\Site\entities\Chapter;
+use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\exceptions\AlreadyExistingRessourceException;
 use WebtoonLike\Site\exceptions\NotFoundException;
-use function Root\BC_C2_dwl;
 
-define('base_images_folder', dirname(__DIR__, 3) . '/assets/webtoons-imgs/');
+define('BASE_IMAGE_FOLDER', dirname(__DIR__, 3) . '/assets/webtoons-imgs/');
 
 class Import
 {
@@ -45,18 +46,14 @@ class Import
             throw new NotFoundException();
         }
 
-        $chapterId = ChapterController::create([
-            'number' => $chapter,
-            'title' => '',
-            'webtoonID' => $webtoonId
-        ]);
+        $chapterId = ChapterController::create(new Chapter(null, $chapter, '', $webtoonId));
 
         for ($j = 0; $j < $i; $j++) {
-            ImageController::create([
-                'position' => $j,
-                'path' => 'file://' . base_images_folder . "$webtoonId/$chapter/$j.jpg",
-                'chapterID' => $chapterId
-            ]);
+            ImageController::create(new Image(
+                null,
+                $j,
+                'file://' . BASE_IMAGE_FOLDER . "$webtoonId/$chapter/$j.jpg",
+                $chapterId));
         }
 
         return $chapterId;
@@ -82,7 +79,15 @@ class Import
         $downloader = new ImageDownloader([
             'class' => ImageValidator::class
         ]);
-        $downloader->download($uri, base_images_folder . 'black-clover/2', $frame . '.jpg');
+        $downloader->download($uri, BASE_IMAGE_FOLDER . 'black-clover/2', $frame . '.jpg');
     }
 
+}
+
+function BC_C2_dwl(int $frame) {
+    $uri = 'https://cdn.bakihanma.com/file/Zolyvmanga/black-clover/Chapter-2-:-The-Magic-Knights-Entrance-Exam/' . $frame . '.jpg';
+    $downloader = new \greeflas\tools\ImageDownloader([
+        'class' => \greeflas\tools\validators\ImageValidator::class
+    ]);
+    $downloader->download($uri, __DIR__ . '/assets/webtoons-imgs/black-clover/2', $frame . '.jpg');
 }
