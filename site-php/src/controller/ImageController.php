@@ -37,7 +37,7 @@ class ImageController
      * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
      *
      * @param int $index index recherché
-     * @return Image
+     * @return Image|null
      */
     public static function getByIndex(Chapter $chapterID, int $index):  ?Image
     {

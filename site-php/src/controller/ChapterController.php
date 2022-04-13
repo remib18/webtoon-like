@@ -38,7 +38,7 @@ class ChapterController
      * Obtention du chapter avec l'identifiant correspondant.
      *
      * @param int $index index recherché
-     * @return Chapter
+     * @return Chapter|null
      */
     public static function getByIndex(Webtoon $webtoonID, int $index):  ?Chapter
     {
