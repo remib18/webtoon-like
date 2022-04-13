@@ -4,6 +4,7 @@ namespace WebtoonLike\Site\helpers;
 
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\Settings;
 
 class CurlHelper {
 
@@ -32,8 +33,10 @@ class CurlHelper {
             }
 
             // use while testing
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            if( Settings::get('production') == false ) {
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            }
 
             $response = curl_exec($curlSession);
             $decodedResponse = json_decode( $response, true );
@@ -67,9 +70,12 @@ class CurlHelper {
                     'Content-Type: application/json',
                     'Content-Length: ' . strlen($jsonData))
             );
+
             // use while testing
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-            // curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            if( Settings::get('production') == false ) {
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+            }
 
             $response = curl_exec($curlSession);
             $decodedResponse = json_decode( $response, true );

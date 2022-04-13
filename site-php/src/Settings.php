@@ -22,7 +22,8 @@ class Settings {
             'database' => 'webtoonLike',
             'port' => null,
             'socket' => null
-        ]
+        ],
+        'production' => false
     ];
 
     public static function get(string $key): mixed {
