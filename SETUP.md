@@ -1,7 +1,7 @@
 # Configuration du serveur WEB
-Si vous utilisez Appache:
+Si vous utilisez Apache:
   - localiser `httpd.conf` (CentOS/RHEL/Fedora/MAMP) ou `apache2.conf` (Ubuntu/Debian)
-  - trouver la directive `<Directory></Directory>`
+  - trouver la directive `<Directory {chemin vers la racine du site}></Directory>`
   - changer `AllowOverride None` pour `AllowOverride All`
 
 Changer la racine pour deservir le dossier `/site-php`
