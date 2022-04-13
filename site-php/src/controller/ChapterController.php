@@ -3,84 +3,94 @@
 namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\Chapter;
+use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\entities\Webtoon;
 use WebtoonLike\Site\utils\Database;
 
 class ChapterController
 {
 
-    public static function existsById(int $id): bool {
-        $q = Database::getDB()->query('SELECT chapterId FROM Chapter WHERE chapterId = ' . $id . ';');
-        return sizeof($q->fetch_assoc()) > 0;
-    }
-
-    public static function exists(int $webtoonId, int $chapterIndex): false | int {
-        $sql = 'SELECT chapterID ';
-        $sql .= 'FROM Webtoon INNER JOIN Chapter USING (webtoonID)';
-        $sql .= "WHERE webtoonID = $webtoonId AND number = $chapterIndex;";
-        $q = Database::getDB()->query($sql);
-        return $q->fetch_assoc()[0]['chapterID'] ?? false;
-    }
-
+    // get by id, get by webtoon-id // getby-index
     /**
-     * @param int $chapterId
-     * @return array<int, Image> Liste des images indexées par leur position
+     * Obtenir la liste des chapter
+     *
+     * @param string|array $col
+     * @param array $where
+     *
+     * @return array
      */
-    public static function getAllImages(int $chapterId): array {
-
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getByName(string $name): Chapter
+    public static function getAll(string|array $col = '*', array $where = []): array
     {
-        // TODO: Implement getByName() method.
+        return Database::getAll('Chapter', Chapter::class, $col, $where);
     }
 
     /**
-     * @inheritDoc
+     * Obtention du chapter avec l'identifiant correspondant.
+     *
+     * @param int $id Identifiant recherché
+     * @return Chapter|null
      */
-    public static function create(Chapter $entity): int|false
+    public static function getById(int $id): ?Chapter
     {
-        $sql = 'INSERT INTO Chapter (number, title, webtoonID) VALUE (?, ?, ?);';
-        $stmt = Database::getDB()->prepare($sql);
-        $stmt->bind_param('isi', $entity['number'], $entity['title'], $entity['webtoonId']);
-        $res = $stmt->execute();
-        $stmt->close();
-        return $res;
-        
-    }
-    
-    /**
-     * @inheritDoc
-     */
-    public static function edit(Chapter $entity): bool
-    {
-        // TODO: Implement edit() method.
+        return Database::getFirst('Chapter', Chapter::class, '*', ['chapterID' => "chapterID = $id"]);
     }
 
     /**
-     * @inheritDoc
+     * Obtention du chapter avec l'identifiant correspondant.
+     *
+     * @param int $index index recherché
+     * @return EntityInterface
      */
-    public static function getAll(): array
+    public static function getByIndex(Webtoon $webtoonID, int $index):  ?Chapter
     {
-        // TODO: Implement getAll() method.
+        return Database::getFirst('Chapter', Chapter::class, '*', [
+            'index,webtoonID' => "index = $index AND webtoonID' = $webtoonID"
+            ]);
     }
 
     /**
-     * @inheritDoc
+     * La ressource fournit existe-t-elle ?
+     *
+     * @param int $id Ressource correspondante
+     * @return bool
      */
-    public static function getById(int $id): Chapter
-    {
-        // TODO: Implement getById() method.
+    public static function exists(int $id): bool {
+        $q = "SELECT chapterID FROM Chapter WHERE chapterID = $id";
+        $res = Database::getDB()->query($q)->fetch_assoc();
+        return sizeof($res ?? []) > 0;
     }
 
     /**
-     * @inheritDoc
+     * Enregistre un chapter et retourne son identifiant ou <code>false</code> en cas d'erreur.
+     *
+     * @param Chapter $entity
+     * @return int|false Faux en cas d'erreur
      */
-    public static function removeById(int $id): bool
+    public static function create(Chapter &$entity): int|false
     {
-        // TODO: Implement removeById() method.
+        return Database::create('Chapter', $entity);
+    }
+
+    /**
+     * Modifie le chapter
+     *
+     * @param Chapter $entity Le chapter modifié
+     * @return bool Retourne vrai si la modification a été effectuée avec succès.
+     */
+    public static function edit(Chapter &$entity): bool
+    {
+        return Database::edit('Chapter', $entity);
+    }
+
+    /**
+     * Supprime le chapter correspondant à l'identifiant fournit.
+     *
+     * @param Chapter $entity L'identifiant du chapter à supprimer.
+     * @return bool Retourne vrai si la suppression a été effectuée avec succès.
+     */
+    public static function remove(Chapter $entity): bool
+    {
+        return Database::remove('Chapter', $entity);
     }
 }
