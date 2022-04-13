@@ -15,12 +15,12 @@ class WebtoonManager
                 self::$webtoon = WebtoonController::getById((int)$_GET['id']);
             } else {
                 var_dump($_GET);
-                //header('Location: /');
+                header('Location: /');
             }
         }
         if (is_null(self::$webtoon)) {
             var_dump(self::$webtoon);
-            //header('Location: /');
+            header('Location: /');
         }
         return self::$webtoon;
     }
@@ -29,11 +29,17 @@ class WebtoonManager
         return self::getWebtoon()->getName();
     }
 
-    public static function getNbChap():array {
-        return self::getWebtoon()->getNbChap();
+    public static function getChapter(): string {
+        $chapters =ChapterController::getAll();
+
+
+        foreach ($chapters as $chapter) {
+            $res .= '<option value=".(int)$Chapter." selected>Chapitre'.$chapter.'</option>';
+    }
+        return $res;
     }
 
-    public static function getDescription():stringSSSSSSSS {
+    public static function getDescription(): string {
         return self::getWebtoon()->getDescription();
     }
 
