@@ -5,9 +5,6 @@ namespace WebtoonLike\Site\helpers;
 use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
 
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 class CurlHelper {
 
     /**
