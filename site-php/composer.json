@@ -24,5 +24,12 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {}
+    "require": {
+        "greeflas/php-image-downloader": "dev-master",
+        "google/cloud-vision": "dev-main",
+        "ext-curl": "*",
+        "ext-gd": "*",
+        "ext-mbstring": "*",
+        "ext-mysqli": "*"
+    }
 }

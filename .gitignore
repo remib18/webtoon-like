@@ -143,4 +143,7 @@ $RECYCLE.BIN/
 # Composer
 */vendor/*
 */composer.lock
+
+# Webtoon Images (for copyrigths)
+/site-php/assets/webtoons-imgs/
 *.jpg

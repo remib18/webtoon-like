@@ -1,35 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
-	<component name="NewModuleRootManager">
-		<content url="file://$MODULE_DIR$">
-			<sourceFolder url="file://$MODULE_DIR$/site-php/src" isTestSource="false" packagePrefix="WebtoonLike\Site\" />
-			<sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
-			<sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/composer" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/greeflas/php-image-downloader" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/monolog/monolog" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/cache" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/rize/uri-template" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-message" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-client" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/log" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-factory" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/ralouphie/getallheaders" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/firebase/php-jwt" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/common-protos" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/auth" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/cloud-vision" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/gax" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/grpc-gcp" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/protobuf" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/cloud-core" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/symfony/deprecation-contracts" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/grpc/grpc" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/promises" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/psr7" />
-			<excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/guzzle" />
-		</content>
-		<orderEntry type="inheritedJdk" />
-		<orderEntry type="sourceFolder" forTests="false" />
-	</component>
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/site-php/src" isTestSource="false" packagePrefix="WebtoonLike\Site\" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/greeflas/php-image-downloader" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/monolog/monolog" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/rize/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-message" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/log" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/psr/http-factory" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/common-protos" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/cloud-vision" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/gax" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/grpc-gcp" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/protobuf" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/google/cloud-core" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/symfony/deprecation-contracts" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/grpc/grpc" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/site-php/vendor/guzzlehttp/guzzle" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
 </module>

@@ -1,7 +1,8 @@
-CREATE DATABASE webtoonlike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE webtoonlike;
+DROP DATABASE IF EXISTS webtoonLike;
+CREATE DATABASE webtoonLike CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE webtoonLike;
 
-CREATE TABLE Users (
+CREATE TABLE `User` (
     userID BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32),
     email VARCHAR(256),
@@ -14,68 +15,69 @@ CREATE TABLE Report (
     type INT,
     userID BIGINT NOT NULL,
     PRIMARY KEY (reportID),
-    FOREIGN KEY (userID) REFERENCES Users(userID)
-)  ENGINE=INNODB; 
+    FOREIGN KEY (userID) REFERENCES User(userID)
+)  ENGINE=INNODB;
 
-CREATE TABLE TranslationProposition (
-    translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
-    proposedTranslation TEXT,
-    PRIMARY KEY (translationPropositionID)
-)  ENGINE=INNODB; 
-
-CREATE TABLE Propose (
-    translationPropositionID BIGINT NOT NULL,
-    userID BIGINT NOT NULL,
-    FOREIGN KEY (userID) REFERENCES Users(userID),
-    FOREIGN KEY (translationPropositionID) REFERENCES TranslationProposition(translationPropositionID)
-)  ENGINE=INNODB; 
-
-CREATE TABLE Webtoons (
+CREATE TABLE Webtoon (
     webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(256),
+    `name` VARCHAR(256),
     author VARCHAR(128),
-    description TEXT,
+    `description` TEXT,
     PRIMARY KEY (webtoonID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Chapter (
     chapterID BIGINT NOT NULL AUTO_INCREMENT,
-    number INT,
+    `index` INT,
     title VARCHAR(256),
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
-    FOREIGN KEY (webtoonID) REFERENCES Webtoons(webtoonID)
+    FOREIGN KEY (webtoonID) REFERENCES Webtoon(webtoonID)
 )  ENGINE=INNODB; 
 
 CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT,
-    position INT,
+    `index` INT,
     path VARCHAR(256),
+    needOCR bool,
     chapterID BIGINT NOT NULL,
     PRIMARY KEY (imageID),
     FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
-)  ENGINE=INNODB; 
+)  ENGINE=INNODB;
 
-CREATE TABLE CellPosition (
-    cellPositionID BIGINT NOT NULL AUTO_INCREMENT,
-    xAxis INT,
-    yAxis INT,
-    PRIMARY KEY (cellPositionID)
-)  ENGINE=INNODB; 
+CREATE TABLE `Language` (
+    identifier VARCHAR(256) NOT NULL,
+    `name` VARCHAR(256) NOT NULL,
+    PRIMARY KEY (identifier)
+)  ENGINE=INNODB;
 
-CREATE TABLE AvailableLanguage (
-    languageName VARCHAR(256) NOT NULL,
-    PRIMARY KEY (languageName)
-)  ENGINE=INNODB; 
-
-CREATE TABLE Cell (
-    cellID BIGINT NOT NULL AUTO_INCREMENT,
-    content TEXT,
+CREATE TABLE `Block` (
+    blockID BIGINT NOT NULL AUTO_INCREMENT,
+    originalContent TEXT,
+    startX int,
+    startY int,
+    endX int,
+    endY int,
     imageID BIGINT NOT NULL,
-    cellPositionID BIGINT NOT NULL,
-    languageName VARCHAR(256) NOT NULL,
-    PRIMARY KEY (cellID),
-    FOREIGN KEY (imageID) REFERENCES Image(imageID),
-    FOREIGN KEY (cellPositionID) REFERENCES CellPosition(cellPositionID),
-    FOREIGN KEY (languageName) REFERENCES AvailableLanguage(languageName)
-)ENGINE=INNODB; 
+    PRIMARY KEY (blockID),
+    FOREIGN KEY (imageID) REFERENCES Image(imageID)
+)ENGINE=INNODB;
+
+CREATE TABLE `Translation` (
+    languageIdentifier VARCHAR(256) NOT NULL,
+    blockID BIGINT NOT NULL,
+    content TEXT,
+    PRIMARY KEY (languageIdentifier, blockID),
+    FOREIGN KEY (languageIdentifier) REFERENCES Language(identifier),
+    FOREIGN KEY (blockID) REFERENCES Block(blockID)
+)  ENGINE=INNODB;
+
+CREATE TABLE TranslationProposition (
+    translationPropositionID BIGINT NOT NULL AUTO_INCREMENT,
+    proposedTranslation TEXT,
+    blockID BIGINT NOT NULL,
+    userID BIGINT NOT NULL,
+    PRIMARY KEY (translationPropositionID),
+    FOREIGN KEY (blockID) REFERENCES Block(blockID),
+    FOREIGN KEY (userID) REFERENCES User(userID)
+)  ENGINE=INNODB;
