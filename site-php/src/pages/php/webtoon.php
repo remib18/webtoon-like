@@ -32,10 +32,10 @@ require dirname(__DIR__, 2) . '/components/header.php';
         <pre>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dolor turpis, elementum at ex in, condimentum ornare mi. Integer fermentum risus at placerat scelerisque. Maecenas elit nulla, vestibulum in maximus vestibulum, facilisis a tortor.
 Nam fringilla blandit libero. In pulvinar est sit amet pellentesque facilisis. Aliquam ornare, sem et iaculis fermentum, dolor tortor rutrum neque, vel pretium nunc felis placerat nunc. Nulla facilisi. Phasellus rutrum eros ac sollicitudin pulvinar.
 Nunc est lacus, eleifend sit amet pellentesque nec, porta non urna.</pre>
-        <h3>Genres</h3>
+        <!--<h3>Genres</h3>
         <span class="genre">AAA</span>
         <span>•</span>
-        <span class="genre">BBB</span>
+        <span class="genre">BBB</span>-->
         <a href="./import-chapter.html" class="button outlined">Importer un nouveau chapitre</a>
     </aside>
     <section aria-describedby="content">
