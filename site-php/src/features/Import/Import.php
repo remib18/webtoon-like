@@ -48,14 +48,14 @@ class Import
         $chapterId = ChapterController::create([
             'number' => $chapter,
             'title' => '',
-            'webtoonId' => $webtoonId
+            'webtoonID' => $webtoonId
         ]);
 
         for ($j = 0; $j < $i; $j++) {
             ImageController::create([
                 'position' => $j,
                 'path' => 'file://' . base_images_folder . "$webtoonId/$chapter/$j.jpg",
-                'chapterId' => $chapterId
+                'chapterID' => $chapterId
             ]);
         }
 
