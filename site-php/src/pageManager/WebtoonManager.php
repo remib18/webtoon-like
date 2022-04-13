@@ -7,21 +7,26 @@ use WebtoonLike\Site\entities\Webtoon;
 
 class WebtoonManager
 {
-    static Webtoon $webtoon;
+    static ?Webtoon $webtoon = null;
 
     private static function getWebtoon(): Webtoon {
-        if (!isset(self::$webtoon)) {
-            if (!(isset($_POST['id']) && is_numeric($_POST['id']))) {
-                self::$webtoon = WebtoonController::getById((int)$_POST['id']);
+        if (is_null(self::$webtoon)) {
+            if (isset($_GET['id'])) {
+                self::$webtoon = WebtoonController::getById((int)$_GET['id']);
             } else {
-                header('Location: /');
+                var_dump($_GET);
+                //header('Location: /');
             }
+        }
+        if (is_null(self::$webtoon)) {
+            var_dump(self::$webtoon);
+            //header('Location: /');
         }
         return self::$webtoon;
     }
 
     public static function getName(): string {
-        return 'The Beginning after the end';
+        return self::getWebtoon()->getName();
     }
 
 }
