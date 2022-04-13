@@ -10,8 +10,6 @@ use WebtoonLike\Site\utils\Database;
 
 class ChapterController
 {
-
-    // get by id, get by webtoon-id // getby-index
     /**
      * Obtenir la liste des chapter
      *
