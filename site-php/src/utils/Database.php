@@ -50,6 +50,16 @@ class Database
         return self::getDB()->query($q)->fetch_row()[0];
     }
 
+    /**
+     * Retourne toutes les ressources dans la table
+     *
+     * @param string $table La table
+     * @param string $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
+     * @param string|array $select '*' ou un tableau contenant les noms des champs à sélectionner
+     * @param array $where Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules et les tests
+     *
+     * @return EntityInterface[] Un tableau de l'entité correspondante à celle souhaité
+     */
     public static function getAll(string $table, string $entityClass, string|array $select, array $where): array {
         $selectedColumns = self::getSelectedColumns($select, $entityClass);
         $whereConditions = sizeof($where) > 0 ? ' WHERE' . self::getWhereConditions($where, $entityClass) : '';
@@ -60,6 +70,16 @@ class Database
         return self::responseToObjects($res, $entityClass);
     }
 
+    /**
+     * Retourne la première ressource correspondante
+     *
+     * @param string $table La table
+     * @param string $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
+     * @param string|array $select '*' ou un tableau contenant les noms des champs à sélectionner
+     * @param array $where Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules et les tests
+     *
+     * @return EntityInterface|null L'entité correspondante à celle souhaité ou null si inexistant
+     */
     public static function getFirst(string $table, string $entityClass, string|array $select, array $where): ?EntityInterface {
         $selectedColumns = self::getSelectedColumns($select, $entityClass);
         $whereConditions = sizeof($where) > 0 ? ' WHERE' . self::getWhereConditions($where, $entityClass) : '';
@@ -70,13 +90,29 @@ class Database
         return self::responseToObjects([$res], $entityClass)[0] ?? null;
     }
 
-    public static function remove($table, EntityInterface $entity): bool {
+    /**
+     * Supprime la ressource et renvoie vrai si l'opération a été effectué avec succès.
+     *
+     * @param string          $table Le nom de la table
+     * @param EntityInterface $entity La ressource à supprimer
+     *
+     * @return bool
+     */
+    public static function remove(string $table, EntityInterface $entity): bool {
         $where = self::whereIds($entity);
         $q = "DELETE FROM `$table` WHERE $where";
         return self::getDB()
             ->query($q);
     }
 
+    /**
+     * Crée une ressource dans la base de donnée
+     *
+     * @param string          $table Le nom de la table
+     * @param EntityInterface $entity La ressource à enregistrer
+     *
+     * @return bool Faux en cas d'erreur
+     */
     public static function create(string $table, EntityInterface &$entity): bool {
         $fields = '';
         $values = '';
@@ -94,6 +130,14 @@ class Database
         return $res;
     }
 
+    /**
+     * Modifie une ressource dans la base de donnée
+     *
+     * @param string          $table Le nom de la table
+     * @param EntityInterface $entity La ressource modifiée
+     *
+     * @return bool Faux en cas d'erreur
+     */
     public static function edit(string $table, EntityInterface &$entity): bool {
         $sets = self::buildEditSet($entity);
         $where = self::whereIds($entity);
@@ -105,6 +149,13 @@ class Database
         return $res;
     }
 
+    /**
+     * Obtention du where pour une recherche par identifiants
+     *
+     * @param EntityInterface $entity
+     *
+     * @return string
+     */
     private static function whereIds(EntityInterface $entity): string {
         $where = '';
         foreach ($entity::getIdentifiers() as $id) {
@@ -114,6 +165,13 @@ class Database
         return substr($where, 0, -5);
     }
 
+    /**
+     * Construit la partie set d'une requête update.
+     *
+     * @param EntityInterface $entity
+     *
+     * @return string
+     */
     private static function buildEditSet(EntityInterface $entity): string {
         $res = '';
         foreach ($entity->getFieldsToSave() as $key => $value) {
@@ -123,10 +181,26 @@ class Database
         return substr($res, 0, -2);
     }
 
-    private static function normalizeValue(mixed $value): mixed {
-        return is_string($value) ? "'$value'" : $value;
+    /**
+     * Ajoute des guillemets si chaine de caractère
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    private static function normalizeValue(mixed $value): string {
+        return is_string($value) ? "'$value'" : (string)$value;
     }
 
+    /**
+     * Vérifie l'existence de la colonne dans la table
+     * Note: pourrait avoir été effectué avec des requêtes, mais risque de surcharge de la base.
+     *
+     * @param array  $keys
+     * @param string $entityClass
+     *
+     * @return void
+     */
     private static function testIfColumnKeysExistsOnEntity(array $keys, string $entityClass): void {
         foreach ($keys as $key) {
             if (!in_array($key, $entityClass::getColumnsKeys())) {
@@ -135,6 +209,14 @@ class Database
         }
     }
 
+    /**
+     * Construit la liste des colonnes sélectionnées
+     *
+     * @param string|array $select
+     * @param string       $entityClass
+     *
+     * @return string
+     */
     private static function getSelectedColumns(string|array $select, string $entityClass): string {
         if ($select === '*') return $select;
         if (is_string($select)) throw new InvalidArgumentException('Select can only be \'*\' or an array of columns.');
@@ -142,6 +224,14 @@ class Database
         return join(', ', $select);
     }
 
+    /**
+     * Construit une condition where
+     *
+     * @param array  $where
+     * @param string $entityClass
+     *
+     * @return string
+     */
     private static function getWhereConditions(array $where, string $entityClass): string {
         $res = '';
         foreach ($where as $key => $value) {
