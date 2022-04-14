@@ -75,6 +75,12 @@ class GoogleOCR implements OCRInterface
     }
 
     /**
+     * Effectue un appel API pour une image
+     *
+     * @param int $index Index de l'image dans la pile de traitement
+     *
+     * @return void
+     *
      * @throws InvalidProtocolException
      * @throws \Google\ApiCore\ApiException
      */
@@ -97,18 +103,27 @@ class GoogleOCR implements OCRInterface
 
             $image->setNeedOCR(false);
         } else {
-            $this->loadImageOCRResult();
+            $this->loadImageOCRResult($image);
         }
     }
 
     /**
+     * Effectue le traitement pour toutes les images.
+     *
+     * @note: Actuellement utilise un appel api par image,
+     * car manque de documentation pour l'implémentation de la requête batch...
+     *
+     * @todo: Optimize batch call
+     * @see StackOverflowIssue : https://stackoverflow.com/questions/71827453/google-cloud-vision-php-make-batch-request
+     * @see OfficialDocumentation : https://cloud.google.com/vision/docs/batch#sample_code
+     *
+     * @return void
+     *
      * @throws InvalidProtocolException
      * @throws \Google\ApiCore\ApiException
      */
     private function runBatch(): void {
-        // TODO: Optimize batch call
-        // See : https://stackoverflow.com/questions/71827453/google-cloud-vision-php-make-batch-request
-        // See : https://cloud.google.com/vision/docs/batch#sample_code
+
 
         // Temporary implementation
         for ($i = 0; $i < sizeof($this->images); $i++) {
@@ -117,6 +132,11 @@ class GoogleOCR implements OCRInterface
         }
     }
 
+    /**
+     * Obtention des textes
+     *
+     * @return void
+     */
     private function setTexts(): void {
         $textAnnotations = $this->response->getTextAnnotations();
         for ($i = 1; $i < sizeof($textAnnotations); $i++) {
@@ -124,6 +144,11 @@ class GoogleOCR implements OCRInterface
         }
     }
 
+    /**
+     * Créations des blocs
+     *
+     * @return void
+     */
     private function makeBlocs(): void {
         foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
             foreach ($page->getBlocks() as $block) {
@@ -144,6 +169,11 @@ class GoogleOCR implements OCRInterface
         }
     }
 
+    /**
+     * Création de la taille de police
+     *
+     * @return void
+     */
     function setFontSize(): void {
         $charVertices = $this->response
             ->getFullTextAnnotation()
@@ -159,6 +189,11 @@ class GoogleOCR implements OCRInterface
         $this->results[$this->workingIndex]->setFontSize($end - $start);
     }
 
+    /**
+     * Mise à jour des blocs pour correspondre à un vrai bloc
+     *
+     * @return void
+     */
     private function fixBlocs(): void {
         $initialBlocs = $this->results[$this->workingIndex]->getBlocs();
         $blocs = [];
@@ -180,14 +215,27 @@ class GoogleOCR implements OCRInterface
         $this->results[$this->workingIndex]->setBlocs($blocs);
     }
 
+    /**
+     * Préparation au prochain appel
+     *
+     * @return void
+     */
     private function resetForNext(): void {
         $this->texts = [];
         $this->workingIndex = null;
         $this->response = null;
     }
 
-    // TODO
-    private function loadImageOCRResult()
+    /**
+     * Charge le résultat à partir de la base de donnée si l'image a déjà été traitée
+     *
+     * @todo Implémenter la méthode
+     *
+     * @param Image $image
+     *
+     * @return void
+     */
+    private function loadImageOCRResult(Image $image): void
     {
 
     }
