@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\utils;
 use InvalidArgumentException;
 use mysqli;
 use WebtoonLike\Site\entities\EntityInterface;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\Settings;
 
 class Database
@@ -108,10 +109,13 @@ class Database
     /**
      * Crée une ressource dans la base de donnée
      *
-     * @param string          $table Le nom de la table
+     * @param string          $table  Le nom de la table
      * @param EntityInterface $entity La ressource à enregistrer
      *
+     *                                La ressource est modifiée avec son nouvel identifiant
+     *
      * @return bool Faux en cas d'erreur
+     * @throws NoIdOverwritingException
      */
     public static function create(string $table, EntityInterface &$entity): bool {
         $fields = '';
@@ -126,6 +130,8 @@ class Database
         $res = Database::getDB()->query($q);
         if ($res) {
             $entity->AllFieldsSaved();
+            $entity->setId(self::getLastInsertedId());
+            // return self::getLastInsertedId();
         }
         return $res;
     }
@@ -133,7 +139,7 @@ class Database
     /**
      * Modifie une ressource dans la base de donnée
      *
-     * @param string          $table Le nom de la table
+     * @param string          $table  Le nom de la table
      * @param EntityInterface $entity La ressource modifiée
      *
      * @return bool Faux en cas d'erreur

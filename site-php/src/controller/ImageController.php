@@ -5,12 +5,13 @@ namespace WebtoonLike\Site\controller;
 use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\utils\Database;
 
 class ImageController
 {
     /**
-     * Obtenir la liste des image
+     * Obtenir la liste des images
      *
      * @param string|array $col
      * @param array $where
@@ -62,9 +63,12 @@ class ImageController
      * Enregistre une image et retourne son identifiant ou <code>false</code> en cas d'erreur.
      *
      * @param Image $entity
-     * @return int|false Faux en cas d'erreur
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
      */
-    public static function create(Image &$entity): int|false
+    public static function create(Image &$entity): bool
     {
         return Database::create('Image', $entity);
     }
