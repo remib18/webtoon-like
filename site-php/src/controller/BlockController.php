@@ -15,7 +15,7 @@ class BlockController
      *
      * @param Image $image
      *
-     * @return array
+     * @return Block[]
      */
     public static function getAll(Image $image): array {
         $imgId = $image->getId();
