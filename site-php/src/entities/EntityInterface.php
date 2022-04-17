@@ -2,6 +2,8 @@
 
 namespace WebtoonLike\Site\entities;
 
+use WebtoonLike\Site\exceptions\AlreadyExistingRessourceException;
+
 interface EntityInterface
 {
 
@@ -43,8 +45,21 @@ interface EntityInterface
     /**
      * Enregistre la sauvegarde des données
      * Attention, ne doit être exécuté que si les données ont bien été enregistrées dans la BDD !
+     *
      * @return void
      */
     public function AllFieldsSaved(): void;
+
+    /**
+     * Définit l'identifiant après enregistrement dans la base de données.
+     * Si la ressource a déjà un identifiant, retourne une erreur.
+     *
+     * @param int $id
+     *
+     * @return void
+     *
+     * @throws NoIdOverwritingException
+     */
+    public function setId(int $id): void;
 
 }
