@@ -23,7 +23,8 @@ class Settings {
             'port' => null,
             'socket' => null
         ],
-        'production' => false
+        'production' => false,
+        'AZURE_API_KEY' => ''
     ];
 
     public static function get(string $key): mixed {
@@ -36,7 +37,8 @@ class Settings {
         'GT_API_KEY_FILE' => "string",
         'preTranslateTo' => "string[]",
         'webtoonsImagesBaseFolder' => "string",
-        'DATABASE' => "array"
+        'DATABASE' => "array",
+        'AZURE_API_KEY' => "string"
     ])]
     public static function getAll(): array {
         return self::$settings;
