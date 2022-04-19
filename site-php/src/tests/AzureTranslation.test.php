@@ -14,3 +14,17 @@ $fr = new Language('fr', 'french', false);
 
 $res = AzureTranslation::translate("Voici un test qui fonctionne.", $fr, $es);
 var_dump($res);
+
+$list = [
+    'WHICH OF FIRST BECOMES',
+    'THE SORCERY EMPEROR !!!',
+    'AN OATH BETWEEN MEN!!'
+];
+
+$res = AzureTranslation::translateMany(
+    $list,
+    new Language('en', '', false),
+    new Language('fr', '', false)
+);
+
+var_dump($res);
