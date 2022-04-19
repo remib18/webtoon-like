@@ -6,6 +6,7 @@ CREATE TABLE `User` (
     userID BIGINT NOT NULL AUTO_INCREMENT,
     username VARCHAR(32) not null,
     email VARCHAR(256) not null,
+    password VARCHAR(256) not null,
     registeredAt DATETIME not null,
     PRIMARY KEY (userID)
 )  ENGINE=INNODB; 
