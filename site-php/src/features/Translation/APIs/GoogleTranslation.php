@@ -8,7 +8,7 @@ use WebtoonLike\Site\exceptions\InvalidApiKeyException;
 use WebtoonLike\Site\exceptions\TranslationErrorException;
 use WebtoonLike\Site\Settings;
 
-class GoogleApiTranslation implements TranslationInterface
+class GoogleTranslation implements TranslationInterface
 {
     /**
      * Generate URL for the translate method.
@@ -45,13 +45,11 @@ class GoogleApiTranslation implements TranslationInterface
      * @return string Traduction
      *
      *
-     * @throws InvalidRequestException
-     * @throws InvalidApiKeyException
-     * @throws TranslationErrorException
+     * @throws TranslationException
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
-        $url = self::prepareURL($text, $source, $target);
+        $url = self::prepareURL($text, $source->getIdentifier(), $target->getIdentifier());
         $response = curlHelper::httpGet($url);
 
         $code = $response['httpCode'];
@@ -60,23 +58,9 @@ class GoogleApiTranslation implements TranslationInterface
         {
             return $decodedResponse['data']['translations'][0]['translatedText'];
         }
-        else
-        {
-            $error = $decodedResponse['error']['errors'][0]['message'];
-            if( $code == 400 )
-            {
-                throw new InvalidRequestException($error);
-            }
-            else if( $code == 403 )
-            {
-                throw new InvalidApiKeyException($error);
-            }
-            else if( $code == 500 )
-            {
-                throw new TranslationErrorException($error);
-            }
-            return '';
-        }
+
+        $error = $decodedResponse['error']['errors'][0]['message'];
+        throw new TranslationException($error);
 
     }
 
@@ -87,11 +71,7 @@ class GoogleApiTranslation implements TranslationInterface
     {
         $response = [];
         foreach ($texts as $text) {
-            try
-            {
-                $response[] = self::translate($text, $source, $target);
-            }
-            catch (InvalidApiKeyException|TranslationErrorException|InvalidRequestException $e) {}
+            $response[] = self::translate($text, $source, $target);
         }
         return $response;
     }
