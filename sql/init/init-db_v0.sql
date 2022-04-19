@@ -52,15 +52,20 @@ CREATE TABLE `Language` (
 )  ENGINE=INNODB;
 
 CREATE TABLE `Block` (
-    blockID BIGINT NOT NULL AUTO_INCREMENT,
+    blockID BIGINT NOT NULL AUTO_INCREMENT primary key,
     originalContent TEXT,
     startX int,
     startY int,
     endX int,
     endY int,
     imageID BIGINT NOT NULL,
-    PRIMARY KEY (blockID),
-    FOREIGN KEY (imageID) REFERENCES Image(imageID)
+    originalLanguage varchar(256) not null,
+    constraint Block_Language_identifier_fk
+        foreign key (originalLanguage) references Language (identifier)
+            on update cascade,
+    constraint Block_Image_imageID_fk
+        foreign key (imageID) references Image (imageID)
+            on update cascade
 )ENGINE=INNODB;
 
 CREATE TABLE `Translation` (
