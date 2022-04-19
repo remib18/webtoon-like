@@ -137,6 +137,7 @@ class GoogleOCR implements OCRInterface
             $this->runSingle($i);
             $this->resetForNext();
         }
+
     }
 
     /**
@@ -153,6 +154,8 @@ class GoogleOCR implements OCRInterface
 
     /**
      * Créations des blocs
+     *
+     * @param Image $image
      *
      * @return void
      */

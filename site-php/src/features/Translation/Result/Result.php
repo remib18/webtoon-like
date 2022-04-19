@@ -78,4 +78,10 @@ class Result
         return $this->originalLanguage;
     }
 
+    public function setTranslations(array $translations, Language $target): void {
+        foreach ($this->blocks as $block) {
+            $block->registerTranslation($target->getIdentifier(), $translations[$block->getId()]);
+        }
+    }
+
 }

@@ -105,10 +105,14 @@ class WebtoonTranslation
     private function translate(int $chapterId, Language $target): void {
         $this->loadImages($chapterId);
         foreach ($this->results as $result) {
+            $toTranslate = [];
             foreach ($result->getBlocks() as $block) {
-                $translation = $this->getTranslation($block, $result->getOriginalLanguage(), $target);
-                $block->registerTranslation($translation->getLanguageIdentifier(), $translation->getContent());
+                $toTranslate[$block->getId()] = $block->getOriginalContent();
+                // $translation = $this->getTranslation($block, $result->getOriginalLanguage(), $target);
+                // $block->registerTranslation($translation->getLanguageIdentifier(), $translation->getContent());
             }
+            $translations = $this->translation::translateMany($toTranslate, $result->getOriginalLanguage(), $target);
+            $result->setTranslations($translations, $target);
         }
     }
 

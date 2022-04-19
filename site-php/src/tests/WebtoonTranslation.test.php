@@ -13,7 +13,7 @@ use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\entities\Webtoon;
-use WebtoonLike\Site\features\Translation\APIs\LibreTranslateTranslation;
+use WebtoonLike\Site\features\Translation\APIs\AzureTranslation;
 use WebtoonLike\Site\features\Translation\OCR\Providers\GoogleOCR;
 use WebtoonLike\Site\features\Translation\WebtoonTranslation;
 
@@ -34,7 +34,7 @@ try {
     }
 } catch (\Exception) {}
 
-$ocr = new WebtoonTranslation(GoogleOCR::class, LibreTranslateTranslation::class);
+$ocr = new WebtoonTranslation(GoogleOCR::class, AzureTranslation::class);
 
 $res = $ocr->getTranslatedWebtoonImages(1, 2, new Language('fr', 'french', false));
 
