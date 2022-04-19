@@ -24,7 +24,8 @@ class Settings {
             'socket' => null
         ],
         'production' => false,
-        'AZURE_API_KEY' => ''
+        'AZURE_API_KEY' => '',
+        'AZURE_API_LOCATION' => 'westeurope'
     ];
 
     public static function get(string $key): mixed {
