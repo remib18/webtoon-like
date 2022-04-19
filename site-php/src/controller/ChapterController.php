@@ -38,14 +38,27 @@ class ChapterController
     /**
      * Obtention du chapter avec l'identifiant correspondant.
      *
-     * @param int $index index recherché
+     * @param int $webtoonID
+     * @param int     $index index recherché
+     *
      * @return Chapter|null
      */
-    public static function getByIndex(Webtoon $webtoonID, int $index): ?Chapter
+    public static function getByIndex(int $webtoonID, int $index): ?Chapter
     {
         return Database::getFirst('Chapter', Chapter::class, '*', [
             'index,webtoonID' => "index = $index AND webtoonID' = $webtoonID"
             ]);
+    }
+
+    /**
+     * Obtention de la liste des images liées à ce chapitre
+     *
+     * @param int $chapterId
+     *
+     * @return Image[]
+     */
+    public static function getImages(int $chapterId): array {
+        return Database::getAll('Image', Image::class, '*', ['chapterID' => "chapterID = $chapterId"]);
     }
 
     /**

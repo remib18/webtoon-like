@@ -30,7 +30,11 @@ class BlockController
      * @return Block|null
      */
     public static function getById(int $id): ?Block {
-        return Database::getFirst('Block', Block::class, '*', ['ImageID' => "ImageID = $id"]);
+        return Database::getFirst('Block', Block::class, '*', ['blockID' => "blockID = $id"]);
+    }
+
+    public static function getByImageId(int $id): ?Block {
+        return Database::getFirst('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
     }
 
     /**
