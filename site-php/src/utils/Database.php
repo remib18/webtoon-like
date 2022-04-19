@@ -194,7 +194,7 @@ class Database
      *
      * @return string
      */
-    private static function normalizeValue(mixed $value): string {
+    public static function normalizeValue(mixed $value): string {
         return is_string($value) ? "'$value'" : (string)$value;
     }
 
