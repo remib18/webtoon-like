@@ -27,7 +27,7 @@ class LanguageController
      */
     public static function getById(string $languageId): ?Language {
         return Database::getFirst('Language', Language::class, '*', [
-            'languageIdentifier' => "languageIdentifier = $languageId"
+            'identifier' => "identifier = '$languageId'"
         ]);
     }
 

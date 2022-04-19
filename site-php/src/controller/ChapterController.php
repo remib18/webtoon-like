@@ -46,7 +46,7 @@ class ChapterController
     public static function getByIndex(int $webtoonID, int $index): ?Chapter
     {
         return Database::getFirst('Chapter', Chapter::class, '*', [
-            'index,webtoonID' => "index = $index AND webtoonID' = $webtoonID"
+            'index,webtoonID' => "`index` = $index AND webtoonID = $webtoonID"
             ]);
     }
 

@@ -62,6 +62,17 @@ class BlockController
     }
 
     /**
+     * Enregistre une liste de blocks
+     *
+     * @param Block[] $entities
+     *
+     * @return bool
+     */
+    public static function createBatch(array $entities): bool {
+        return Database::createBatch('Block', $entities);
+    }
+
+    /**
      * Supprime le block
      *
      * @param Block $entity
