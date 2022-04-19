@@ -2,6 +2,8 @@
 
 namespace WebtoonLike\Site\features\Translation\Result;
 
+use WebtoonLike\Site\entities\Language;
+
 class Result
 {
 
@@ -13,9 +15,11 @@ class Result
 
     /**
      * @param string|null $imagePath Le chemin de l'image à partir du dossier de webtoons. Null si une image manque
+     * @param ?Language $originalLanguage Le langage d'origine de l'image, null si inconnu.
      */
     public function __construct(
-        private ?string $imagePath
+        private ?string $imagePath,
+        private ?Language $originalLanguage
     ) {}
 
     /**
