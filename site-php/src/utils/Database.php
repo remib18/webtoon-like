@@ -137,6 +137,20 @@ class Database
     }
 
     /**
+     * Enregistrer une liste d'entités dans la base de données
+     * @param string            $table Le nom de la table
+     * @param EntityInterface[] $entities Les ressources à enregistrer
+     *
+     * @return bool
+     */
+    public static function createBatch(string $table, array $entities): bool {
+        $fields = join(', ', array_keys($entities[0]->getFieldsToSave()));
+        $values = self::insertValues($entities);
+        $q = "INSERT INTO `$table`($fields) VALUES $values";
+        return Database::getDB()->query($q);
+    }
+
+    /**
      * Modifie une ressource dans la base de donnée
      *
      * @param string          $table  Le nom de la table
@@ -153,6 +167,25 @@ class Database
             $entity->AllFieldsSaved();
         }
         return $res;
+    }
+
+    /**
+     * Obtention des valeurs d'insertion
+     *
+     * @param EntityInterface[] $entities
+     *
+     * @return string
+     */
+    private static function insertValues(array $entities): string {
+        $res = '';
+        foreach ($entities as $entity) {
+            $fields = [];
+            foreach ($entity->getFieldsToSave() as $item) {
+                $fields[] = self::normalizeValue($item);
+            }
+            $res .= '(' . join(', ', $fields) . '),';
+        }
+        return substr($res, 0, -1);
     }
 
     /**
@@ -195,7 +228,8 @@ class Database
      * @return string
      */
     public static function normalizeValue(mixed $value): string {
-        return is_string($value) ? "'$value'" : (string)$value;
+        if (is_null($value)) return 'null';
+        return is_string($value) ? "'" . self::getDB()->escape_string($value) . "'" : (string)$value;
     }
 
     /**
