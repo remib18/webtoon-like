@@ -3,10 +3,9 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
-use WebtoonLike\Site\exceptions\InvalidRequestException;
 use WebtoonLike\Site\exceptions\InvalidApiKeyException;
-use WebtoonLike\Site\exceptions\TranslationErrorException;
-use WebtoonLike\Site\exceptions\SlowDownException;
+use WebtoonLike\Site\exceptions\TranslationException;
+use WebtoonLike\Site\exceptions\UnsupportedLanguageException;
 use WebtoonLike\Site\helpers\curlHelper;
 
 class LibreTranslateTranslation implements TranslationInterface
@@ -54,10 +53,7 @@ class LibreTranslateTranslation implements TranslationInterface
      * @param Language $target Langue vers laquelle traduire
      * @return string Traduction
      *
-     * @throws InvalidApiKeyException
-     * @throws InvalidRequestException
-     * @throws SlowDownException
-     * @throws TranslationErrorException
+     * @throws TranslationException
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
@@ -66,31 +62,12 @@ class LibreTranslateTranslation implements TranslationInterface
         foreach ($requests as $data) {
             $response = curlHelper::httpPost($data);
             $code = $response['httpCode'];
-            if($code == 200) {
+
+            if($code === 200) {
                 return $response['response']['translatedText'];
             }
-            else if( $code == 403 ) {
-                throw new InvalidApiKeyException('Invalid Api Key For ' . $data['url']);
-            }
-            else {
-                $error = $response['response']['error'];
-                if( $code == 500 ) {
-                    // TO-DO: verify the language was available.
-                    // Return if it was.
-                    throw new TranslationErrorException($error);
-                }
-                else {
-                    if( $code == 400 ) {
-                        throw new InvalidRequestException($error);
-                    }
-                    else if( $code == 429 ) {
-                        throw new SlowDownException($error);
-                    }
-                    return '';
-                }
-            }
         }
-        throw new NoApiAvailableException('No Translation Api Was Up');
+        throw new TranslationException('No Translation Api Was Up.');
     }
 
     /**
@@ -100,10 +77,7 @@ class LibreTranslateTranslation implements TranslationInterface
     {
         $response = [];
         foreach ($texts as $text) {
-            try
-            {
-                $response[] = self::translate($text, $source, $target);
-            } catch (InvalidApiKeyException|TranslationErrorException|SlowDownException|InvalidRequestException $e) {}
+            $response[] = self::translate($text, $source, $target);
         }
         return $response;
     }
