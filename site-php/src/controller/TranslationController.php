@@ -19,8 +19,8 @@ class TranslationController
      */
     public static function get(string $languageId, int $blockID): ?Translation {
         return Database::getFirst('Translation', Translation::class, '*', [
-            'languageIdentifier' => "languageIdentifier = $languageId",
-            'blockID' => "blockID = $blockID"
+            'languageIdentifier' => "languageIdentifier = '$languageId'",
+            'blockID' => "AND blockID = $blockID"
         ]);
     }
 

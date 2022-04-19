@@ -4,6 +4,7 @@ namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\features\Translation\Result\Bloc;
 
 class Block implements EntityInterface
 {
@@ -17,6 +18,9 @@ class Block implements EntityInterface
 
     private ?int $id;
     private int $imageId;
+
+    /** @var string[] $translations La liste des traductions chargées */
+    private array $translations = [];
 
     public function __construct(
         ?int $blockID,
@@ -37,6 +41,28 @@ class Block implements EntityInterface
         $this->setImageId($imageID);
 
         if ($fromDB) $this->AllFieldsSaved();
+    }
+
+    public static function merge(Block $current, Block $next): Block {
+        if ($next->getStartX() < $current->getStartX()) {
+            $current->setStartX($next->getStartX());
+        }
+        if ($next->getStartY() < $current->getStartY()) {
+            $current->setStartY($next->getStartY());
+        }
+
+        if ($next->getEndX() > $current->getEndX()) {
+            $current->setEndX($next->getEndX());
+        }
+        if ($next->getEndY() > $current->getEndY()) {
+            $current->setEndY($next->getEndY());
+        }
+
+        $current->setOriginalContent(
+            $current->getOriginalContent() . ' ' . $next->getOriginalContent()
+        );
+
+        return $current;
     }
 
     /**
@@ -147,6 +173,14 @@ class Block implements EntityInterface
     {
         $this->fieldsToSave['startY'] = $startY;
         $this->startY = $startY;
+    }
+
+    public function registerTranslation(string $languageId, string $translation): void {
+        $this->translations[$languageId] = $translation;
+    }
+
+    public function getTranslation(string $languageId): string {
+        return $this->translations[$languageId];
     }
 
     /**

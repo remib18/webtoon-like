@@ -4,7 +4,9 @@ namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
+use WebtoonLike\Site\entities\Translation;
 use WebtoonLike\Site\utils\Database;
 
 class BlockController
@@ -81,6 +83,24 @@ class BlockController
      */
     public static function remove(Block $entity): bool {
         return Database::remove('Block', $entity);
+    }
+
+    /**
+     * Détermine si le block a été traduit dans la langue fournit
+     *
+     * @param int    $id
+     * @param string $languageId
+     *
+     * @return bool
+     */
+    public static function isTranslatedIn(int $id, string $languageId): bool {
+        $res = Database::getFirst(
+            'Translation',
+            Translation::class,
+            '*',
+            ['blockID,languageIdentifier' => "blockID = $id AND languageIdentifier = '$languageId'"]
+        );
+        return !is_null($res);
     }
 
 }

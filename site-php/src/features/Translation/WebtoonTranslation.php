@@ -2,13 +2,16 @@
 
 namespace WebtoonLike\Site\features\Translation;
 
+use WebtoonLike\Site\controller\BlockController;
 use WebtoonLike\Site\controller\ChapterController;
+use WebtoonLike\Site\controller\TranslationController;
 use WebtoonLike\Site\controller\WebtoonController;
+use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\entities\Translation;
 use WebtoonLike\Site\exceptions\AlreadyExistingRessourceException;
 use WebtoonLike\Site\exceptions\ApiException;
 use WebtoonLike\Site\exceptions\NotFoundException;
-use WebtoonLike\Site\exceptions\UnableToLoadImageException;
 use WebtoonLike\Site\features\Import\Import;
 use WebtoonLike\Site\features\Translation\APIs\TranslationInterface;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
@@ -65,27 +68,23 @@ class WebtoonTranslation
      * @throws AlreadyExistingRessourceException
      * @throws ApiException
      */
-    public function getTranslatedWebtoonImages(int $id, int $chapter, Language $lang): array {
+    public function getTranslatedWebtoonImages(int $id, int $chapterIndex, Language $lang): array {
 
         // Load images in a Result object, if necessary run OCR
         if(!WebtoonController::exists($id)) throw new NotFoundException('Webtoon introuvable.', 001);
-        $chapterId = ChapterController::getByIndex($id, $chapter)->getId();
+        $chapter = ChapterController::getByIndex($id, $chapterIndex);
+        if (is_null($chapter)) throw new NotFoundException("Chapitre introuvable. (webtoon: $id, chapter: $chapterIndex)");
+        $chapterId = $chapter->getId();
         if(!$chapterId) {
             try {
-                $chapterId = Import::load($id, $chapter);
+                $chapterId = Import::load($id, $chapterIndex);
             } catch (NotFoundException) {
                 throw new NotFoundException('Chapitre introuvable, tentatives de téléchargement échouées.', 002);
             }
         }
 
         // Perform translation
-        $this->loadImages($chapterId);
-        foreach ($this->results as $result) {
-            foreach ($result->getBlocs() as $bloc) {
-                $translation = $this->translation::translate($bloc->getOriginalText(), $result->getOriginalLanguage(), $lang);
-                $bloc->setTranslatedText($translation);
-            }
-        }
+        $this->translate($chapterId, $lang);
         return $this->results;
     }
 
@@ -101,6 +100,25 @@ class WebtoonTranslation
             $this->ocr->registerImage($image);
         }
         $this->results = $this->ocr->runOCR();
+    }
+
+    private function translate(int $chapterId, Language $target): void {
+        $this->loadImages($chapterId);
+        foreach ($this->results as $result) {
+            foreach ($result->getBlocks() as $block) {
+                $translation = $this->getTranslation($block, $result->getOriginalLanguage(), $target);
+                $block->registerTranslation($translation->getLanguageIdentifier(), $translation->getContent());
+            }
+        }
+    }
+
+    private function getTranslation(Block $block, Language $from, Language $target): Translation {
+        if (!BlockController::isTranslatedIn($block->getId(), $target->getIdentifier())) {
+            $translationTxt = $this->translation::translate($block->getOriginalContent(), $from, $target);
+            $translation = new Translation($target->getIdentifier(), $block->getId(), $translationTxt, false);
+            TranslationController::create($translation);
+        }
+        return TranslationController::get($target->getIdentifier(), $block->getId());
     }
 
 }

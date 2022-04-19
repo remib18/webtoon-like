@@ -2,10 +2,10 @@
 
 namespace WebtoonLike\Site\features\Translation\OCR\Providers;
 
-use Exception;
 use Google\ApiCore\ValidationException;
 use Google\Cloud\Vision\V1\AnnotateImageResponse;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Vertex;
 use InvalidArgumentException;
 use WebtoonLike\Site\controller\BlockController;
 use WebtoonLike\Site\controller\ImageController;
@@ -14,8 +14,6 @@ use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\exceptions\ApiException;
 use WebtoonLike\Site\exceptions\InvalidProtocolException;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
-use WebtoonLike\Site\features\Translation\Result\Bloc;
-use WebtoonLike\Site\features\Translation\Result\Position;
 use WebtoonLike\Site\features\Translation\Result\Result;
 use WebtoonLike\Site\Settings;
 use WebtoonLike\Site\utils\OCRUtils;
@@ -103,7 +101,7 @@ class GoogleOCR implements OCRInterface
             $this->response = $this->ocrClient->textDetection($image->getRessource());
             $this->setFontSize();
             $this->setTexts();
-            $this->makeBlocs();
+            $this->makeBlocs($image);
             $this->fixBlocs();
 
             $image->setNeedOCR(false);
@@ -158,7 +156,7 @@ class GoogleOCR implements OCRInterface
      *
      * @return void
      */
-    private function makeBlocs(): void {
+    private function makeBlocs(Image $image): void {
         foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
             foreach ($page->getBlocks() as $block) {
                 $text = '';
@@ -167,13 +165,15 @@ class GoogleOCR implements OCRInterface
                 foreach ($block->getParagraphs() as $paragraph) {
                     foreach ($paragraph->getWords() as $word) {
                         if ($start === null) {
-                            $start = OCRUtils::vertexToPosition($word->getBoundingBox()->getVertices()[0]);
+                            $start = new Vertex(); //$word->getBoundingBox()->getVertices()[0];
                         }
-                        $end = OCRUtils::vertexToPosition($word->getBoundingBox()->getVertices()[2]);
+                        $end = $word->getBoundingBox()->getVertices()[2];
                         $text .= ' ' . array_shift($this->texts);
                     }
                 }
-                $this->results[$this->workingIndex]->appendBloc(new Bloc($text, $start, $end));
+                $this->results[$this->workingIndex]->appendBlock(
+                    new Block(null, $text, $start->getX(), $start->getY(), $end->getX(), $end->getY(), $image->getId(), false)
+                );
             }
         }
     }
@@ -204,14 +204,14 @@ class GoogleOCR implements OCRInterface
      * @return void
      */
     private function fixBlocs(): void {
-        $initialBlocs = $this->results[$this->workingIndex]->getBlocs();
+        $initialBlocks = $this->results[$this->workingIndex]->getBlocks();
         $blocs = [];
-        for ($i = 0; $i < sizeof($initialBlocs); $i++) {
+        for ($i = 0; $i < sizeof($initialBlocks); $i++) {
             $append = false;
-            $current = $initialBlocs[$i];
-            foreach ($initialBlocs as $next) {
+            $current = $initialBlocks[$i];
+            foreach ($initialBlocks as $next) {
                 if (OCRUtils::proximityChecks($current, $next, $this->results[$this->workingIndex]->getFontSize())) {
-                    $blocs[] = Bloc::merge($current, $next);
+                    $blocs[] = Block::merge($current, $next);
                     $append = true;
                     $i++;
                     break;
@@ -221,7 +221,7 @@ class GoogleOCR implements OCRInterface
                 $blocs[] = $current;
             }
         }
-        $this->results[$this->workingIndex]->setBlocs($blocs);
+        $this->results[$this->workingIndex]->setBlocks($blocs);
     }
 
     /**
@@ -239,29 +239,14 @@ class GoogleOCR implements OCRInterface
         $res = new Result($image->getPath(), $image->getOriginalLanguage());
         $res->setFontSize($image->getFontSize());
         foreach (ImageController::getBlocks($image->getId()) as $block) {
-            $res->appendBloc(new Bloc(
-                 $block->getOriginalContent(),
-                 new Position($block->getStartX(), $block->getStartY()),
-                 new Position($block->getEndX(), $block->getEndY())
-            ));
+            $res->appendBlock($block);
         }
         $this->results[$image->getIndex()] = $res;
     }
 
     private function saveInDB(Image $image): void {
-        $blocksToImport = [];
-        foreach ($this->results[$image->getIndex()]->getBlocs() as $bloc) {
-            $blocksToImport[] = new Block(
-                null,
-                $bloc->getOriginalText(),
-                $bloc->getStart()->getX(),
-                $bloc->getStart()->getY(),
-                $bloc->getEnd()->getX(),
-                $bloc->getEnd()->getY(),
-                $image->getId(),
-                false
-            );
-        }
-        BlockController::createBatch($blocksToImport);
+        $blocks = $this->results[$image->getIndex()]->getBlocks();
+        BlockController::createBatch($blocks);
+        $this->results[$image->getIndex()]->setBlocks($blocks);
     }
 }
