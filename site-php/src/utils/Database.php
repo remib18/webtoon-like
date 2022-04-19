@@ -143,11 +143,20 @@ class Database
      *
      * @return bool
      */
-    public static function createBatch(string $table, array $entities): bool {
+    public static function createBatch(string $table, array &$entities): bool {
         $fields = join(', ', array_keys($entities[0]->getFieldsToSave()));
         $values = self::insertValues($entities);
         $q = "INSERT INTO `$table`($fields) VALUES $values";
-        return Database::getDB()->query($q);
+        $res = Database::getDB()->query($q);
+        if ($res) {
+            $id = self::getLastInsertedId();
+            foreach ($entities as $entity) {
+                $entity->setId($id);
+                $id++;
+            }
+            return true;
+        }
+        return false;
     }
 
     /**

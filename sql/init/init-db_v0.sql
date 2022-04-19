@@ -15,7 +15,7 @@ CREATE TABLE Report (
     type INT not null,
     userID BIGINT NOT NULL,
     PRIMARY KEY (reportID),
-    FOREIGN KEY (userID) REFERENCES User(userID)
+    FOREIGN KEY (userID) REFERENCES `User`(userID)
 )  ENGINE=INNODB;
 
 CREATE TABLE Webtoon (
@@ -42,31 +42,26 @@ CREATE TABLE `Language` (
 )  ENGINE=INNODB;
 
 CREATE TABLE Image (
-    imageID BIGINT NOT NULL AUTO_INCREMENT primary key,
+    imageID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `index` INT not null,
     `path` VARCHAR(256) not null,
     needOCR bool not null,
     fontSize int,
     chapterID BIGINT NOT NULL,
     originalLanguage varchar(256) not null,
-    constraint Image_Language_identifier_fk
-        foreign key (originalLanguage) references Language (identifier)
-            on update cascade,
-    constraint image_ibfk_1
-        foreign key (chapterID) references Chapter (chapterID)
+    FOREIGN KEY (originalLanguage) REFERENCES `Language`(identifier),
+    FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
 )  ENGINE=INNODB;
 
 CREATE TABLE `Block` (
-    blockID BIGINT NOT NULL AUTO_INCREMENT primary key,
+    blockID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     originalContent TEXT not null,
     startX int not null,
     startY int not null,
     endX int not null,
     endY int not null,
     imageID BIGINT NOT NULL,
-    constraint Block_Image_imageID_fk
-        foreign key (imageID) references Image (imageID)
-            on update cascade
+    FOREIGN KEY (imageID) REFERENCES Image(imageID)
 )ENGINE=INNODB;
 
 CREATE TABLE `Translation` (
@@ -74,8 +69,8 @@ CREATE TABLE `Translation` (
     blockID BIGINT NOT NULL not null,
     content TEXT not null,
     PRIMARY KEY (languageIdentifier, blockID),
-    FOREIGN KEY (languageIdentifier) REFERENCES Language(identifier),
-    FOREIGN KEY (blockID) REFERENCES Block(blockID)
+    FOREIGN KEY (languageIdentifier) REFERENCES `Language`(identifier),
+    FOREIGN KEY (blockID) REFERENCES `Block`(blockID)
 )  ENGINE=INNODB;
 
 CREATE TABLE TranslationProposition (
@@ -84,6 +79,6 @@ CREATE TABLE TranslationProposition (
     blockID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     PRIMARY KEY (translationPropositionID),
-    FOREIGN KEY (blockID) REFERENCES Block(blockID),
-    FOREIGN KEY (userID) REFERENCES User(userID)
+    FOREIGN KEY (blockID) REFERENCES `Block`(blockID),
+    FOREIGN KEY (userID) REFERENCES `User`(userID)
 )  ENGINE=INNODB;

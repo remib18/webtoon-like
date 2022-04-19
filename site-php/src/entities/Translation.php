@@ -43,7 +43,7 @@ class Translation implements EntityInterface
      */
     public function setContent(string $content): void
     {
-        $this->fieldsToSave['$content'] = $content;
+        $this->fieldsToSave['content'] = $content;
         $this->content = $content;
     }
 

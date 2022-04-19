@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\tests;
 
+ini_set('xdebug.var_display_max_depth', 10);
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use WebtoonLike\Site\controller\ChapterController;

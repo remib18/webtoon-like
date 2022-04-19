@@ -2,13 +2,14 @@
 
 namespace WebtoonLike\Site\features\Translation\Result;
 
+use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Language;
 
 class Result
 {
 
-    /** @var array<Bloc> $blocs */
-    private array $blocs = [];
+    /** @var array<Block> $blocks */
+    private array $blocks = [];
 
     /** @var int $fontSize in pixels */
     private int $fontSize;
@@ -23,11 +24,11 @@ class Result
     ) {}
 
     /**
-     * @param Bloc $bloc
+     * @param Block $block
      * @return void
      */
-    public function appendBloc(Bloc $bloc): void {
-        $this->blocs[] = $bloc;
+    public function appendBlock(Block $block): void {
+        $this->blocks[] = $block;
     }
 
     /**
@@ -47,11 +48,11 @@ class Result
     }
 
     /**
-     * @return Bloc[]
+     * @return Block[]
      */
-    public function getBlocs(): array
+    public function getBlocks(): array
     {
-        return $this->blocs;
+        return $this->blocks;
     }
 
     /**
@@ -63,11 +64,11 @@ class Result
     }
 
     /**
-     * @param Bloc[] $blocs
+     * @param Block[] $blocs
      */
-    public function setBlocs(array $blocs): void
+    public function setBlocks(array $blocs): void
     {
-        $this->blocs = $blocs;
+        $this->blocks = $blocs;
     }
 
     /**
