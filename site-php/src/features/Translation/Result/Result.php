@@ -70,4 +70,11 @@ class Result
         $this->blocs = $blocs;
     }
 
+    /**
+     * @return Language|null
+     */
+    public function getOriginalLanguage(): ?Language {
+        return $this->originalLanguage;
+    }
+
 }
