@@ -2,10 +2,13 @@
 
 namespace WebtoonLike\Site\features\Translation\APIs;
 
+use WebtoonLike\Site\controller\BlockController;
+use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\exceptions\InvalidApiKeyException;
 use WebtoonLike\Site\exceptions\TranslationException;
 use WebtoonLike\Site\exceptions\UnsupportedLanguageException;
+use WebtoonLike\Site\features\Translation\Result\Bloc;
 use WebtoonLike\Site\helpers\curlHelper;
 
 class LibreTranslateTranslation implements TranslationInterface
@@ -48,16 +51,17 @@ class LibreTranslateTranslation implements TranslationInterface
     /**
      * Traduit un texte
      *
-     * @param string $text Texte à traduire
+     * @param Bloc     $bloc
      * @param Language $source Langue d'origine
      * @param Language $target Langue vers laquelle traduire
+     *
      * @return string Traduction
      *
      * @throws TranslationException
      */
-    public static function translate(string $text, Language $source, Language $target): string
+    public static function translate(Bloc $bloc, Language $source, Language $target): string
     {
-        $requests = self::preparePostRequest($text, $source->getIdentifier(), $target->getIdentifier(), 'translate');
+        $requests = self::preparePostRequest($bloc->getOriginalText(), $source->getIdentifier(), $target->getIdentifier(), 'translate');
 
         foreach ($requests as $data) {
             $response = curlHelper::httpPost($data);
@@ -73,12 +77,20 @@ class LibreTranslateTranslation implements TranslationInterface
     /**
      * @inheritDoc
      */
-    public static function translateMany(array $texts, Language $source, Language $target): array
+    public static function translateMany(array $blocs, Language $source, Language $target): array
     {
         $response = [];
-        foreach ($texts as $text) {
-            $response[] = self::translate($text, $source, $target);
+        foreach ($blocs as $bloc) {
+            $response[] = self::translate($bloc, $source, $target);
         }
         return $response;
+    }
+
+    private static function getFromDB(Bloc $bloc, Language $target) {
+
+    }
+
+    private static function saveToDB(Bloc $bloc) {
+        
     }
 }

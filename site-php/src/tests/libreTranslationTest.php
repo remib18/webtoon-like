@@ -13,4 +13,7 @@ $fr = new Language('fr', 'french', false);
 
 
 $res = LibreTranslateTranslation::translate("Voici un test qui fonctionne.", $fr, $ja);
-echo $res;
+
+echo '<pre style="font-family: Verdana;">';
+var_dump(['test', 'blabla']);
+echo '</pre>';
