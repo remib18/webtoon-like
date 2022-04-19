@@ -196,8 +196,8 @@ class GoogleOCR implements OCRInterface
             ->getSymbols()[0]
             ->getBoundingBox()
             ->getVertices();
-        $start = OCRUtils::vertexToPosition($charVertices[0])->getY();
-        $end = OCRUtils::vertexToPosition($charVertices[2])->getY();
+        $start = $charVertices[0]->getY();
+        $end = $charVertices[2]->getY();
         $this->results[$this->workingIndex]->setFontSize($end - $start);
     }
 
