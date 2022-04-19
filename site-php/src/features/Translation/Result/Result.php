@@ -2,28 +2,33 @@
 
 namespace WebtoonLike\Site\features\Translation\Result;
 
+use WebtoonLike\Site\entities\Block;
+use WebtoonLike\Site\entities\Language;
+
 class Result
 {
 
-    /** @var array<Bloc> $blocs */
-    private array $blocs = [];
+    /** @var array<Block> $blocks */
+    private array $blocks = [];
 
     /** @var int $fontSize in pixels */
     private int $fontSize;
 
     /**
      * @param string|null $imagePath Le chemin de l'image à partir du dossier de webtoons. Null si une image manque
+     * @param ?Language $originalLanguage Le langage d'origine de l'image, null si inconnu.
      */
     public function __construct(
-        private ?string $imagePath
+        private ?string $imagePath,
+        private ?Language $originalLanguage
     ) {}
 
     /**
-     * @param Bloc $bloc
+     * @param Block $block
      * @return void
      */
-    public function appendBloc(Bloc $bloc): void {
-        $this->blocs[] = $bloc;
+    public function appendBlock(Block $block): void {
+        $this->blocks[] = $block;
     }
 
     /**
@@ -43,11 +48,11 @@ class Result
     }
 
     /**
-     * @return Bloc[]
+     * @return Block[]
      */
-    public function getBlocs(): array
+    public function getBlocks(): array
     {
-        return $this->blocs;
+        return $this->blocks;
     }
 
     /**
@@ -59,11 +64,24 @@ class Result
     }
 
     /**
-     * @param Bloc[] $blocs
+     * @param Block[] $blocs
      */
-    public function setBlocs(array $blocs): void
+    public function setBlocks(array $blocs): void
     {
-        $this->blocs = $blocs;
+        $this->blocks = $blocs;
+    }
+
+    /**
+     * @return Language|null
+     */
+    public function getOriginalLanguage(): ?Language {
+        return $this->originalLanguage;
+    }
+
+    public function setTranslations(array $translations, Language $target): void {
+        foreach ($this->blocks as $block) {
+            $block->registerTranslation($target->getIdentifier(), $translations[$block->getId()]);
+        }
     }
 
 }

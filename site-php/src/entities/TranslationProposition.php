@@ -155,4 +155,12 @@ class TranslationProposition implements EntityInterface
     {
         $this->fieldsToSave = [];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function setId(int $id): void {
+        if (!is_null($this->id)) throw new NoIdOverwritingException();
+        $this->id = $id;
+    }
 }

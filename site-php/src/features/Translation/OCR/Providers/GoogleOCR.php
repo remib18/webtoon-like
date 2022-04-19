@@ -2,16 +2,18 @@
 
 namespace WebtoonLike\Site\features\Translation\OCR\Providers;
 
-use Exception;
 use Google\ApiCore\ValidationException;
 use Google\Cloud\Vision\V1\AnnotateImageResponse;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Vertex;
 use InvalidArgumentException;
+use WebtoonLike\Site\controller\BlockController;
+use WebtoonLike\Site\controller\ImageController;
+use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\exceptions\ApiException;
 use WebtoonLike\Site\exceptions\InvalidProtocolException;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
-use WebtoonLike\Site\features\Translation\Result\Bloc;
 use WebtoonLike\Site\features\Translation\Result\Result;
 use WebtoonLike\Site\Settings;
 use WebtoonLike\Site\utils\OCRUtils;
@@ -66,7 +68,7 @@ class GoogleOCR implements OCRInterface
             } else {
                 $this->runSingle();
             }
-        } catch (Exception) {
+        } catch (\Google\ApiCore\ApiException $e) {
             throw new ApiException('[OCR]: Unable to perform OCR using Google Cloud API.');
         }
 
@@ -75,11 +77,18 @@ class GoogleOCR implements OCRInterface
     }
 
     /**
+     * Effectue un appel API pour une image
+     *
+     * @param int $index Index de l'image dans la pile de traitement
+     *
+     * @return void
+     *
      * @throws InvalidProtocolException
      * @throws \Google\ApiCore\ApiException
      */
     private function runSingle(int $index = 0): void {
         if (!isset($this->images[$index])) {
+            var_dump($this->images);
             throw new InvalidArgumentException('Index ' . $index . ' does not exist.');
         }
 
@@ -87,36 +96,55 @@ class GoogleOCR implements OCRInterface
 
         if ($image->doesNeedOCR()) {
             $this->workingIndex = $image->getIndex();
-            $this->results[$this->workingIndex] = new Result($image->getPath());
+            $this->results[$this->workingIndex] = new Result($image->getPath(), $image->getOriginalLanguage());
 
             $this->response = $this->ocrClient->textDetection($image->getRessource());
             $this->setFontSize();
             $this->setTexts();
-            $this->makeBlocs();
+            $this->makeBlocs($image);
             $this->fixBlocs();
 
             $image->setNeedOCR(false);
+
+            $this->saveInDB($image);
         } else {
-            $this->loadImageOCRResult();
+            $this->getResultFromDB($image);
+            //throw new OCRAlreadyPerformedException();
         }
     }
 
     /**
+     * Effectue le traitement pour toutes les images.
+     *
+     * @note: Actuellement utilise un appel api par image,
+     * car manque de documentation pour l'implémentation de la requête batch...
+     *
+     * @return void
+     *
      * @throws InvalidProtocolException
      * @throws \Google\ApiCore\ApiException
+     *
+     * @todo: Optimize batch call
+     * @see StackOverflowIssue : https://stackoverflow.com/questions/71827453/google-cloud-vision-php-make-batch-request
+     * @see OfficialDocumentation : https://cloud.google.com/vision/docs/batch#sample_code
+     *
      */
     private function runBatch(): void {
-        // TODO: Optimize batch call
-        // See : https://stackoverflow.com/questions/71827453/google-cloud-vision-php-make-batch-request
-        // See : https://cloud.google.com/vision/docs/batch#sample_code
+
 
         // Temporary implementation
         for ($i = 0; $i < sizeof($this->images); $i++) {
             $this->runSingle($i);
             $this->resetForNext();
         }
+
     }
 
+    /**
+     * Obtention des textes
+     *
+     * @return void
+     */
     private function setTexts(): void {
         $textAnnotations = $this->response->getTextAnnotations();
         for ($i = 1; $i < sizeof($textAnnotations); $i++) {
@@ -124,7 +152,14 @@ class GoogleOCR implements OCRInterface
         }
     }
 
-    private function makeBlocs(): void {
+    /**
+     * Créations des blocs
+     *
+     * @param Image $image
+     *
+     * @return void
+     */
+    private function makeBlocs(Image $image): void {
         foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
             foreach ($page->getBlocks() as $block) {
                 $text = '';
@@ -133,17 +168,24 @@ class GoogleOCR implements OCRInterface
                 foreach ($block->getParagraphs() as $paragraph) {
                     foreach ($paragraph->getWords() as $word) {
                         if ($start === null) {
-                            $start = OCRUtils::vertexToPosition($word->getBoundingBox()->getVertices()[0]);
+                            $start = new Vertex(); //$word->getBoundingBox()->getVertices()[0];
                         }
-                        $end = OCRUtils::vertexToPosition($word->getBoundingBox()->getVertices()[2]);
+                        $end = $word->getBoundingBox()->getVertices()[2];
                         $text .= ' ' . array_shift($this->texts);
                     }
                 }
-                $this->results[$this->workingIndex]->appendBloc(new Bloc($text, $start, $end));
+                $this->results[$this->workingIndex]->appendBlock(
+                    new Block(null, $text, $start->getX(), $start->getY(), $end->getX(), $end->getY(), $image->getId(), false)
+                );
             }
         }
     }
 
+    /**
+     * Création de la taille de police
+     *
+     * @return void
+     */
     function setFontSize(): void {
         $charVertices = $this->response
             ->getFullTextAnnotation()
@@ -154,20 +196,25 @@ class GoogleOCR implements OCRInterface
             ->getSymbols()[0]
             ->getBoundingBox()
             ->getVertices();
-        $start = OCRUtils::vertexToPosition($charVertices[0])->getY();
-        $end = OCRUtils::vertexToPosition($charVertices[2])->getY();
+        $start = $charVertices[0]->getY();
+        $end = $charVertices[2]->getY();
         $this->results[$this->workingIndex]->setFontSize($end - $start);
     }
 
+    /**
+     * Mise à jour des blocs pour correspondre à un vrai bloc
+     *
+     * @return void
+     */
     private function fixBlocs(): void {
-        $initialBlocs = $this->results[$this->workingIndex]->getBlocs();
+        $initialBlocks = $this->results[$this->workingIndex]->getBlocks();
         $blocs = [];
-        for ($i = 0; $i < sizeof($initialBlocs); $i++) {
+        for ($i = 0; $i < sizeof($initialBlocks); $i++) {
             $append = false;
-            $current = $initialBlocs[$i];
-            foreach ($initialBlocs as $next) {
+            $current = $initialBlocks[$i];
+            foreach ($initialBlocks as $next) {
                 if (OCRUtils::proximityChecks($current, $next, $this->results[$this->workingIndex]->getFontSize())) {
-                    $blocs[] = Bloc::merge($current, $next);
+                    $blocs[] = Block::merge($current, $next);
                     $append = true;
                     $i++;
                     break;
@@ -177,18 +224,32 @@ class GoogleOCR implements OCRInterface
                 $blocs[] = $current;
             }
         }
-        $this->results[$this->workingIndex]->setBlocs($blocs);
+        $this->results[$this->workingIndex]->setBlocks($blocs);
     }
 
+    /**
+     * Préparation au prochain appel
+     *
+     * @return void
+     */
     private function resetForNext(): void {
         $this->texts = [];
         $this->workingIndex = null;
         $this->response = null;
     }
 
-    // TODO
-    private function loadImageOCRResult()
-    {
+    private function getResultFromDB(Image $image) {
+        $res = new Result($image->getPath(), $image->getOriginalLanguage());
+        $res->setFontSize($image->getFontSize());
+        foreach (ImageController::getBlocks($image->getId()) as $block) {
+            $res->appendBlock($block);
+        }
+        $this->results[$image->getIndex()] = $res;
+    }
 
+    private function saveInDB(Image $image): void {
+        $blocks = $this->results[$image->getIndex()]->getBlocks();
+        BlockController::createBatch($blocks);
+        $this->results[$image->getIndex()]->setBlocks($blocks);
     }
 }

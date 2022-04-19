@@ -2,15 +2,17 @@
 
 namespace WebtoonLike\Site\controller;
 
+use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\utils\Database;
 
 class ImageController
 {
     /**
-     * Obtenir la liste des image
+     * Obtenir la liste des images
      *
      * @param string|array $col
      * @param array $where
@@ -36,7 +38,9 @@ class ImageController
     /**
      * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
      *
-     * @param int $index index recherché
+     * @param Chapter $chapterID
+     * @param int     $index index recherché
+     *
      * @return Image|null
      */
     public static function getByIndex(Chapter $chapterID, int $index): ?Image
@@ -44,6 +48,17 @@ class ImageController
         return Database::getFirst('Chapter', Chapter::class, '*', [
             'index,chapterID' => "index = $index AND chapterID' = $chapterID"
         ]);
+    }
+
+    /**
+     * Obtention de tous les blocs d'une image
+     *
+     * @param int $id Identifiant de l'image
+     *
+     * @return Block[]
+     */
+    public static function getBlocks(int $id): array {
+        Database::getAll('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
     }
 
     /**
@@ -62,9 +77,12 @@ class ImageController
      * Enregistre une image et retourne son identifiant ou <code>false</code> en cas d'erreur.
      *
      * @param Image $entity
-     * @return int|false Faux en cas d'erreur
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
      */
-    public static function create(Image &$entity): int|false
+    public static function create(Image &$entity): bool
     {
         return Database::create('Image', $entity);
     }

@@ -48,12 +48,14 @@ class CurlHelper {
 
     /**
      * Retourne la réponse d'une requête POST
+     * Content-Type et Content-Length prédefinis.
+     *
      *
      * @param array $params
      * @return array Code réponse HTTP et contenu.
      */
     #[ArrayShape(['httpCode' => "mixed", 'response' => "mixed"])]
-    public static function httpPost(array $params): array
+    public static function httpPost(array $params, array $header = []): array
     {
         if (!isset($params['url'])) {
             throw new InvalidArgumentException('Missing params url key.');
@@ -66,10 +68,11 @@ class CurlHelper {
             curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($curlSession, CURLOPT_POST, true);
             curl_setopt($curlSession, CURLOPT_POSTFIELDS, $jsonData);
-            curl_setopt($curlSession, CURLOPT_HTTPHEADER, array(
-                    'Content-Type: application/json',
-                    'Content-Length: ' . strlen($jsonData))
-            );
+
+            $header[] = 'Content-Type: application/json';
+            $header[] = 'Content-Length: ' . strlen($jsonData);
+
+            curl_setopt($curlSession, CURLOPT_HTTPHEADER, $header);
 
             // use while testing
             if( Settings::get('production') === false ) {

@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\controller;
 use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\entities\Webtoon;
 use WebtoonLike\Site\utils\Database;
 
@@ -37,14 +38,27 @@ class ChapterController
     /**
      * Obtention du chapter avec l'identifiant correspondant.
      *
-     * @param int $index index recherché
+     * @param int $webtoonID
+     * @param int     $index index recherché
+     *
      * @return Chapter|null
      */
-    public static function getByIndex(Webtoon $webtoonID, int $index):  ?Chapter
+    public static function getByIndex(int $webtoonID, int $index): ?Chapter
     {
         return Database::getFirst('Chapter', Chapter::class, '*', [
-            'index,webtoonID' => "index = $index AND webtoonID' = $webtoonID"
+            'index,webtoonID' => "`index` = $index AND webtoonID = $webtoonID"
             ]);
+    }
+
+    /**
+     * Obtention de la liste des images liées à ce chapitre
+     *
+     * @param int $chapterId
+     *
+     * @return Image[]
+     */
+    public static function getImages(int $chapterId): array {
+        return Database::getAll('Image', Image::class, '*', ['chapterID' => "chapterID = $chapterId"]);
     }
 
     /**
@@ -60,12 +74,15 @@ class ChapterController
     }
 
     /**
-     * Enregistre un chapter et retourne son identifiant ou <code>false</code> en cas d'erreur.
+     * Enregistre un chapter
      *
      * @param Chapter $entity
-     * @return int|false Faux en cas d'erreur
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
      */
-    public static function create(Chapter &$entity): int|false
+    public static function create(Chapter &$entity): bool
     {
         return Database::create('Chapter', $entity);
     }
