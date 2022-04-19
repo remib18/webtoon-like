@@ -4,9 +4,9 @@ namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\controller\LanguageController;
 use WebtoonLike\Site\exceptions\InvalidProtocolException;
 use WebtoonLike\Site\Settings;
-use WebtoonLike\Site\utils\UriUtils;
 
 class Image implements EntityInterface
 {
@@ -18,12 +18,16 @@ class Image implements EntityInterface
     private string $path;
     private bool $needOCR;
     private int $chapterId;
+    private string $originalLanguage;
+    private ?int $fontSize;
 
     public function __construct(
         ?int $imageID,
         int $index,
         string $path,
         int $chapterID,
+        string $originalLanguage,
+        ?int $fontSize,
         bool $needOCR = true,
         bool $fromDB = true
     ) {
@@ -32,6 +36,8 @@ class Image implements EntityInterface
         $this->setPath($path);
         $this->setNeedOCR($needOCR);
         $this->setChapterId($chapterID);
+        $this->setOriginalLanguage($originalLanguage);
+        $this->setFontSize($fontSize);
 
         if ($fromDB) $this->AllFieldsSaved();
     }
@@ -71,7 +77,7 @@ class Image implements EntityInterface
      */
     public function setPath(string $path): void
     {
-        $this->fieldsToSave['index'] = $index;
+        $this->fieldsToSave['path'] = $path;
         $this->path = $path;
     }
 
@@ -88,7 +94,7 @@ class Image implements EntityInterface
      */
     public function setChapterId(int $chapterId): void
     {
-        $this->fieldsToSave['index'] = $index;
+        $this->fieldsToSave['chapterID'] = $chapterId;
         $this->chapterId = $chapterId;
     }
 
@@ -105,8 +111,45 @@ class Image implements EntityInterface
      */
     public function setNeedOCR(bool $needOCR): void
     {
-        $this->fieldsToSave['index'] = $index;
+        $this->fieldsToSave['needOCR'] = $needOCR;
         $this->needOCR = $needOCR;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOriginalLanguageIdentifier(): string {
+        return $this->originalLanguage;
+    }
+
+    /**
+     * @return Language
+     */
+    public function getOriginalLanguage(): Language {
+        return LanguageController::getById($this->originalLanguage);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getFontSize(): ?int {
+        return $this->fontSize;
+    }
+
+    /**
+     * @param int|null $fontSize
+     */
+    public function setFontSize(?int $fontSize): void {
+        $this->fieldsToSave['fontSize'] = $fontSize;
+        $this->fontSize = $fontSize;
+    }
+
+    /**
+     * @param string $originalLanguage
+     */
+    public function setOriginalLanguage(string $originalLanguage): void {
+        $this->fieldsToSave['originalLanguage'] = $originalLanguage;
+        $this->originalLanguage = $originalLanguage;
     }
 
     /**
@@ -145,7 +188,9 @@ class Image implements EntityInterface
         'index' => "int",
         'path' => "string",
         'needOCR' => "bool",
-        'chapterID' => "int"
+        'chapterID' => "int",
+        'originalLanguage' => "string",
+        'fontSize' => "int"
     ])]
     public function __toArray(): array
     {
@@ -154,7 +199,9 @@ class Image implements EntityInterface
             'index' => $this->index,
             'path' => $this->path,
             'needOCR' => $this->needOCR,
-            'chapterID' => $this->chapterId
+            'chapterID' => $this->chapterId,
+            'originalLanguage' => $this->originalLanguage,
+            'fontSize' => $this->fontSize
         ];
     }
 
@@ -167,7 +214,9 @@ class Image implements EntityInterface
             'index',
             'path',
             'needOCR',
-            'chapterID'
+            'chapterID',
+            'originalLanguage',
+            'fontSize'
         ];
     }
 
@@ -189,7 +238,9 @@ class Image implements EntityInterface
             'index' => "int",
             'path' => "string",
             'needOCR' => "bool",
-            'chapterID' => "int"
+            'chapterID' => "int",
+            'originalLanguage' => "string",
+            'fontSize' => "int"
         ];
     }
 
