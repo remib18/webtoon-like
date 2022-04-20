@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "webtoontranslator",
+  "private_key_id": "559f69ed40c0d04d1e22511c639e634ea22cbe74",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDmCK8WHAhkJGQb\nSem2CB1NSgvmdRajPtokTCs+SvyQGuanZSOySuyEzlMpiB0XW0A0cTqELP2guLeB\niU1rTkUbtazsJW9C3lVABMJpBXwQMXfN2M3URikCSFGsVcnvvG7A4HJxYknze/BI\n4TJQQMyfj05yCT87gBoDAmsKTpMtr3n58VkZ/t88IaVU3Uw3bIGUCrUXBdyW3611\nLqeafK7X4qXQEpjthw72jAjBnBKBrgZ7foO75XbKUwlxehlljv43tx1NNVIjrds0\n8cO5lrN+qFMbG5d7PRJq8v00j958A+csXZY2sIwW+UUI6nzbcSJNyFSftI2W+9Ai\nbrCSNY7JAgMBAAECggEACooQpjgClRQAbNT7cED5lrZIdUvyuD1Y9ptxdRkvw9Ui\nXD5gtE/ae6XjCYltoR79LL9DVGr7STHYC9yj6haxSTkPAy1z5jcUO3/8UvN9YQCN\n4fsySFeD6XwxbG6XIfTFiPC/oueYm8nskxTo8+RZe7YFJ2m6YUTX7EC1cXNy1X+Z\nH5rMAugxRtsmGkyzkgcnnDGozQAE2ClSdN9IPOkHLLVhVyN+1rUWzGfgW4smbGLA\nYGF+qqM2xyzfPzfIOT8vYFpkIzZRkXoMDH3+xQO70y8UN032LB2bzBv9VZAdmz+X\njyp8j+4xPeHa6xDwr0TR/3SquXwtq+83UoXRNruRAQKBgQD0myXN+OHmkOKuFuQU\n0BGn+V9RDZ7+rBMyaXWLhAC2mi/lR/C2QVrK33GnPhqydSKfvw0FYqMt5RnwUmL2\nnHBarBFiAcnIekgvO0XKP0jBgO8YyijHb90xDc5nk9q2Y3f197IFT483Zad4dUet\nztFQIwQaMHb4Rgh8+RJXXPgUTQKBgQDwv8SkVYAyCwoGPNMz39jkO0zXMR5pRPyv\nCU0ix0Hfpwd+cPwXAN5E30l93mADjkNhAzfTtWdzNPC09u58utjJx77P9fP/OIyI\nZ8ORjEeB/4Wrct2oFJnc5czuKcq2XBUGOmgtzEuExYRuQpi2ejGshDryv5cBTKs0\nF978SYWSbQKBgCw6aWmG2QHhrLshtHf271paAtwbBGa0Inx5CSIC6kYaNxLUITgz\nNQF9yYUd+6HNAEe2OdqBbVP9GuWTYAWLX91lQ3dfL2cqhSbVJtdc/gDPGWx4EUuO\ndIZMIsgjueZEsgotkWjYa+LuZIupWR6aSMqeqj06Cij2MM64EpLtYoX5AoGBALwn\n5HPbLvntjsQZPafJRyX5ArEcfnwfoqzaRCLuQBmf3UeA3kTMNOr25+UrqzacNSTY\n8wTPPi7YLVgBtZpeHZh2ODcoLq5Fb/AbyMk0LZ74KWw5terrTuVJ5MQufXPQu83G\nUC2bAVqfVEUoX1oeXjxKjBe0jTxCw3tPPMNIYtBxAoGBAJTLyhKxgGGbCA0rpvZ4\n3uArHsyXmNXOaWdlOmrnGcrBIDx8dbqJfNA5RZoYcn9KgsAppI1aMddnCvI/bOmr\nIBm6CXEkFmjgvBwIclPHj5Uwh8U5gfFHnJsJDeDr/G1DOAFCPWc4Rs0QxYI3Ief9\nbBzWo3F058D0Ir2EQj5zsjwP\n-----END PRIVATE KEY-----\n",
+  "client_email": "visionapi@webtoontranslator.iam.gserviceaccount.com",
+  "client_id": "106331979958470269904",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/visionapi%40webtoontranslator.iam.gserviceaccount.com"
+}

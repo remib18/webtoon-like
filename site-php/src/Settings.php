@@ -14,7 +14,7 @@ class Settings {
             'fr',
             'en'
         ],
-        'webtoonsImagesBaseFolder' => baseDirectory . '/assets/webtoons-imgs/',
+        'WEBTOONS_IMAGES_FOLDER' => baseDirectory . '/assets/webtoons-imgs/',
         'DATABASE' => [
             'hostname' => 'localhost',
             'username' => 'root',       // TODO: Replace root in production
@@ -23,8 +23,12 @@ class Settings {
             'port' => null,
             'socket' => null
         ],
+        'ROUTER' => [
+            'GENERATED_FOLDER' => baseDirectory . '/src/pages/php/',
+            'PURE_FOLDER' => baseDirectory . '/src/pages/html/'
+        ],
         'production' => false,
-        'AZURE_API_KEY' => '',
+        'AZURE_API_KEY' => '9b975df258dc4e12a8605381a4fb4b4a',
         'AZURE_API_LOCATION' => 'westeurope'
     ];
 
@@ -37,9 +41,12 @@ class Settings {
     #[ArrayShape([
         'GT_API_KEY_FILE' => "string",
         'preTranslateTo' => "string[]",
-        'webtoonsImagesBaseFolder' => "string",
+        'WEBTOONS_IMAGES_FOLDER' => "string",
         'DATABASE' => "array",
-        'AZURE_API_KEY' => "string"
+        'ROUTER' => "array",
+        'production' => "bool",
+        'AZURE_API_KEY' => "string",
+        'AZURE_API_LOCATION' => 'string'
     ])]
     public static function getAll(): array {
         return self::$settings;

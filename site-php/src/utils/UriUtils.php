@@ -11,8 +11,17 @@ class UriUtils
     /** @var array<string, mixed> Liste des options */
     private array $options = [];
 
-    public function __construct() {
+    private static ?UriUtils $instance = null;
+
+    private function __construct() {
         $this->analyseUri();
+    }
+
+    private static function getInstance(): UriUtils {
+        if (is_null(self::$instance)) {
+            self::$instance = new UriUtils();
+        }
+        return self::$instance;
     }
 
     /**
@@ -56,8 +65,8 @@ class UriUtils
      *
      * @return string
      */
-    public function getPageType(): string {
-        return $this->pageType;
+    public static function getPageType(): string {
+        return self::getInstance()->pageType;
     }
 
     /**
@@ -66,8 +75,8 @@ class UriUtils
      * @todo : Add GET / POST parameters
      * @return array<string, mixed>
      */
-    public function getArrayOptions(): array {
-        return $this->options;
+    public static function getArrayOptions(): array {
+        return self::getInstance()->options;
     }
 
     /**

@@ -44,7 +44,7 @@ $p = new PageUtils('');
     </fieldset>
     <nav class="icons">
         <ul>
-            <?= $p->getNaviguation() ?>
+            <?= $p->getNavigation() ?>
         </ul>
     </nav>
 </header>
