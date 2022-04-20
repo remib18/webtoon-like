@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\utils;
 
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\core\Router;
 
 class UriUtils
 {
@@ -36,10 +37,9 @@ class UriUtils
 
         // Vérification de l'existence du résultat
         if ($_ === []) {
-            $this->pageType = 'error';
-            $this->options['code'] = 404;
-            $this->options['message'] = 'La page que vous essayez d\'obtenir n\'existe pas...';
-            return;
+            Router::redirect('/error', 404, [
+                'msg' => 'La page que vous essayez d\'obtenir n\'existe pas...'
+            ]);
         }
 
         // Obtention du type de page

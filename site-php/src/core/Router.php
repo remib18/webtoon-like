@@ -18,20 +18,36 @@ class Router
         $this->pageType = UriUtils::getPageType();
     }
 
+    /**
+     * @return Router
+     */
     private static function getRouter(): Router {
         if (is_null(self::$router)) self::$router = new Router();
         return self::$router;
     }
 
+    /**
+     * L'utilisateur a-t-il l'accès à la ressource ?
+     *
+     * @return bool
+     */
     private static function isRessourceAccessibleForUser(): bool {
         // TODO: [User system] @gabey
         // note: utilises self::getRouter()->pageType pour savoir le template
         return true;
     }
 
+    /**
+     * Effectue le routing
+     *
+     * @param RouterMode $mode
+     * @param array|null $data
+     *
+     * @return void
+     */
     public static function route(RouterMode $mode, ?array $data): void {
         if (!self::isRessourceAccessibleForUser()) {
-            self::redirect('', [], '#register');
+            self::redirect('', 403, [], '#register');
         }
 
         if (UriUtils::isHandler()) {
@@ -49,6 +65,13 @@ class Router
         }
     }
 
+    /**
+     * Routing avec le moteur de template
+     *
+     * @param array $data
+     *
+     * @return void
+     */
     private function pureHTMLRouting(array $data): void {
         // TODO: [TemplateEngine] @MPXH
         try {
@@ -56,6 +79,13 @@ class Router
         } catch (NotFoundException) { self::notFound(); }
     }
 
+    /**
+     * Routing de fichiers php
+     *
+     * @param bool $isHandler
+     *
+     * @return void
+     */
     private function generatedHTMLRouting(bool $isHandler = false): void {
         $ressourceLocation = $isHandler ? 'HANDLERS_FOLDER' : 'GENERATED_PAGES_FOLDER';
         $pageType = $isHandler ? substr($this->pageType, 1) : $this->pageType;
@@ -65,13 +95,30 @@ class Router
         require $path;
     }
 
-    #[NoReturn] public static function redirect(string $url, array $getParams = [], string $htmlId = ''): void {
-        header('Location: ' . $url . UriUtils::buildUriGetParamsFromArray($getParams) . $htmlId);
+    /**
+     * Effectue une redirection
+     *
+     * @param string $url
+     * @param array  $getParams
+     * @param string $htmlId
+     *
+     * @return void
+     */
+    #[NoReturn] public static function redirect(string $url, int $code = 301, array $getParams = [], string $htmlId = ''): void {
+        header(
+            'Location: ' . $url . UriUtils::buildUriGetParamsFromArray($getParams) . $htmlId,
+            true, $code
+        );
         die;
     }
 
+    /**
+     * Redirection vers la page d'erreur 404
+     *
+     * @return void
+     */
     #[NoReturn] private static function notFound(): void {
-        self::redirect('/error', [
+        self::redirect('/error', 404, [
             'code' => 404,
             'msg' => 'La pas demandée n\'existe pas.'
         ]);
