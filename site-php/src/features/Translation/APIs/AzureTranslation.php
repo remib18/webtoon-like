@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\features\Translation\APIs;
 use JetBrains\PhpStorm\ArrayShape;
 use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\exceptions\TranslationException;
+use WebtoonLike\Site\exceptions\UnsupportedLanguageException;
 use WebtoonLike\Site\helpers\CurlHelper;
 use WebtoonLike\Site\Settings;
 
@@ -87,11 +88,13 @@ class AzureTranslation implements TranslationInterface
     /**
      * Traduit les textes.
      *
-     * @param string $text
+     * @param string   $text
      * @param Language $source
      * @param Language $target
+     *
      * @return String
      * @throws TranslationException
+     * @throws UnsupportedLanguageException
      */
     public static function translate(string $text, Language $source, Language $target): string
     {
@@ -106,18 +109,18 @@ class AzureTranslation implements TranslationInterface
         }
 
         $errorCode = $response['response']["error"]["code"];
-        $errormsg = $response['response']["error"]["message"];
+        $errorMsg = $response['response']["error"]["message"];
         if($code === 400) {
-            throw new UnsupportedLanguageException($errorCode . ' :' .  $errormsg);
+            throw new UnsupportedLanguageException($errorCode . ' :' .  $errorMsg);
         }
 
-        throw new TranslationException($errorCode . ' :' .  $errormsg);
-
-        return '';
+        throw new TranslationException($errorCode . ' :' .  $errorMsg);
     }
 
     /**
      * @inheritDoc
+     * @throws TranslationException
+     * @throws UnsupportedLanguageException
      */
     public static function translateMany(array $texts, Language $source, Language $target): array
     {
