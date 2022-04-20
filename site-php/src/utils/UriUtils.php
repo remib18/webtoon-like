@@ -30,7 +30,7 @@ class UriUtils
      * @return void
      */
     private function analyseUri(): void {
-        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|report|webtoon|error)?)(?:[\?\/]([\w\-\/=&]*))?$/';
+        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|report|webtoon|error|@\w+)?)(?:[?\/]([\w\-\/=&]*))?$/';
         preg_match_all($re, $_SERVER['REQUEST_URI'], $matches);
         [$_, $pageType, $rawOptions] = $matches;    // Répartition du résultat
 
@@ -59,6 +59,15 @@ class UriUtils
         }
     }
 
+    public static function buildUriGetParamsFromArray(array $array): string {
+        if (sizeof($array) < 1) return '';
+        $res = '';
+        foreach ($array as $key => $value) {
+            $res .= '&' . urlencode($key) . '=' . urlencode($value);
+        }
+        return '?' . substr($res, 1);
+    }
+
 
     /**
      * Obtention du type de la page
@@ -77,6 +86,10 @@ class UriUtils
      */
     public static function getArrayOptions(): array {
         return self::getInstance()->options;
+    }
+
+    public static function isHandler(): bool {
+        return str_starts_with(self::getInstance()->pageType, '@');
     }
 
     /**

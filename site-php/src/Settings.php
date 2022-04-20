@@ -24,8 +24,9 @@ class Settings {
             'socket' => null
         ],
         'ROUTER' => [
-            'GENERATED_FOLDER' => baseDirectory . '/src/pages/php/',
-            'PURE_FOLDER' => baseDirectory . '/src/pages/html/'
+            'GENERATED_PAGES_FOLDER' => baseDirectory . '/src/pages/php/',
+            'PURE_PAGES_FOLDER' => baseDirectory . '/src/pages/html/',
+            'HANDLERS_FOLDER' => baseDirectory . '/src/handlers/'
         ],
         'production' => false,
         'AZURE_API_KEY' => '9b975df258dc4e12a8605381a4fb4b4a',
