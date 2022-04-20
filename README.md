@@ -10,7 +10,7 @@ Prototype du design : [Figma](https://www.figma.com/file/9Wa0rJtEdahhpfkFgCEbSF/
 V1 est l'objectif de l'état du projet à la fin de semestre.
 ### V0
 - [ ] Réaliser un lecteur de webtoon
-- [ ] Traduire le webtoon à partir de données préalablement extraites (via API)
+- [x] Traduire le webtoon à partir de données préalablement extraites (via API)
 - [ ] Masquage basique des images
 - [ ] Réécriture des traductions
 ### V1
