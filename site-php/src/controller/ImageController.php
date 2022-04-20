@@ -4,7 +4,6 @@ namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Chapter;
-use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\utils\Database;
@@ -58,7 +57,7 @@ class ImageController
      * @return Block[]
      */
     public static function getBlocks(int $id): array {
-        Database::getAll('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
+        return Database::getAll('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
     }
 
     /**
@@ -90,7 +89,7 @@ class ImageController
     /**
      * Modifie l'image
      *
-     * @param Image $entity L'image modifié
+     * @param Image $entity L'image modifiée
      * @return bool Retourne vrai si la modification a été effectuée avec succès.
      */
     public static function edit(Image &$entity): bool

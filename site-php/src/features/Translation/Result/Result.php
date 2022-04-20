@@ -4,15 +4,21 @@ namespace WebtoonLike\Site\features\Translation\Result;
 
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\exceptions\TranslationException;
 
 class Result
 {
 
-    /** @var array<Block> $blocks */
+    /** @var Block[] $blocks */
     private array $blocks = [];
+
+    /** @var Block[] $mappedBlocks Liste des blocks indexer par leur identifiant */
+    private array $mappedBlocks = [];
 
     /** @var int $fontSize in pixels */
     private int $fontSize;
+
+    private string $preferredStruct = 'blocks';
 
     /**
      * @param string|null $imagePath Le chemin de l'image à partir du dossier de webtoons. Null si une image manque
@@ -28,7 +34,12 @@ class Result
      * @return void
      */
     public function appendBlock(Block $block): void {
-        $this->blocks[] = $block;
+        if (is_null($block->getId())) {
+            $this->blocks[] = $block;
+        } else {
+            $this->preferredStruct = 'mappedBlocks';
+            $this->mappedBlocks[$block->getId()] = $block;
+        }
     }
 
     /**
@@ -52,7 +63,7 @@ class Result
      */
     public function getBlocks(): array
     {
-        return $this->blocks;
+        return $this->{$this->preferredStruct};
     }
 
     /**
@@ -64,11 +75,16 @@ class Result
     }
 
     /**
-     * @param Block[] $blocs
+     * @param Block[] $blocks
      */
-    public function setBlocks(array $blocs): void
+    public function setBlocks(array $blocks, bool $mapped): void
     {
-        $this->blocks = $blocs;
+        if ($mapped) {
+            $this->mappedBlocks = $blocks;
+            $this->preferredStruct = 'mappedBlocks';
+        } else {
+            $this->blocks = $blocks;
+        }
     }
 
     /**
@@ -78,10 +94,39 @@ class Result
         return $this->originalLanguage;
     }
 
+    /**
+     * @param array    $translations
+     * @param Language $target
+     *
+     * @return void
+     * @throws TranslationException
+     */
     public function setTranslations(array $translations, Language $target): void {
-        foreach ($this->blocks as $block) {
-            $block->registerTranslation($target->getIdentifier(), $translations[$block->getId()]);
+        foreach ($translations as $blockId => $translation) {
+            $this->setTranslationForBlock($blockId, $translation, $target->getIdentifier());
         }
+    }
+
+    /**
+     * @param int    $id
+     * @param string $translation
+     * @param string $languageId
+     *
+     * @return void
+     * @throws TranslationException
+     */
+    private function setTranslationForBlock(int $id, string $translation, string $languageId): void {
+        if (isset($this->mappedBlocks[$id])) {
+            $this->mappedBlocks[$id]->registerTranslation($languageId, $translation);
+            return;
+        }
+        foreach ($this->blocks as $block) {
+            if ($block->getId() === $id) {
+                $block->registerTranslation($languageId, $translation);
+                return;
+            }
+        }
+        throw new TranslationException('Unable to register translation on block ' . $id . '.');
     }
 
 }
