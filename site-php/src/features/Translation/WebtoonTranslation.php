@@ -12,6 +12,7 @@ use WebtoonLike\Site\entities\Translation;
 use WebtoonLike\Site\exceptions\AlreadyExistingRessourceException;
 use WebtoonLike\Site\exceptions\ApiException;
 use WebtoonLike\Site\exceptions\NotFoundException;
+use WebtoonLike\Site\exceptions\TranslationException;
 use WebtoonLike\Site\features\Import\Import;
 use WebtoonLike\Site\features\Translation\APIs\TranslationInterface;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
@@ -24,21 +25,6 @@ TODO: Steps to long-term most performance optimization :
     3. Reinsert text into SVG with text attribute
     4. For new translation, just need to change text with regex
 */
-
-/*
-TODO: Steps for now :
-    0. Appel de `getTranslatedWebtoonImages` avec un webtoon et un chapitre
-   ✅ 1. Vérification de l'existence du webtoon
-   ✅ 2. Vérification de l'existence du chapitre
-   ‼️     - Si non: tentatives d'import à l'aide du downloader
-    3. Inscription de toutes les images
-    4. Execution de l'GoogleOCR sur chaque image
-    5. Traduction de chaque résultat
-    6. Construction d'un objet `Result` qui contient:
-        - Le chemin d'accès d'une image
-        - La liste des bulles et de leurs positions contenant le text original et la traduction avec la position de chaque blocs
-    7. Exécution du script constructeur du rendu (pas dans cette classe)
- */
 
 
 class WebtoonTranslation
@@ -99,19 +85,31 @@ class WebtoonTranslation
         foreach ($images as $image) {
             $this->ocr->registerImage($image);
         }
+        $this->ocr->registerChapterId($chapterId);
         $this->results = $this->ocr->runOCR();
     }
 
+    /**
+     * @throws ApiException
+     * @throws TranslationException
+     */
     private function translate(int $chapterId, Language $target): void {
         $this->loadImages($chapterId);
         foreach ($this->results as $result) {
             $toTranslate = [];
+            $translations = [];
             foreach ($result->getBlocks() as $block) {
-                $toTranslate[$block->getId()] = $block->getOriginalContent();
-                // $translation = $this->getTranslation($block, $result->getOriginalLanguage(), $target);
-                // $block->registerTranslation($translation->getLanguageIdentifier(), $translation->getContent());
+                if (BlockController::isTranslatedIn($block->getId(), $target->getIdentifier())) {
+                    $translations[$block->getId()] = TranslationController::get($target->getIdentifier(), $block->getId());
+                } else {
+                    $toTranslate[$block->getId()] = $block->getOriginalContent();
+                }
             }
-            $translations = $this->translation::translateMany($toTranslate, $result->getOriginalLanguage(), $target);
+
+            // Register translations from API
+            $result->setTranslations($this->translation::translateMany($toTranslate, $result->getOriginalLanguage(), $target), $target);
+
+            // Register translations from DB
             $result->setTranslations($translations, $target);
         }
     }

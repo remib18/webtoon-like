@@ -6,6 +6,7 @@ use InvalidArgumentException;
 use mysqli;
 use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
+use WebtoonLike\Site\exceptions\UnsupportedOperationException;
 use WebtoonLike\Site\Settings;
 
 class Database
@@ -138,10 +139,13 @@ class Database
 
     /**
      * Enregistrer une liste d'entités dans la base de données
-     * @param string            $table Le nom de la table
+     *
+     * @param string            $table    Le nom de la table
      * @param EntityInterface[] $entities Les ressources à enregistrer
      *
      * @return bool
+     * @throws NoIdOverwritingException
+     * @throws UnsupportedOperationException
      */
     public static function createBatch(string $table, array &$entities): bool {
         $fields = join(', ', array_keys($entities[0]->getFieldsToSave()));
@@ -149,11 +153,18 @@ class Database
         $q = "INSERT INTO `$table`($fields) VALUES $values";
         $res = Database::getDB()->query($q);
         if ($res) {
+            $result = [];
             $id = self::getLastInsertedId();
             foreach ($entities as $entity) {
                 $entity->setId($id);
+                try {
+                    $result[$entity->getId()] = $entity;
+                } catch (\Exception|\Error) {
+                    throw new UnsupportedOperationException('Impossible to perform a create ressource batch request on entity ' . $entities[0]::class . '.');
+                }
                 $id++;
             }
+            $entities = $result;
             return true;
         }
         return false;
@@ -238,6 +249,7 @@ class Database
      */
     public static function normalizeValue(mixed $value): string {
         if (is_null($value)) return 'null';
+        if (is_bool($value)) return $value ? 'true' : 'false';
         return is_string($value) ? "'" . self::getDB()->escape_string($value) . "'" : (string)$value;
     }
 

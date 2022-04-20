@@ -6,7 +6,7 @@ ini_set('xdebug.var_display_max_depth', 10);
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
 use WebtoonLike\Site\entities\Image;
-use WebtoonLike\Site\features\Translation\OCR\Providers\GoogleOCR;
+use WebtoonLike\Site\features\Translation\OCR\Providers\Google\GoogleOCR;
 
 
 $ocr = new GoogleOCR();

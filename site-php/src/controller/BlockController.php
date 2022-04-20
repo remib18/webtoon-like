@@ -7,6 +7,7 @@ use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\Language;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\entities\Translation;
+use WebtoonLike\Site\exceptions\UnsupportedOperationException;
 use WebtoonLike\Site\utils\Database;
 
 class BlockController
@@ -69,9 +70,15 @@ class BlockController
      * @param Block[] $entities
      *
      * @return bool
+     * @throws NoIdOverwritingException
      */
-    public static function createBatch(array $entities): bool {
-        return Database::createBatch('Block', $entities);
+    public static function createBatch(array &$entities): bool {
+        try {
+            return Database::createBatch('Block', $entities);
+        } catch (UnsupportedOperationException) {
+            // This case never happen
+            return false;
+        }
     }
 
     /**

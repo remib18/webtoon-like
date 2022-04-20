@@ -15,6 +15,7 @@ class Settings {
             'en'
         ],
         'webtoonsImagesBaseFolder' => baseDirectory . '/assets/webtoons-imgs/',
+        'WEBTOONS_IMAGES_FOLDER' => baseDirectory . '/assets/webtoons-imgs/',
         'DATABASE' => [
             'hostname' => 'localhost',
             'username' => 'root',       // TODO: Replace root in production
