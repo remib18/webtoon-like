@@ -18,13 +18,13 @@ use WebtoonLike\Site\pageManager\WebtoonManager;
             <label for="chapter">Sélectionnez le chapitre</label>
             <span class="select">
                 <select name="chapter" id="chapter">
-                    <?=WebtoonManager::getChapters()?>
+                    <?= WebtoonManager::getChapters() ?>
                 </select>
             </span>
         </fieldset>
         <hr>
         <h3>Description</h3>
-        <pre><?=WebtoonManager::getDescription()?></pre>
+        <pre><?= WebtoonManager::getDescription() ?></pre>
         <!--<h3>Genres</h3>
         <span class="genre">AAA</span>
         <span>•</span>
@@ -35,3 +35,9 @@ use WebtoonLike\Site\pageManager\WebtoonManager;
         <!-- Todo: Javascript to load the images of the webtoon -->
     </section>
 </div>
+
+
+
+
+
+

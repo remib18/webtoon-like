@@ -2,6 +2,7 @@
 
 namespace WebtoonLike\Site\pageManager;
 
+use WebtoonLike\Site\controller\ChapterController;
 use WebtoonLike\Site\controller\WebtoonController;
 use WebtoonLike\Site\entities\Webtoon;
 
@@ -29,12 +30,19 @@ class WebtoonManager
         return self::getWebtoon()->getName();
     }
 
-    public static function getChapter(): string {
+    public static function getChapters(): string {
+        if (!(isset($_GET['chapter']))) {
+            header('Location: /');
+        }
         $chapters =ChapterController::getAll();
-
+        $res="";
 
         foreach ($chapters as $chapter) {
-            $res .= '<option value=".(int)$Chapter." selected>Chapitre'.$chapter.'</option>';
+            if( (int) $_GET['chapter'] === $chapter->getIndex()) {
+                $res .= '<option value="' . $chapter->getIndex() . '" selected>Chapitre ' . $chapter->getTitle() . '</option>';
+            }else{
+                $res .= '<option value="' . $chapter->getIndex() . '">Chapitre ' . $chapter->getTitle() . '</option>';
+            }
     }
         return $res;
     }
