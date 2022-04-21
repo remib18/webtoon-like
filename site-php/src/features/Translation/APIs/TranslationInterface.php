@@ -3,9 +3,12 @@
 namespace WebtoonLike\Site\features\Translation\APIs;
 
 use WebtoonLike\Site\entities\Language;
+use WebtoonLike\Site\features\Translation\Result\Bloc;
 
 interface TranslationInterface
 {
+    // TODO: Remplacer string $text by Block $block
+
     /**
      * Traduit un texte
      *
@@ -20,7 +23,7 @@ interface TranslationInterface
     /**
      * Traduit plusieurs textes issus du même langage.
      *
-     * @param array<string> $texts Liste des textes à traduire
+     * @param string[] $texts Liste des textes à traduire
      * @param Language $source Langue d'origine
      * @param Language $target Langue vers laquelle traduire
      *

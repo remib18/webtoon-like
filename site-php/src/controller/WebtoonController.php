@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\EntityInterface;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\entities\Webtoon;
 use WebtoonLike\Site\utils\Database;
 
@@ -15,7 +16,7 @@ class WebtoonController
      * @param string|array $col
      * @param array $where
      *
-     * @return array
+     * @return Webtoon[]
      */
     public static function getAll(string|array $col = '*', array $where = []): array
     {
@@ -37,7 +38,7 @@ class WebtoonController
      * Obtention du webtoon avec le nom correspondant.
      *
      * @param string $name Nom rechercher
-     * @return EntityInterface[]
+     * @return Webtoon[]
      */
     public static function getByName(string $name): array
     {
@@ -60,9 +61,12 @@ class WebtoonController
      * Enregistre un webtoon et retourne son identifiant ou <code>false</code> en cas d'erreur.
      *
      * @param Webtoon $entity
-     * @return int|false Faux en cas d'erreur
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
      */
-    public static function create(Webtoon &$entity): int|false
+    public static function create(Webtoon &$entity): bool
     {
         return Database::create('Webtoon', $entity);
     }

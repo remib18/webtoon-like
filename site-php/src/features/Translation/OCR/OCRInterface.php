@@ -10,12 +10,16 @@ interface OCRInterface
 {
 
     /**
+     * Enregistre une image dans la pile du traitement.
+     *
      * @param Image $image L'image à charger
      * @return $this
      */
     public function registerImage(Image $image): OCRInterface;
 
     /**
+     * Exécute la reconnaissance de texte et retourne un résultat.
+     *
      * @return array<Result>
      *
      * @throws ApiException
