@@ -1,4 +1,5 @@
-#### Table des matières
+
+### Table des matières:
 
 - [Configuration du serveur WEB](#configuration-du-serveur-web)
 - [Obtention et installation](#obtention-et-installation)
@@ -112,3 +113,4 @@ mysql -u root < sql/import/import-db_v0.sql
 *Paths relatifs par rapport au dossier root du projet (webtoon-like).*
 - Initialisation: `sql/init/init-db_v0.sql`
 - Import de données test: `sql/import/import-db_v0.sql`
+
