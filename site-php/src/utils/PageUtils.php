@@ -2,8 +2,10 @@
 
 namespace WebtoonLike\Site\utils;
 
+use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\core\RouterMode;
+use WebtoonLike\Site\core\AccessLevel;
 
 require_once 'UriUtils.php';
 
@@ -18,7 +20,7 @@ const NAVIGUATION = [
         'icon' => '',
         'label' => 'Tous les webtoons',
         'tooltip' => '',
-        'logged' => null
+        'accessLevel' => AccessLevel::Everyone
     ],
     'import' => [
         'target' => '/import?type=webtoon',
@@ -28,32 +30,30 @@ const NAVIGUATION = [
                    </svg>',
         'label' => 'Importer',
         'tooltip' => 'Importer un webtoon',
-        'logged' => true // TODO[user-system]
+        'accessLevel' => AccessLevel::Logged
     ],
     'login' => [
         'target' => '?action=logging',
         'icon' => '',
         'label' => 'Connexion',
         'tooltip' => 'Se connecter au site web.',
-        'logged' => false
+        'accessLevel' => AccessLevel::Unlogged
     ],
     'logout' => [
-        'target' => '?action=logout',
+        'target' => '@loggout',
         'icon' => '',
         'label' => 'Deconnexion',
         'tooltip' => 'Se deconnecter du site web.',
-        'logged' => true
+        'accessLevel' => AccessLevel::Logged
     ]
 ];
 
 class PageUtils
 {
     private string $pageType;
-    private bool $logged;
 
     public function __construct(bool $logged = false) {
         $this->pageType = UriUtils::getPageType();
-        $this->logged = $logged;
     }
 
     /**
@@ -128,7 +128,7 @@ class PageUtils
         foreach (NAVIGUATION as $page => $item) {
             $isCurrent = $this->pageType === $page;
 
-            if($this->logged === $item['logged'] || $item['logged'] === null) {
+            if(Authentication::hasAccess($item['accessLevel'])) {
                 $res .= '<li data-tooltip="' . '">';
                 $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
                 $res .= $item['icon'];

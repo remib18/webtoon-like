@@ -32,9 +32,16 @@ class Router
      * @return bool
      */
     private static function isRessourceAccessibleForUser(): bool {
-        // TODO: [User system] @gabey
-        // note: utilises self::getRouter()->pageType pour savoir le template
-        return true;
+
+        $pageType =  self::getRouter()->pageType;
+
+        switch ($pageType) {
+            case 'import':
+            case '@loggout':
+                return Authentication::hasAccess(AccessLevel::Logged);
+            default:
+                return true;
+        }
     }
 
     /**

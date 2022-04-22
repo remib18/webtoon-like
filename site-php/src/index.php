@@ -4,6 +4,8 @@ namespace WebtoonLike\Site;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use WebtoonLike\Site\core\AccessLevel;
+use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\utils\PageUtils;
 
 if( Settings::get('production') === false )
@@ -17,7 +19,9 @@ if( Settings::get('production') === false )
     ini_set('display_errors', 0);
 }
 
-$p = new PageUtils(false);
+Authentication::innitSession();
+
+$p = new PageUtils();
 
 ?>
 
