@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\core;
 
 
+use WebtoonLike\Site\controller\UserController;
+use WebtoonLike\Site\entities\User;
 use WebtoonLike\Site\utils\PageUtils;
 
 class Authentication {
@@ -46,13 +48,39 @@ class Authentication {
         return Authentication::getUserAccessLevel()->value >= $requiredLevel->value;
     }
 
+    /**
+     * Register user to the database.
+     *
+     * @return bool
+     */
     public static function register(String $username, String $email, String $password, string $password_confirmation): bool
     {
+        $errors = [];
+
+        if( !is_null(UserController::getByEmail($email)) ) {
+            $errors[] = 'Email déjà utilisé';
+        }
+
+        if( !is_null(UserController::getByEmail($username)) ) {
+            $errors[] = 'Username déjà utilisé';
+        }
+
+        if ( $password !== $password_confirmation ) {
+            $errors[] = 'Mots de passes non-identique.';
+        }
+
+        if( empty($errors) ) {
+            $psd = password_hash($password, PASSWORD_DEFAULT);
+            $user = new User($username, $email, $password);
+            return UserController::create($user);
+        }
+
         return false;
     }
 
     public static function login(String $email, String $password): bool
     {
+
         return false;
     }
 

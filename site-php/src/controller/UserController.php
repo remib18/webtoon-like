@@ -31,6 +31,26 @@ class UserController
         return Database::getFirst('User', user::class, '*', ['userID' => "userID = $id"]);
     }
 
+    /* Obtention de l'user avec l'email correspondant.
+    *
+    * @param int $email email recherché
+    * @return User|null
+    */
+    public static function getByEmail(int $email): ?User
+    {
+        return Database::getFirst('User', user::class, '*', ['email' => "email = $email"]);
+    }
+
+    /* Obtention de l'user avec l'username correspondant.
+    *
+    * @param int $username username  recherché
+    * @return User|null
+    */
+    public static function getByUsername(int $username): ?User
+    {
+        return Database::getFirst('User', user::class, '*', ['username' => "username = $username"]);
+    }
+
     /**
      * La ressource fournit existe-t-elle ?
      *
