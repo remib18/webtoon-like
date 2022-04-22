@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\core;
 
 
+use WebtoonLike\Site\utils\PageUtils;
+
 class Authentication {
 
     /**
@@ -13,7 +15,7 @@ class Authentication {
     public static function innitSession(): void {
         session_start();
         if(!isset($_SESSION['accessLevel'])) {
-            $_SESSION['accessLevel'] = AccessLevel::Unlogged;
+            $_SESSION['accessLevel'] = AccessLevel::everyone;
         }
     }
 
@@ -31,14 +33,27 @@ class Authentication {
      *
      * @return bool
      */
-    public static function hasAccess(AccessLevel $requiredLevel): bool {
-        $sessionLevel = Authentication::getUserAccessLevel();
+    public static function hasAccess(?AccessLevel $requiredLevel = null, bool $strict = false): bool {
 
-        if($requiredLevel === AccessLevel::Everyone || $sessionLevel === $requiredLevel) {
-            return true;
+        if(is_null($requiredLevel)) {
+            $requiredLevel = PageUtils::getPageAccess();
         }
 
-        return False;
+        if($strict) {
+            return Authentication::getUserAccessLevel()->value === $requiredLevel->value;
+        }
+
+        return Authentication::getUserAccessLevel()->value >= $requiredLevel->value;
+    }
+
+    public static function register(String $username, String $email, String $password, string $password_confirmation): bool
+    {
+        return false;
+    }
+
+    public static function login(String $email, String $password): bool
+    {
+        return false;
     }
 
 }

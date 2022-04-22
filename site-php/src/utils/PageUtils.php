@@ -14,13 +14,22 @@ const SCRIPTS_PAGE_TYPE = [
     'import' => ['importFormController']
 ];
 
+const PAGES = [
+    'home' => ['accessLevel' => AccessLevel::everyone],
+    'import' => ['accessLevel' => AccessLevel::authenticated],
+    '@logout' => ['accessLevel' => AccessLevel::authenticated],
+    'error' => ['accessLevel' => AccessLevel::everyone],
+    'proposition' => ['accessLevel' => AccessLevel::authenticated],
+    'webtoon' => ['accessLevel' => AccessLevel::everyone]
+];
+
 const NAVIGUATION = [
     'home' => [
         'target' => '/',
         'icon' => '',
         'label' => 'Tous les webtoons',
         'tooltip' => '',
-        'accessLevel' => AccessLevel::Everyone
+        'accessLevel' => AccessLevel::everyone
     ],
     'import' => [
         'target' => '/import?type=webtoon',
@@ -30,21 +39,21 @@ const NAVIGUATION = [
                    </svg>',
         'label' => 'Importer',
         'tooltip' => 'Importer un webtoon',
-        'accessLevel' => AccessLevel::Logged
+        'accessLevel' => AccessLevel::authenticated
     ],
     'login' => [
         'target' => '?action=login',
         'icon' => '',
         'label' => 'Connexion',
         'tooltip' => 'Se connecter au site web.',
-        'accessLevel' => AccessLevel::Unlogged
+        'accessLevel' => AccessLevel::everyone
     ],
     'logout' => [
-        'target' => '@loggout',
+        'target' => '@logout',
         'icon' => '',
         'label' => 'Deconnexion',
         'tooltip' => 'Se deconnecter du site web.',
-        'accessLevel' => AccessLevel::Logged
+        'accessLevel' => AccessLevel::authenticated
     ]
 ];
 
@@ -52,8 +61,12 @@ class PageUtils
 {
     private string $pageType;
 
-    public function __construct(bool $logged = false) {
+    public function __construct() {
         $this->pageType = UriUtils::getPageType();
+    }
+
+    public static function getPageAccess(): AccessLevel {
+        return PAGES[UriUtils::getPageType()]['accessLevel'];
     }
 
     /**
@@ -128,7 +141,7 @@ class PageUtils
         foreach (NAVIGUATION as $page => $item) {
             $isCurrent = $this->pageType === $page;
 
-            if(Authentication::hasAccess($item['accessLevel'])) {
+            if(Authentication::hasAccess($item['accessLevel'], true)) {
                 $res .= '<li data-tooltip="' . '">';
                 $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
                 $res .= $item['icon'];

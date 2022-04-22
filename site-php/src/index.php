@@ -4,6 +4,7 @@ namespace WebtoonLike\Site;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Google\Auth\Middleware\AuthTokenMiddleware;
 use WebtoonLike\Site\core\AccessLevel;
 use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\utils\PageUtils;
@@ -20,6 +21,8 @@ if( Settings::get('production') === false )
 }
 
 Authentication::innitSession();
+
+$_SESSION['accessLevel'] = AccessLevel::authenticated;
 
 $p = new PageUtils();
 

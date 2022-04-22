@@ -2,10 +2,9 @@
 
 namespace WebtoonLike\Site\core;
 
-enum AccessLevel
+enum AccessLevel: int
 {
-    case Logged;
-    case Unlogged;
-    case Everyone;
+    case everyone = 0;
+    case authenticated = 1;
 
 }
