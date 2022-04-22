@@ -70,8 +70,8 @@ class Authentication {
         }
 
         if( empty($errors) ) {
-            $psd = password_hash($password, PASSWORD_DEFAULT);
-            $user = new User($username, $email, $password);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $user = new User($username, $email, $hashedPassword);
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['user']['username'] = $user->getUsername();
