@@ -2,6 +2,9 @@
 
 namespace WebtoonLike\Site\utils;
 
+use WebtoonLike\Site\core\Router;
+use WebtoonLike\Site\core\RouterMode;
+
 require_once 'UriUtils.php';
 
 const SCRIPTS_PAGE_TYPE = [
@@ -34,8 +37,7 @@ class PageUtils
     private string $pageType;
 
     public function __construct() {
-        $uri = new UriUtils();
-        $this->pageType = $uri->getPageType();
+        $this->pageType = UriUtils::getPageType();
     }
 
     /**
@@ -84,15 +86,7 @@ class PageUtils
      * Affiche la page demandée
      */
     public function router(): void {
-        $path = dirname(__DIR__) . '/pages/' . $this->pageType . '.php';
-        if (!file_exists($path)) {
-            header(
-                'Location: /error?code=500&msg='
-                . urlencode('Un problème est survenu lors de la création de la page, le template n\'existe pas.')
-            );
-            die;
-        }
-        require $path;
+        Router::route(RouterMode::GENERATED_HTML, null);
     }
 
     /**
@@ -113,7 +107,7 @@ class PageUtils
      *
      * @return string
      */
-    public function getNaviguation(): string {
+    public function getNavigation(): string {
         $res = '';
         foreach (NAVIGUATION as $page => $item) {
             $isCurrent = $this->pageType === $page;
