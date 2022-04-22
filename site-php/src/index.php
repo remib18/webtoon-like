@@ -17,7 +17,7 @@ if( Settings::get('production') === false )
     ini_set('display_errors', 0);
 }
 
-$p = new PageUtils('');
+$p = new PageUtils(false);
 
 ?>
 

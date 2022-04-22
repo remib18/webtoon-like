@@ -18,7 +18,7 @@ const NAVIGUATION = [
         'icon' => '',
         'label' => 'Tous les webtoons',
         'tooltip' => '',
-        //'access' => 'everyone' // TODO[user-system]
+        'logged' => null
     ],
     'import' => [
         'target' => '/import?type=webtoon',
@@ -28,16 +28,32 @@ const NAVIGUATION = [
                    </svg>',
         'label' => 'Importer',
         'tooltip' => 'Importer un webtoon',
-        //'access' => 'everyone' // TODO[user-system]
+        'logged' => true // TODO[user-system]
+    ],
+    'login' => [
+        'target' => '?action=logging',
+        'icon' => '',
+        'label' => 'Connexion',
+        'tooltip' => 'Se connecter au site web.',
+        'logged' => false
+    ],
+    'logout' => [
+        'target' => '?action=logout',
+        'icon' => '',
+        'label' => 'Deconnexion',
+        'tooltip' => 'Se deconnecter du site web.',
+        'logged' => true
     ]
 ];
 
 class PageUtils
 {
     private string $pageType;
+    private bool $logged;
 
-    public function __construct() {
+    public function __construct(bool $logged = false) {
         $this->pageType = UriUtils::getPageType();
+        $this->logged = $logged;
     }
 
     /**
@@ -111,12 +127,15 @@ class PageUtils
         $res = '';
         foreach (NAVIGUATION as $page => $item) {
             $isCurrent = $this->pageType === $page;
-            $res .= '<li data-tooltip="' . '">';
-            $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
-            $res .= $item['icon'];
-            $res .= '<span>' . $item['label'] . '</span>';
-            $res .= $isCurrent ? '' : '</a>';
-            $res .= '</li>';
+
+            if($this->logged === $item['logged'] || $item['logged'] === null) {
+                $res .= '<li data-tooltip="' . '">';
+                $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
+                $res .= $item['icon'];
+                $res .= '<span>' . $item['label'] . '</span>';
+                $res .= $isCurrent ? '' : '</a>';
+                $res .= '</li>';
+            }
         }
         return $res;
     }
