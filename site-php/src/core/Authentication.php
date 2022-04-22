@@ -72,6 +72,12 @@ class Authentication {
         if( empty($errors) ) {
             $psd = password_hash($password, PASSWORD_DEFAULT);
             $user = new User($username, $email, $password);
+
+            $_SESSION['accessLevel'] = AccessLevel::authenticated;
+            $_SESSION['user']['username'] = $user->getUsername();
+            $_SESSION['user']['id'] = $user->getId();
+            $_SESSION['user']['email'] = $user->getEmail();
+
             return UserController::create($user);
         }
 
@@ -80,6 +86,19 @@ class Authentication {
 
     public static function login(String $email, String $password): bool
     {
+
+        $user = UserController::getByEmail($email);
+        $identicalPsd = password_verify($password, $user->getPassword() );
+
+        if( $user->getEmail() ===  $email && $identicalPsd === True) {
+
+            $_SESSION['accessLevel'] = AccessLevel::authenticated;
+            $_SESSION['user']['username'] = $user->getUsername();
+            $_SESSION['user']['id'] = $user->getId();
+            $_SESSION['user']['email'] = $user->getEmail();
+
+            return true;
+        }
 
         return false;
     }
