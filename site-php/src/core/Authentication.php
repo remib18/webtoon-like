@@ -90,7 +90,7 @@ class Authentication {
         $user = UserController::getByEmail($email);
         $identicalPsd = password_verify($password, $user->getPassword() );
 
-        if( $user->getEmail() ===  $email && $identicalPsd === True) {
+        if( $user->getEmail() === $email && $identicalPsd === True ) {
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['user']['username'] = $user->getUsername();
