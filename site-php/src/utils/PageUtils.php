@@ -33,7 +33,7 @@ const NAVIGUATION = [
         'accessLevel' => AccessLevel::Logged
     ],
     'login' => [
-        'target' => '?action=logging',
+        'target' => '?action=login',
         'icon' => '',
         'label' => 'Connexion',
         'tooltip' => 'Se connecter au site web.',
