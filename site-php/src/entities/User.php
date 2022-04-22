@@ -61,6 +61,14 @@ class User implements EntityInterface
         $this->email = $email;
     }
 
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
     public function setPassword(string $password): void {
         $this->fieldsToSave['password'] = $password;
         $this->password = $password;
@@ -119,7 +127,7 @@ class User implements EntityInterface
             'userID',
             'username',
             'email',
-            'password'
+            'password',
             'registeredAt'
         ];
     }
