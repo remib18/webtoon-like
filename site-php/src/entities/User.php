@@ -15,18 +15,21 @@ class User implements EntityInterface
     private ?int $id;
     private string $username;
     private string $email;
+    private string $password;
     private DateTime $registeredAt;
 
     public function __construct(
         ?int $userID,
         string $username,
         string $email,
+        string $password,
         DateTime $registeredAt,
         bool $fromDB = true
     ){
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
+        $this->setPassword($password);
         $this->registeredAt = $registeredAt;
 
         if ($fromDB) $this->AllFieldsSaved();
@@ -56,6 +59,11 @@ class User implements EntityInterface
     {
         $this->fieldsToSave['email'] = $email;
         $this->email = $email;
+    }
+
+    public function setPassword(string $password): void {
+        $this->fieldsToSave['password'] = $password;
+        $this->password = $password;
     }
 
     /**
@@ -90,6 +98,7 @@ class User implements EntityInterface
         'userID' => "int",
         'username' => "string",
         'email' => "string",
+        'password' => "password",
         'registeredAt' => "\DateTime"
     ])]
     public function __toArray(): array {
@@ -97,6 +106,7 @@ class User implements EntityInterface
             'userID' => $this->id,
             'username' => $this->username,
             'email' => $this->email,
+            'password' => $this->password,
             'registeredAt' => $this->registeredAt
         ];
     }
@@ -109,6 +119,7 @@ class User implements EntityInterface
             'userID',
             'username',
             'email',
+            'password'
             'registeredAt'
         ];
     }
@@ -130,6 +141,7 @@ class User implements EntityInterface
             'userID' => "int",
             'username' => "string",
             'email' => "string",
+            'password' => "string",
             'registeredAt' => "\DateTime"
         ];
     }
