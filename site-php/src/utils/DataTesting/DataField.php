@@ -6,6 +6,7 @@ class DataField {
 
     private function __construct(
         private mixed $data,
+        private DataType  $type,
         private bool $nullable,
         private ?int $minLength,
         private ?int $maxLength,
@@ -18,6 +19,14 @@ class DataField {
     public function getData(): mixed
     {
         return $this->data;
+    }
+
+    /**
+     * @return DataType
+     */
+    public function getType(): DataType
+    {
+        return $this->type;
     }
 
     /**
