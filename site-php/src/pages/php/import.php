@@ -1,3 +1,5 @@
+<?php require dirname(__DIR__, 2) . '/components/header.php'; ?>
+
 <div aria-describedby="#s1-title" id="app">
 
     <svg xmlns="http://www.w3.org/2000/svg" width="976" height="100" viewBox="0 0 976 130" fill="none" id="completion">
@@ -6,20 +8,28 @@
                 --svg-primary: #656D6D;
                 --svg-accent: #9FABAB;
             }
-            svg .svg-txt { text-anchor: middle; }
+
+            svg .svg-txt {
+                text-anchor: middle;
+            }
+
             svg .svg-step {
                 fill: black;
                 font-size: 2.25rem;
                 font-weight: bolder;
             }
+
             svg .svg-details { fill: var(--text-primary); }
+
             stop {
                 transition: stop-color .3s ease;
             }
+
             svg .svg-switch {
                 stop-color: var(--svg-primary);
                 offset: 0;
             }
+
             svg.switched .svg-switch {
                 stop-color: var(--svg-accent) !important;
                 offset: 20%;
@@ -78,7 +88,7 @@
                         </label>
                         <label for="chapter-img" class="file">
                             Importer une cover
-                            <input type="file" name="chapter-x-parts" id="chapter-parts" multiple  accept="image/jpeg,image/png" required>
+                            <input type="file" name="chapter-x-parts" id="chapter-parts" multiple accept="image/jpeg,image/png" required>
                         </label>
                     </div>
                     <input type="submit" value="Ajouter le chapitre">
@@ -181,3 +191,5 @@
         </section>
     </form>
 </div>
+
+<?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>

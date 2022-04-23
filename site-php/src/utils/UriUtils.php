@@ -37,9 +37,11 @@ class UriUtils
 
         // Vérification de l'existence du résultat
         if ($_ === []) {
-            Router::redirect('/error', 404, [
-                'msg' => 'La page que vous essayez d\'obtenir n\'existe pas...'
-            ]);
+            Router::notFound();
+
+            // When redirection has already been applied, to load the error page
+            $pageType[0] = ' error';
+
         }
 
         // Obtention du type de page
@@ -48,7 +50,7 @@ class UriUtils
             default => substr($pageType[0], 1),
         };
 
-
+        /*
         // Obtention d'un tableau des paramètres
         if ($rawOptions[0] !== '') {
             $options = mb_split('&', $rawOptions[0]);
@@ -56,7 +58,7 @@ class UriUtils
                 [$key, $value] = mb_split('=', $option);
                 $this->options[$key] = $value;
             }
-        }
+        }*/
     }
 
     public static function buildUriGetParamsFromArray(array $array): string {

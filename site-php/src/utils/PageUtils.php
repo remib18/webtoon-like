@@ -2,9 +2,6 @@
 
 namespace WebtoonLike\Site\utils;
 
-use WebtoonLike\Site\core\Router;
-use WebtoonLike\Site\core\RouterMode;
-
 require_once 'UriUtils.php';
 
 const SCRIPTS_PAGE_TYPE = [
@@ -36,18 +33,25 @@ class PageUtils
 {
     private string $pageType;
 
-    public function __construct() {
+    private static ?PageUtils $instance = null;
+
+    private function __construct() {
         $this->pageType = UriUtils::getPageType();
+    }
+
+    private static function getInstance(): PageUtils {
+        if (is_null(self::$instance)) self::$instance = new PageUtils();
+        return self::$instance;
     }
 
     /**
      * Retourne le titre de la page
      *
-     * @todo : if pageType = webtoon then "WebtoonLike — {webtoon-title}"
      * @return string
+     * @todo : if pageType = webtoon then "WebtoonLike — {webtoon-title}"
      */
-    public function getPageTitle(): string {
-        return 'WebtoonLike — ' . ucfirst($this->pageType);
+    public static function getPageTitle(): string {
+        return 'WebtoonLike — ' . ucfirst(self::getInstance()->pageType);
     }
 
     /**
@@ -55,12 +59,12 @@ class PageUtils
      *
      * @return string
      */
-    public function getStylesheets(): string {
+    public static function getStylesheets(): string {
         $reset = '<link rel="stylesheet" href="/assets/styles/reset.css">';
         $app = '<link rel="stylesheet" href="/assets/styles/app.css">';
         $page = '';
-        if (file_exists(dirname(__DIR__, 2) . '/assets/styles/page-' . $this->pageType . '.css')) {
-            $page = '<link rel="stylesheet" href="/assets/styles/page-' . $this->pageType . '.css">';
+        if (file_exists(dirname(__DIR__, 2) . '/assets/styles/page-' . self::getInstance()->pageType . '.css')) {
+            $page = '<link rel="stylesheet" href="/assets/styles/page-' . self::getInstance()->pageType . '.css">';
         }
         return $reset . $app . $page;
     }
@@ -70,9 +74,9 @@ class PageUtils
      *
      * @return string
      */
-    public function getScripts(): string {
+    public static function getScripts(): string {
         $res = '';
-        $custom = SCRIPTS_PAGE_TYPE[$this->pageType] ?? [];
+        $custom = SCRIPTS_PAGE_TYPE[self::getInstance()->pageType] ?? [];
         $scriptsName = [...SCRIPTS_PAGE_TYPE['all'], ...$custom];
         foreach ($scriptsName as $name) {
             if (file_exists(dirname(__DIR__, 2) . '/assets/scripts/' . $name . '.js')) {
@@ -83,20 +87,13 @@ class PageUtils
     }
 
     /**
-     * Affiche la page demandée
-     */
-    public function router(): void {
-        Router::route(RouterMode::GENERATED_HTML, null);
-    }
-
-    /**
      * Retourne le logo du site
      *
      * @return string
      */
-    public function getLogo(): string {
+    public static function getLogo(): string {
         $logo = '<h1 class="logo">WebtoonLike</h1>';
-        if ($this->pageType === 'home') {
+        if (self::getInstance()->pageType === 'home') {
             return $logo;
         }
         return '<a href="/">' . $logo . '</a>';
@@ -107,10 +104,10 @@ class PageUtils
      *
      * @return string
      */
-    public function getNavigation(): string {
+    public static function getNavigation(): string {
         $res = '';
         foreach (NAVIGUATION as $page => $item) {
-            $isCurrent = $this->pageType === $page;
+            $isCurrent = self::getInstance()->pageType === $page;
             $res .= '<li data-tooltip="' . '">';
             $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
             $res .= $item['icon'];
