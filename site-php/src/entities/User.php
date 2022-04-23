@@ -27,6 +27,7 @@ class User implements EntityInterface
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
+        $this->registeredAt = $registeredAt;
 
         if ($fromDB) $this->AllFieldsSaved();
         else $this->fieldsToSave['registeredAt'] = $registeredAt;
@@ -147,5 +148,13 @@ class User implements EntityInterface
     public function AllFieldsSaved(): void
     {
         $this->fieldsToSave = [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setId(int $id): void {
+        if (!is_null($this->id)) throw new NoIdOverwritingException();
+        $this->id = $id;
     }
 }

@@ -6,8 +6,20 @@ const resultItemTemplate = document.querySelector('[data-item-result-template]')
 let items = undefined
 let noResultNodeAppend = false
 
+// Settings
+const WEBTOON_API_ENDPOINT = '/src/handlers/api/webtoons.php'
+const WEBTOON_BASE_IMAGES_FOLDER = '/assets/webtoons-imgs/'
+
 // Si on est sur une page affichant les résultats par défaut, on charge automatiquement les données
-if (inPageSearchResultContainer) load().then(() => {})
+if (inPageSearchResultContainer) load().then(() => {
+}, () => {
+    const el = document.createElement('p')
+    el.style.position = 'absolute'
+    el.textContent = 'Erreur lors du chargement des webtoons. Vérifiez que vous êtes bien connecté à internet.'
+    inPageSearchResultContainer.appendChild(el)
+    inPageSearchResultContainer.style.position = 'relative'
+    inPageSearchResultContainer.style.maxWidth = '100vw'  // Evite l'overflow
+})
 
 // Fonction de recherche
 searchBar.addEventListener('input', e => {
@@ -23,15 +35,22 @@ searchBar.addEventListener('input', e => {
         if (!found) noResult()
     }, () => alert('Erreur lors du chargement des webtoons. Vérifiez que vous êtes bien connecté à internet.'))
 })
-// Todo: Load data with focus within on searchBar
+searchBar.addEventListener('focus', () => {
+    load().then(
+        () => {
+        },
+        () => alert('Erreur lors du chargement des webtoons. Vérifiez que vous êtes bien connecté à internet.')
+    )
+}, {once: true})
 
 /**
  * Renvoie la chaine de caractères str avec une taille maximale de 20
  * @param str
+ * @param length
  * @returns {null|string}
  */
-function maxLength(str) {
-    if (str) return str.length > 20 ? str.substr(0, 20) + '...' : str
+function maxLength(str, length = 17) {
+    if (str) return str.length > length ? str.substr(0, length) + '...' : str
     return null
 }
 
@@ -39,27 +58,35 @@ function maxLength(str) {
  * Charge les webtoons
  */
 function load() {
+    if (items) return
     return new Promise((successCb, failureCb) => {
         if (items === undefined) {
             console.log('[API]: Loading data...')
-            fetch('https://api.unsplash.com/photos/random?count=30&content_filter=low&query=manga&client_id=RgNusp6pAi-K2pSfEEluyP7agvOtMfgK6dL4HVpJLdw')
+            fetch(WEBTOON_API_ENDPOINT)
                 .then(res => res.json(), reason => failureCb(reason))
                 .then(data => {
-                    data.slice(2, 100)
                     items = data.map(item => {
                         const el = resultItemTemplate.content.cloneNode(true).children[0]
-                        const title = maxLength(item.description) || maxLength(item.alt_description) || '...'
-                        const searchableField = `${item.description} ${item.alt_description}`.toLowerCase()
-                        el.querySelector('img').src = item.urls.small
+                        const title = getFormattedTitle(item.title)
+                        const searchableField = `${item.title}`.toLowerCase()
+                        el.querySelector('img').src = WEBTOON_BASE_IMAGES_FOLDER + item.cover
                         el.querySelector('.webtoon-title').textContent = title
+                        el.href = `/webtoon?id=${item.id}`
                         resultContainer.append(el)
                         return {title, el, searchableField}
                     })
                     console.log('[API]: Data loaded.')
                     successCb()
                 }, reason => failureCb(reason))
-        } else { successCb() }
+        } else {
+            successCb()
+        }
     })
+}
+
+function getFormattedTitle(title) {
+    if (inPageSearchResultContainer) return maxLength(title) || '...'
+    return maxLength(title, 25) || '...'
 }
 
 function clearItems() {

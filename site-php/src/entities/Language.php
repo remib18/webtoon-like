@@ -108,4 +108,9 @@ class Language implements EntityInterface
     {
         $this->fieldsToSave = [];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function setId(int $id): void {}
 }

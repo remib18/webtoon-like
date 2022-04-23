@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\utils;
 
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\core\Router;
 
 class UriUtils
 {
@@ -11,8 +12,17 @@ class UriUtils
     /** @var array<string, mixed> Liste des options */
     private array $options = [];
 
-    public function __construct() {
+    private static ?UriUtils $instance = null;
+
+    private function __construct() {
         $this->analyseUri();
+    }
+
+    private static function getInstance(): UriUtils {
+        if (is_null(self::$instance)) {
+            self::$instance = new UriUtils();
+        }
+        return self::$instance;
     }
 
     /**
@@ -21,16 +31,17 @@ class UriUtils
      * @return void
      */
     private function analyseUri(): void {
-        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|report|webtoon|error)?)(?:[\?\/]([\w\-\/=&]*))?$/';
+        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|report|webtoon|error|@\w+)?)(?:[?\/]([\w\-\/=&]*))?$/';
         preg_match_all($re, $_SERVER['REQUEST_URI'], $matches);
         [$_, $pageType, $rawOptions] = $matches;    // Répartition du résultat
 
         // Vérification de l'existence du résultat
         if ($_ === []) {
-            $this->pageType = 'error';
-            $this->options['code'] = 404;
-            $this->options['message'] = 'La page que vous essayez d\'obtenir n\'existe pas...';
-            return;
+            Router::notFound();
+
+            // When redirection has already been applied, to load the error page
+            $pageType[0] = ' error';
+
         }
 
         // Obtention du type de page
@@ -39,7 +50,7 @@ class UriUtils
             default => substr($pageType[0], 1),
         };
 
-
+        /*
         // Obtention d'un tableau des paramètres
         if ($rawOptions[0] !== '') {
             $options = mb_split('&', $rawOptions[0]);
@@ -47,7 +58,16 @@ class UriUtils
                 [$key, $value] = mb_split('=', $option);
                 $this->options[$key] = $value;
             }
+        }*/
+    }
+
+    public static function buildUriGetParamsFromArray(array $array): string {
+        if (sizeof($array) < 1) return '';
+        $res = '';
+        foreach ($array as $key => $value) {
+            $res .= '&' . urlencode($key) . '=' . urlencode($value);
         }
+        return '?' . substr($res, 1);
     }
 
 
@@ -56,8 +76,8 @@ class UriUtils
      *
      * @return string
      */
-    public function getPageType(): string {
-        return $this->pageType;
+    public static function getPageType(): string {
+        return self::getInstance()->pageType;
     }
 
     /**
@@ -66,8 +86,12 @@ class UriUtils
      * @todo : Add GET / POST parameters
      * @return array<string, mixed>
      */
-    public function getArrayOptions(): array {
-        return $this->options;
+    public static function getArrayOptions(): array {
+        return self::getInstance()->options;
+    }
+
+    public static function isHandler(): bool {
+        return str_starts_with(self::getInstance()->pageType, '@');
     }
 
     /**

@@ -1,7 +1,9 @@
 <?php
-namespace WebtoonLike\Site\page;
-require_once dirname(__DIR__,2) . '/vendor/autoload.php';
+
 use WebtoonLike\Site\pageManager\WebtoonManager;
+
+require dirname(__DIR__, 2) . '/components/header.php';
+
 ?>
 
 <div id="app">
@@ -36,8 +38,4 @@ use WebtoonLike\Site\pageManager\WebtoonManager;
     </section>
 </div>
 
-
-
-
-
-
+<?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>

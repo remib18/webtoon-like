@@ -1,6 +1,6 @@
 <?php
-namespace WebtoonLike\Site\page;
-require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+
+// TODO: @Tacine Déplacer tout ça dans un manager !!!
 function printImportChapter($chapterNum): ?string
 {
     if (isset($chapterNum)) {
@@ -29,6 +29,8 @@ if (isset($_POST['chapter-x-parts'])) {
         $chapterNum[] = $_POST['chapter-x-number'];
     }
 }
+
+require dirname(__DIR__, 2) . '/components/header.php';
 
 ?>
 
@@ -116,13 +118,11 @@ if (isset($_POST['chapter-x-parts'])) {
                     <div class="form-group">
                         <label for="chapter-img" class="file">
                             Importer une cover
-                            <input type="file" name="chapter-x-img" id="chapter-img" accept="image/jpeg,image/png"
-                                   required>
+                            <input type="file" name="chapter-x-img" id="chapter-img" accept="image/jpeg,image/png" required>
                         </label>
                         <label for="chapter-img" class="file">
-                            Importer un chapitre
-                            <input type="file" name="chapter-x-parts" id="chapter-parts" multiple
-                                   accept="image/jpeg,image/png" required>
+                            Importer une cover
+                            <input type="file" name="chapter-x-parts" id="chapter-parts" multiple accept="image/jpeg,image/png" required>
                         </label>
                     </div>
                     <input type="submit" value="Ajouter le chapitre">
@@ -133,8 +133,7 @@ if (isset($_POST['chapter-x-parts'])) {
 
                     <ul class="list">
 
-                        <?= printImportChapter($chapterNum) ?>/*Faire en sorte que les chapitres apparaissent au fur et
-                        à mesure des importation*/
+                        <?= printImportChapter($chapterNum) /*Faire en sorte que les chapitres apparaissent au fur et à mesure des importation*/ ?>
 
                     </ul>
 
@@ -144,3 +143,5 @@ if (isset($_POST['chapter-x-parts'])) {
         </section>
     </form>
 </div>
+
+<?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>
