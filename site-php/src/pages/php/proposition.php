@@ -1,8 +1,14 @@
-<?php require dirname(__DIR__, 2) . '/components/header.php'; ?>
+<?php
+
+use WebtoonLike\Site\pageManager\PropositionManager;
+
+require dirname(__DIR__, 2) . '/components/header.php';
+
+?>
 
 <div id="app">
     <span class="logged-as">
-        <span>Connecté en tant que :</span>/*Profil à faire plus tard*/
+        <span>Connecté en tant que :</span><!-- TODO: @Yacine Profil à faire plus tard -->
         <label for="profile" class="profile">
             <input type="checkbox" name="profile" id="profile">
             <img src="https://via.placeholder.com/50" alt="profile">
@@ -15,18 +21,15 @@
     <div class="grid-container">
         <p class="title-small-1">Texte original</p>
         <pre class="false-input small-1">
-        <?= ->
-        getOriginalContent() ?>/*Renvoie le texte original*/
+        <?= PropositionManager::getOriginalContent()/*Renvoie le texte original*/ ?>
             </pre>
         <p class="title-small-2">Traduction actuelle</p>
         <pre class="false-input small-2">
-        <?= ->
-        getContent() ?>/*Trad actuel*/
+        <?= PropositionManager::getContent()/*Trad actuel*/ ?>
             </pre>
         <label class="title-large" for="proposition">Proposition</label>
         <textarea class="large-1" name="proposition" id="proposition" cols="100" rows="10">
-         <?= ->
-         getContent() ?>/*Affiche le résultat pour réécrire par dessus*/
+         <?= PropositionManager:: getContent()/*Affiche le résultat pour réécrire par-dessus*/ ?>
             </textarea>
         <input type="submit" value="Valider" class="action large">
     </div>
