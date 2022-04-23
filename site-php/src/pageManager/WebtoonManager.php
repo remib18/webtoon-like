@@ -15,13 +15,8 @@ class WebtoonManager
             if (isset($_GET['id'])) {
                 self::$webtoon = WebtoonController::getById((int)$_GET['id']);
             } else {
-                var_dump($_GET);
                 header('Location: /');
             }
-        }
-        if (is_null(self::$webtoon)) {
-            var_dump(self::$webtoon);
-            header('Location: /');
         }
         return self::$webtoon;
     }
@@ -31,19 +26,19 @@ class WebtoonManager
     }
 
     public static function getChapters(): string {
-        if (!(isset($_GET['chapter']))) {
-            header('Location: /');
-        }
-        $chapters =ChapterController::getAll();
-        $res="";
+        $requestedIndex = (int)( $_GET['chapter'] ?? 1 );
+        $res = '';
 
-        foreach ($chapters as $chapter) {
-            if( (int) $_GET['chapter'] === $chapter->getIndex()) {
-                $res .= '<option value="' . $chapter->getIndex() . '" selected>Chapitre ' . $chapter->getTitle() . '</option>';
-            }else{
-                $res .= '<option value="' . $chapter->getIndex() . '">Chapitre ' . $chapter->getTitle() . '</option>';
+        foreach (ChapterController::getAllForWebtoon(self::$webtoon->getId()) as $chapter) {
+            $chapterIndex = $chapter->getIndex();
+            $chapterTitle = $chapter->getTitle();
+
+            if ($requestedIndex === $chapterIndex) {
+                $res .= "<option value='$chapterIndex' selected>Chapitre $chapterTitle</option>";
+            } else {
+                $res .= "<option value='$chapterIndex'>Chapitre $chapterTitle</option>";
             }
-    }
+        }
         return $res;
     }
 

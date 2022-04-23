@@ -19,11 +19,12 @@ CREATE TABLE Report (
     FOREIGN KEY (userID) REFERENCES `User`(userID)
 )  ENGINE=INNODB;
 
-CREATE TABLE Webtoon (
-    webtoonID BIGINT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(256) not null,
-    author VARCHAR(128) not null,
+CREATE TABLE Webtoon(
+    webtoonID     BIGINT NOT NULL AUTO_INCREMENT,
+    `name`        VARCHAR(256) not null,
+    author        VARCHAR(128) not null,
     `description` TEXT not null,
+    cover         VARCHAR(128) not null,
     PRIMARY KEY (webtoonID)
 )  ENGINE=INNODB; 
 
