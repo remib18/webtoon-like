@@ -52,9 +52,9 @@ class Authentication {
     /**
      * Register user to the database.
      *
-     * @return bool
+     * @return bool|array
      */
-    public static function register(String $username, String $email, String $password, string $password_confirmation): bool
+    public static function register(String $username, String $email, String $password, string $password_confirmation): bool|array
     {
         $errors = [];
 
@@ -81,7 +81,7 @@ class Authentication {
             return UserController::create($user);
         }
 
-        return false;
+        return $errors;
     }
 
     /**

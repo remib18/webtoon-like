@@ -109,7 +109,7 @@ class Router
      *
      * @return void
      */
-    #[NoReturn] public static function redirect(string $url, int $code = 301, array $getParams = [], string $htmlId = ''): void {
+    #[NoReturn] public static function redirect(string $url, null|int $code = 301, array $getParams = [], string $htmlId = ''): void {
         if (self::$redirected) return;
         self::$redirected = true;
         self::getRouter()->generatedHTMLRouting(false, 'error');

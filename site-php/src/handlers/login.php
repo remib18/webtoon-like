@@ -15,4 +15,8 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 
 $res = Authentication::login($email, $password);
-Router::redirect('/');
+if($res === true) {
+    Router::redirect('/'); // Todo: ajout element target
+}
+
+Router::redirect('/login', null, [$res]);
