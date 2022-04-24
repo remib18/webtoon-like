@@ -18,7 +18,8 @@ const PAGES = [
     'webtoon' => ['accessLevel' => AccessLevel::everyone],
     '@login' => ['accessLevel' => AccessLevel::everyone],
     '@register' => ['accessLevel' => AccessLevel::everyone],
-    '@test' => ['accessLevel' => AccessLevel::everyone]
+    'login' => ['accessLevel' => AccessLevel::everyone],
+    'register' => ['accessLevel' => AccessLevel::everyone]
 ];
 
 const NAVIGATION = [
@@ -40,7 +41,7 @@ const NAVIGATION = [
         'accessLevel' => AccessLevel::authenticated
     ],
     'login' => [
-        'target' => '#login',
+        'target' => 'login',
         'icon' => '',
         'label' => 'Connexion',
         'tooltip' => 'Se connecter au site web.',

@@ -23,17 +23,20 @@ class User implements EntityInterface
         string $username,
         string $email,
         string $password,
-        DateTime $registeredAt,
+        DateTime|string $registeredAt,
         bool $fromDB = true
     ){
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setPassword($password);
+        if(is_string($registeredAt)) {
+            $registeredAt = new DateTime($registeredAt);
+        }
         $this->registeredAt = $registeredAt;
 
         if ($fromDB) $this->AllFieldsSaved();
-        else $this->fieldsToSave['registeredAt'] = $registeredAt;
+        else $this->fieldsToSave['registeredAt'] = $registeredAt->format('Y-m-d H:i:s');
     }
 
     /**

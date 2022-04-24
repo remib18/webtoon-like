@@ -72,7 +72,8 @@ class Authentication {
 
         if( empty($errors) ) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $user = new User($username, $email, $hashedPassword);
+            $dateTime = new \DateTime('now');
+            $user = new User(null, $username, $email, $hashedPassword, $dateTime, false);
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['id'] = $user->getId();
@@ -90,13 +91,19 @@ class Authentication {
      * @param String $password
      * @return bool
      */
-    public static function login(String $email, String $password): bool
+    public static function login(String $email, String $password): string|bool
     {
+        $error = 'Le mot de passe ne correspond à l\'adresse email fournie.';
 
         $user = UserController::getByEmail($email);
+
+        if(is_null($user)) {
+            return $error;
+        }
+
         $identicalPsd = password_verify($password, $user->getPassword() );
 
-        if( $user->getEmail() === $email && $identicalPsd === true ) {
+        if( $identicalPsd === true ) {
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['id'] = $user->getId();
@@ -104,7 +111,7 @@ class Authentication {
             return true;
         }
 
-        return false;
+        return $error;
     }
 
     /**

@@ -38,7 +38,7 @@ class UserController
     */
     public static function getByEmail(string $email): ?User
     {
-        return Database::getFirst('User', user::class, '*', ['email' => "email = $email"]);
+        return Database::getFirst('User', user::class, '*', ['email' => "email = '$email'"]);
     }
 
     /* Obtention de l'user avec l'username correspondant.
@@ -48,7 +48,7 @@ class UserController
     */
     public static function getByUsername(string $username): ?User
     {
-        return Database::getFirst('User', user::class, '*', ['username' => "username = $username"]);
+        return Database::getFirst('User', user::class, '*', ['username' => "username = '$username'"]);
     }
 
     /**
