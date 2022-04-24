@@ -6,9 +6,7 @@ use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\core\Router;
 
 if ( !isset($_POST['email'], $_POST['username']) ) {
-    Router::redirect('', '400', [
-        'registerError' => 'Un ou plusieurs champs ne sont pas définis.', 'action' => 'login'
-    ]);
+    Router::redirect('/#login');
 }
 
 $email = $_POST['email'];
