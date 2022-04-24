@@ -33,20 +33,20 @@ class UserController
 
     /* Obtention de l'user avec l'email correspondant.
     *
-    * @param int $email email recherché
+    * @param string $email email recherché
     * @return User|null
     */
-    public static function getByEmail(int $email): ?User
+    public static function getByEmail(string $email): ?User
     {
         return Database::getFirst('User', user::class, '*', ['email' => "email = $email"]);
     }
 
     /* Obtention de l'user avec l'username correspondant.
     *
-    * @param int $username username  recherché
+    * @param string $username username  recherché
     * @return User|null
     */
-    public static function getByUsername(int $username): ?User
+    public static function getByUsername(string $username): ?User
     {
         return Database::getFirst('User', user::class, '*', ['username' => "username = $username"]);
     }
