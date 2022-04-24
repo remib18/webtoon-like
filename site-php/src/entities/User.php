@@ -27,6 +27,7 @@ class User implements EntityInterface
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
+        $this->registeredAt = $registeredAt;
 
         if ($fromDB) $this->AllFieldsSaved();
         else $this->fieldsToSave['registeredAt'] = $registeredAt;

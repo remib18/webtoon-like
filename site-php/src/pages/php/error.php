@@ -1,3 +1,13 @@
+<?php
+
+require dirname(__DIR__, 2) . '/components/header.php';
+
+use WebtoonLike\Site\core\Router;
+
+$errorMsg = Router::$ERROR ?? $_GET['msg'] ?? 'Une erreur est survenue...';
+
+?>
+
 <style>
     .message {
         padding-inline: 1rem;
@@ -14,6 +24,8 @@
 
 <section aria-describedby="#s1-title" id="app">
     <h2 id="s1-title">Oups, une erreur est survenue !</h2>
-    <p class="message"><?= $_GET['msg'] ?? 'Une erreur est survenue...' ?></p>
+    <p class="message"><?= $errorMsg ?></p>
     <a href="/" class="button">Retour à l'accueil</a>
 </section>
+
+<?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>
