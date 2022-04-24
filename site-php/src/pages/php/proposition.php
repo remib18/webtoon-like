@@ -30,7 +30,7 @@ require dirname(__DIR__, 2) . '/components/header.php';
         <label class="title-large" for="proposition">Proposition</label>
         <textarea class="large-1" name="proposition" id="proposition" cols="100" rows="10">
          <?= PropositionManager:: getContent()/*Affiche le résultat pour réécrire par-dessus*/ ?>
-            </textarea>
+        </textarea>
         <input type="submit" value="Valider" class="action large">
     </div>
 </div>

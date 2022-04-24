@@ -20,12 +20,12 @@ class PropositionManager
                 self::$block = BlockController::getById((int)$_GET['BlockId']);
             } else {
                 var_dump($_GET);
-                header('Location: /');
+                header('Location: http://localhost/error?');
             }
         }
         if (is_null(self::$block)) {
             var_dump(self::$block);
-            header('Location: /');
+            header('Location: http://localhost/error?');
         }
         return self::$block;
     }
@@ -52,12 +52,12 @@ class PropositionManager
 
             } else {
                 var_dump($_GET);
-                header('Location: /');
+                header('Location: http://localhost/error?');
             }
         }
         if (is_null(self::$translation)) {
             var_dump(self::$translation);
-            header('Location: /');
+            header('Location: http://localhost/error?');
         }
         return self::$translation;
     }

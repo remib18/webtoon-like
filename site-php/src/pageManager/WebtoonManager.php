@@ -15,7 +15,7 @@ class WebtoonManager
             if (isset($_GET['id'])) {
                 self::$webtoon = WebtoonController::getById((int)$_GET['id']);
             } else {
-                header('Location: /');
+                header('Location: http://localhost/error?');
             }
         }
         return self::$webtoon;
