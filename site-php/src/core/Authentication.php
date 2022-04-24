@@ -74,9 +74,7 @@ class Authentication {
             $user = new User($username, $email, $hashedPassword);
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
-            $_SESSION['user']['username'] = $user->getUsername();
-            $_SESSION['user']['id'] = $user->getId();
-            $_SESSION['user']['email'] = $user->getEmail();
+            $_SESSION['id'] = $user->getId();
 
             return UserController::create($user);
         }
@@ -90,12 +88,10 @@ class Authentication {
         $user = UserController::getByEmail($email);
         $identicalPsd = password_verify($password, $user->getPassword() );
 
-        if( $user->getEmail() === $email && $identicalPsd === True ) {
+        if( $user->getEmail() === $email && $identicalPsd === true ) {
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
-            $_SESSION['user']['username'] = $user->getUsername();
-            $_SESSION['user']['id'] = $user->getId();
-            $_SESSION['user']['email'] = $user->getEmail();
+            $_SESSION['id'] = $user->getId();
 
             return true;
         }
