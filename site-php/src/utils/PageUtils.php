@@ -14,10 +14,7 @@ const SCRIPTS_PAGE_TYPE = [
 
 const PAGES = [
     'home' => ['accessLevel' => AccessLevel::everyone],
-    'import' => ['accessLevel' => AccessLevel::authenticated],
-    '@logout' => ['accessLevel' => AccessLevel::authenticated],
     'error' => ['accessLevel' => AccessLevel::everyone],
-    'proposition' => ['accessLevel' => AccessLevel::authenticated],
     'webtoon' => ['accessLevel' => AccessLevel::everyone]
 ];
 
@@ -66,7 +63,7 @@ class PageUtils
     }
 
     public static function getPageAccess(): AccessLevel {
-        return PAGES[UriUtils::getPageType()]['accessLevel'];
+        return PAGES[UriUtils::getPageType()]['accessLevel'] ?? AccessLevel::authenticated;
     }
 
     private static function getInstance(): PageUtils {

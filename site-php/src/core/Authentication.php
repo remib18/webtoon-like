@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\core;
 
 
+use JetBrains\PhpStorm\NoReturn;
 use WebtoonLike\Site\controller\UserController;
 use WebtoonLike\Site\entities\User;
 use WebtoonLike\Site\utils\PageUtils;
@@ -82,6 +83,13 @@ class Authentication {
         return false;
     }
 
+    /**
+     * Log on website.
+     *
+     * @param String $email
+     * @param String $password
+     * @return bool
+     */
     public static function login(String $email, String $password): bool
     {
 
@@ -97,6 +105,16 @@ class Authentication {
         }
 
         return false;
+    }
+
+    /**
+     * Logout from website.
+     *
+     * @return void
+     */
+    #[NoReturn] public static function logout(): void {
+        session_destroy();
+        Router::redirect('/home');
     }
 
 }
