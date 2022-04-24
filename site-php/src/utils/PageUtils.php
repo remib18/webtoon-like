@@ -15,7 +15,10 @@ const SCRIPTS_PAGE_TYPE = [
 const PAGES = [
     'home' => ['accessLevel' => AccessLevel::everyone],
     'error' => ['accessLevel' => AccessLevel::everyone],
-    'webtoon' => ['accessLevel' => AccessLevel::everyone]
+    'webtoon' => ['accessLevel' => AccessLevel::everyone],
+    '@login' => ['accessLevel' => AccessLevel::everyone],
+    '@register' => ['accessLevel' => AccessLevel::everyone],
+    '@test' => ['accessLevel' => AccessLevel::everyone]
 ];
 
 const NAVIGATION = [
@@ -37,7 +40,7 @@ const NAVIGATION = [
         'accessLevel' => AccessLevel::authenticated
     ],
     'login' => [
-        'target' => '?action=login',
+        'target' => '#login',
         'icon' => '',
         'label' => 'Connexion',
         'tooltip' => 'Se connecter au site web.',
