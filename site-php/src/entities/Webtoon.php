@@ -173,4 +173,5 @@ class Webtoon implements EntityInterface
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }
+
 }
