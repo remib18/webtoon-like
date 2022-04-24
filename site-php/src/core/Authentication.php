@@ -59,15 +59,15 @@ class Authentication {
         $errors = [];
 
         if( !is_null(UserController::getByEmail($email)) ) {
-            $errors[] = 'Email déjà utilisé';
+            $errors['errorEmail'] = 'Email déjà utilisé';
         }
 
         if( !is_null(UserController::getByEmail($username)) ) {
-            $errors[] = 'Username déjà utilisé';
+            $errors['errorUsername'] = 'Username déjà utilisé';
         }
 
         if ( $password !== $password_confirmation ) {
-            $errors[] = 'Mots de passes non-identique.';
+            $errors['errorPassword'] = 'Mots de passes non-identique.';
         }
 
         if( empty($errors) ) {
