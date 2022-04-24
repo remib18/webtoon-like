@@ -65,13 +65,18 @@ class PageUtils
         $this->pageType = UriUtils::getPageType();
     }
 
-    public static function getPageAccess(): AccessLevel {
-        return PAGES[UriUtils::getPageType()]['accessLevel'] ?? AccessLevel::authenticated;
-    }
-
     private static function getInstance(): PageUtils {
         if (is_null(self::$instance)) self::$instance = new PageUtils();
         return self::$instance;
+    }
+
+    /**
+     * Retourne le niveau minimum pour accéder à la ressource.
+     *
+     * @return AccessLevel
+     */
+    public static function getPageAccess(): AccessLevel {
+        return PAGES[UriUtils::getPageType()]['accessLevel'] ?? AccessLevel::authenticated;
     }
 
     /**
