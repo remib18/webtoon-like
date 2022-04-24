@@ -2,15 +2,25 @@
 
 namespace WebtoonLike\Site\utils\DataTesting;
 
+use DateTime;
+
 class DataField {
 
+    /**
+     * @param mixed $data
+     * @param DataType $type
+     * @param bool $nullable
+     * @param int|DateTime|null $minLength
+     * @param int|DateTime|null $maxLength
+     * @param Regex|string|null $regex
+     */
     private function __construct(
         private mixed $data,
         private DataType  $type,
         private bool $nullable,
-        private ?int $minLength,
-        private ?int $maxLength,
-        private ?Regex $regex
+        private null|int|DateTime $minLength,
+        private null|int|DateTime $maxLength,
+        private null|Regex|string $regex
     ) {}
 
     /**
@@ -30,27 +40,27 @@ class DataField {
     }
 
     /**
-     * @return int|null
+     * @return DateTime|int|null
      */
-    public function getMaxLength(): ?int
+    public function getMaxLength(): DateTime|int|null
     {
         return $this->maxLength;
     }
 
     /**
-     * @return int|null
+     * @return DateTime|int|null
      */
-    public function getMinLength(): ?int
+    public function getMinLength(): DateTime|int|null
     {
         return $this->minLength;
     }
 
     /**
-     * @param Regex|null $regex
+     * @return string|Regex|null
      */
-    public function setRegex(?Regex $regex): void
+    public function getRegex(): string|Regex|null
     {
-        $this->regex = $regex;
+        return $this->regex;
     }
 
 }
