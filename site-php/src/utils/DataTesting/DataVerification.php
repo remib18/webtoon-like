@@ -2,48 +2,50 @@
 
 namespace WebtoonLike\Site\utils\DataTesting;
 
+use GPBMetadata\Google\Type\Datetime;
+
 class DataVerification {
 
     private function __construct(
         private DataField $field
     ) {}
 
-    public static function verify(DataField $field) {
+    public static function verify(DataField $field, mixed $data) {
         $instance = new DataVerification($field);
 
         switch ( $field->getType() ) {
             case Data::string:
-                return $instance->verifyString();
+                return $instance->verifyString($data);
             case Data::email:
-                return $instance->verifyEmail();
+                return $instance->verifyEmail($data);
             case Data::int:
-                return $instance->verifyInt();
+                return $instance->verifyInt($data);
             case Data::float:
-                return $instance->verifyFloat();
+                return $instance->verifyFloat($data;
             case Data::bool:
-                return $instance->verifyBool();
+                return $instance->verifyBool($data);
             case Data::date:
-                return $instance->verifyDate();
+                return $instance->verifyDate($data);
         }
     }
 
-    public function verifyString(): bool {
+    public function verifyString(string $str): bool {
+
+    }
+
+    public function verifyEmail(string $email): bool {
         return true;
     }
 
-    public function verifyEmail(): bool {
+    public function verifyInt(int $int): bool {
         return true;
     }
 
-    public function verifyInt(): bool {
+    public function verifyFloat(float $float): bool {
         return true;
     }
 
-    public function verifyFloat(): bool {
-        return true;
-    }
-
-    public function verifyDate(): bool {
+    public function verifyDate(Datetime $date): bool {
         return true;
     }
 
