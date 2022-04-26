@@ -58,3 +58,27 @@ $res = DataVerification::verify($a);
 echo '<pre>' . var_dump($res) . '</pre>';
 
 
+/* Tests for emails */
+
+echo "<hr>";
+
+$a = new DataField("test@test.com", DataType::email, false, null, null, null);
+$res = DataVerification::verify($a);
+
+echo '<pre>' . var_dump($res) . '</pre>';
+
+
+$a = new DataField("testtest.com", DataType::email, false, null, null, null);
+$res = DataVerification::verify($a);
+
+echo '<pre>' . var_dump($res) . '</pre>';
+
+$a = new DataField("", DataType::email, true, null, null, null);
+$res = DataVerification::verify($a);
+
+echo '<pre>' . var_dump($res) . '</pre>';
+
+$a = new DataField("", DataType::email, false, null, null, null);
+$res = DataVerification::verify($a);
+
+echo '<pre>' . var_dump($res) . '</pre>';

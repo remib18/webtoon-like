@@ -58,12 +58,16 @@ class DataVerification {
             return false;
         }
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
+        if($this->field->getNullable() === true && empty($email) === true) {
+            return true;
+        } else {
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return false;
+            }
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $email) === 0) {
-            return false;
+            if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $email) === 0) {
+                return false;
+            }
         }
 
         return true;
