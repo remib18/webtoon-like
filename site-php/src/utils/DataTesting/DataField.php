@@ -14,7 +14,7 @@ class DataField {
      * @param int|DateTime|null $maxLength
      * @param Regex|string|null $regex
      */
-    private function __construct(
+    public function __construct(
         private mixed $data,
         private DataType  $type,
         private bool $nullable,
