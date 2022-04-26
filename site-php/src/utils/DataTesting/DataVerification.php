@@ -32,11 +32,11 @@ class DataVerification {
     public function verifyString(): bool {
         $str = $this->field->getData();
 
-        if($this->field->getMinLength() !== null && strlen($str) < $this->field->getMinLength()) {
+        if($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) {
             return false;
         }
 
-        if($this->field->getMaxLength() !== null && strlen($str) > $this->field->getMaxLength()) {
+        if($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) {
             return false;
         }
 
@@ -53,14 +53,6 @@ class DataVerification {
 
     public function verifyEmail(): bool {
         $email = $this->field->getData();
-
-        if($this->field->getMinLength() !== null && strlen($email) < $this->field->getMinLength()) {
-            return false;
-        }
-
-        if($this->field->getMaxLength() !== null && strlen($email) > $this->field->getMaxLength()) {
-            return false;
-        }
 
         if($this->field->getNullable() === false && empty($email) === true) {
             return false;
