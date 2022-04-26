@@ -39,6 +39,11 @@ class DataField {
         return $this->type;
     }
 
+    public function getNullable(): bool
+    {
+        return $this->nullable;
+    }
+
     /**
      * @return DateTime|int|null
      */
