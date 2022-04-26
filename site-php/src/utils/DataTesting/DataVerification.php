@@ -21,7 +21,7 @@ class DataVerification {
             case Data::int:
                 return $instance->verifyInt();
             case Data::float:
-                return $instance->verifyFloat(;
+                return $instance->verifyFloat();
             case Data::bool:
                 return $instance->verifyBool();
             case Data::date:
@@ -108,11 +108,11 @@ class DataVerification {
     public function verifyDate(): bool {
         $date = $this->field->getData();
 
-        if($this->field->getNullable() === false && empty($float) === true) {
+        if($this->field->getNullable() === false && empty($date) === true) {
             return false;
         }
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$float) === 0) {
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$date) === 0) {
             return false;
         }
 
