@@ -10,26 +10,28 @@ class DataVerification {
         private DataField $field
     ) {}
 
-    public static function verify(DataField $field, mixed $data) {
+    public static function verify(DataField $field) {
         $instance = new DataVerification($field);
 
         switch ( $field->getType() ) {
             case Data::string:
-                return $instance->verifyString($data);
+                return $instance->verifyString();
             case Data::email:
-                return $instance->verifyEmail($data);
+                return $instance->verifyEmail();
             case Data::int:
-                return $instance->verifyInt($data);
+                return $instance->verifyInt();
             case Data::float:
-                return $instance->verifyFloat($data;
+                return $instance->verifyFloat(;
             case Data::bool:
-                return $instance->verifyBool($data);
+                return $instance->verifyBool();
             case Data::date:
-                return $instance->verifyDate($data);
+                return $instance->verifyDate();
         }
     }
 
-    public function verifyString(string $str): bool {
+    public function verifyString(): bool {
+        $str = $this->field->getData();
+
         if($this->field->getMinLength() !== null && strlen($str) < $this->field->getMinLength()) {
             return false;
         }
@@ -49,7 +51,9 @@ class DataVerification {
         return true;
     }
 
-    public function verifyEmail(string $email): bool {
+    public function verifyEmail(): bool {
+        $email = $this->field->getData();
+
         if($this->field->getMinLength() !== null && strlen($email) < $this->field->getMinLength()) {
             return false;
         }
@@ -73,7 +77,8 @@ class DataVerification {
         return true;
     }
 
-    public function verifyInt(int $int): bool {
+    public function verifyInt(): bool {
+        $int = $this->field->getData();
 
         if($this->field->getNullable() === false && empty($int) === true) {
             return false;
@@ -86,7 +91,8 @@ class DataVerification {
         return true;
     }
 
-    public function verifyFloat(float $float): bool {
+    public function verifyFloat(): bool {
+        $float = $this->field->getData();
 
         if($this->field->getNullable() === false && empty($float) === true) {
             return false;
@@ -99,7 +105,8 @@ class DataVerification {
         return true;
     }
 
-    public function verifyDate(Datetime $date): bool {
+    public function verifyDate(): bool {
+        $date = $this->field->getData();
 
         if($this->field->getNullable() === false && empty($float) === true) {
             return false;
