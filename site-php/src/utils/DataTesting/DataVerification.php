@@ -14,17 +14,17 @@ class DataVerification {
         $instance = new DataVerification($field);
 
         switch ( $field->getType() ) {
-            case Data::string:
+            case DataType::string:
                 return $instance->verifyString();
-            case Data::email:
+            case DataType::email:
                 return $instance->verifyEmail();
-            case Data::int:
+            case DataType::int:
                 return $instance->verifyInt();
-            case Data::float:
+            case DataType::float:
                 return $instance->verifyFloat();
-            case Data::bool:
+            case DataType::bool:
                 return $instance->verifyBool();
-            case Data::date:
+            case DataType::date:
                 return $instance->verifyDate();
         }
     }
