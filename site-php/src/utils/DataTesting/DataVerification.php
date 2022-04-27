@@ -124,10 +124,7 @@ class DataVerification {
             return true;
         }
 
-
-        if($this->field->getNullable() === false && empty($date) === true) {
-            return false;
-        }
+        
 
         if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$date) === 0) {
             return false;
