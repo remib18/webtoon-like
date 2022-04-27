@@ -8,6 +8,7 @@ use WebtoonLike\Site\entities\EntityInterface;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\exceptions\UnsupportedOperationException;
 use WebtoonLike\Site\Settings;
+use WebtoonLike\Site\utils\DataTesting\DataVerification;
 
 class Database
 {
@@ -23,6 +24,16 @@ class Database
             self::$db = new mysqli(...Settings::get('DATABASE'));
         }
         return self::$db;
+    }
+
+    public static function runTests(EntityInterface $entity): bool {
+        $res =true;
+        foreach ($entity as $field) {
+            // If True, True, True => True
+            // If True, True, False => False
+            $res = DataVerification::verify($field) && $res ;
+        }
+        return $res;
     }
 
     /**
