@@ -2,7 +2,8 @@
 
 namespace WebtoonLike\Site\utils\DataTesting;
 
-use GPBMetadata\Google\Type\Datetime;
+
+use DateTime;
 
 class DataVerification {
 
@@ -124,18 +125,21 @@ class DataVerification {
             return true;
         }
 
-
         if($this->field->getNullable() === false && empty($date) === true) {
             return false;
         }
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$date) === 0) {
+        // Todo: Validate date
+        // Is it even necessary? Isn't PHP handling it in all cases?
+        // Users would
+        // using the regex would leave more flexibility. 
+
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) {
             return false;
         }
 
-        // Todo: validate the date using its format.
+        return True;
 
-        return true;
     }
 
 }
