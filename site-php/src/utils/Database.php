@@ -26,6 +26,12 @@ class Database
         return self::$db;
     }
 
+    /**
+     * Runs the different tests on each field of a given entity.
+     *
+     * @param EntityInterface $entity
+     * @return bool
+     */
     public static function runTests(EntityInterface $entity): bool {
         $res =true;
         foreach ($entity as $field) {

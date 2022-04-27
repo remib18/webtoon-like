@@ -11,6 +11,12 @@ class DataVerification {
         private DataField $field
     ) {}
 
+    /**
+     * Call the right set of test depending on the types.
+     *
+     * @param DataField $field
+     * @return bool|void
+     */
     public static function verify(DataField $field) {
         $instance = new DataVerification($field);
 
@@ -30,6 +36,11 @@ class DataVerification {
         }
     }
 
+    /**
+     * Tests strings
+     *
+     * @return bool
+     */
     public function verifyString(): bool {
         $str = $this->field->getData();
 
@@ -57,6 +68,11 @@ class DataVerification {
         return true;
     }
 
+    /**
+     * Tests emails.
+     *
+     * @return bool
+     */
     public function verifyEmail(): bool {
         $email = $this->field->getData();
 
@@ -80,6 +96,11 @@ class DataVerification {
         return true;
     }
 
+    /**
+     * Tests ints.
+     *
+     * @return bool
+     */
     public function verifyInt(): bool {
         $int = $this->field->getData();
 
@@ -118,6 +139,11 @@ class DataVerification {
         return true;
     }
 
+    /**
+     * Tests dates.
+     *
+     * @return bool
+     */
     public function verifyDate(): bool {
         $date = $this->field->getData();
 
