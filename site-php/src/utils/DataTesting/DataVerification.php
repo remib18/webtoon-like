@@ -168,4 +168,18 @@ class DataVerification {
 
     }
 
+    /**
+     * Verify booleans.
+     *
+     * @return bool
+     */
+    public function verifyBool(): bool {
+        $bool = $this->field->getData();
+        if($this->field->getNullable() === false && $bool === null) {
+            return false;
+        }
+
+        return true;
+    }
+
 }
