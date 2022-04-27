@@ -132,7 +132,7 @@ class DataVerification {
         // Todo: Validate date
         // Is it even necessary? Isn't PHP handling it in all cases?
         // Users would
-        // using the regex would leave more flexibility. 
+        // using the regex would leave more flexibility.
 
         if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) {
             return false;
