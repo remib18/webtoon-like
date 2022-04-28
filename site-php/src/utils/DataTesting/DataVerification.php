@@ -20,7 +20,7 @@ class DataVerification {
     public static function verify(DataField $field) {
         $instance = new DataVerification($field);
 
-        switch ( $field->getType() ) {
+        switch ( $field->getType() ) { (donnee , type, ....)
             case DataType::string:
                 return $instance->verifyString();
             case DataType::email:

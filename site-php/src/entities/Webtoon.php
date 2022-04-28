@@ -142,7 +142,7 @@ class Webtoon implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
             'webtoonID' => 'integer',

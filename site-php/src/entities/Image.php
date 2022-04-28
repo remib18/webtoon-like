@@ -231,7 +231,7 @@ class Image implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
             'imageID' => "int|null",

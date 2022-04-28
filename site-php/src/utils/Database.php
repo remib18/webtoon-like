@@ -34,7 +34,7 @@ class Database
      */
     public static function runTests(EntityInterface $entity): bool {
         $res =true;
-        foreach ($entity as $field) {
+        foreach ($entity->getTypes() as $field) {
             // If True, True, True => True
             // If True, True, False => False
             $res = DataVerification::verify($field) && $res ;
