@@ -3,9 +3,12 @@
 namespace WebtoonLike\Site\core;
 
 
+use DateTime;
 use JetBrains\PhpStorm\NoReturn;
 use WebtoonLike\Site\controller\UserController;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\entities\User;
+use WebtoonLike\Site\utils\Database;
 use WebtoonLike\Site\utils\PageUtils;
 
 class Authentication {
@@ -34,6 +37,8 @@ class Authentication {
     /**
      * Compare l'accessLevel de la session avec le niveau exigé.
      *
+     * @param AccessLevel|null $requiredLevel
+     * @param bool $strict
      * @return bool
      */
     public static function hasAccess(?AccessLevel $requiredLevel = null, bool $strict = false): bool {
@@ -52,7 +57,12 @@ class Authentication {
     /**
      * Register user to the database.
      *
+     * @param String $username
+     * @param String $email
+     * @param String $password
+     * @param string $password_confirmation
      * @return bool|array
+     * @throws NoIdOverwritingException
      */
     public static function register(String $username, String $email, String $password, string $password_confirmation): bool|array
     {
@@ -72,8 +82,16 @@ class Authentication {
 
         if( empty($errors) ) {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $dateTime = new \DateTime('now');
-            $user = new User(null, $username, $email, $hashedPassword, $dateTime, false);
+            $dateTime = new DateTime('now');
+
+            $user = new User(
+                null,
+                $username,
+                $email,
+                Database::normalizeValue($hashedPassword), // encodage pour la requête BDD.
+                $dateTime,
+                false
+            );
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['id'] = $user->getId();
@@ -89,7 +107,7 @@ class Authentication {
      *
      * @param String $email
      * @param String $password
-     * @return bool
+     * @return string|bool
      */
     public static function login(String $email, String $password): string|bool
     {
