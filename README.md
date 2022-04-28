@@ -33,14 +33,14 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 - [ ] Masquage basique des images
 - [ ] Réécriture des traductions
 ### V1
-- [ ] Système d'utilisateur (Connection par services externes)
-- [ ] Propositions d'amélioration de la traduction par les utilisateurs
+- [ ] Système d'utilisateur (Connection par services externes)
+- [ ] Propositions d'amélioration de la traduction par les utilisateurs
 - [ ] Repport d'erreur de masquage des images
 - [ ] Masquage ligne par ligne des images
 ### V2
-- [ ] Ajout et traitement automatique d'un webtoon
-- [ ] Système de catégories
-- [ ] Savegarde du dernier chapitre lu / manga pour les utilisateurs connectés
+- [ ] Ajout et traitement automatique d'un webtoon
+- [ ] Système de catégories
+- [ ] Savegarde du dernier chapitre lu / manga pour les utilisateurs connectés
 - [ ] Ajout d'une option de connection interne
 - [ ] Lecture infinie avec le prochain chapitre automatiquement chargé à la fin
 - [ ] Options utilisateur
