@@ -129,4 +129,17 @@ class Result
         throw new TranslationException('Unable to register translation on block ' . $id . '.');
     }
 
+    public function __toArray(): array {
+        $blocks = [];
+        foreach (( $this->mappedBlocks ?? $this->blocks ?? [] ) as $block) {
+            $blocks[] = $block->__toArray();
+        }
+        return [
+            'font-size'  => $this->fontSize,
+            'image'      => $this->imagePath,
+            'image-lang' => $this->originalLanguage->__toArray(),
+            'blocks'     => $blocks,
+        ];
+    }
+
 }

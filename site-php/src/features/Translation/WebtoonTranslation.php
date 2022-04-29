@@ -44,15 +44,16 @@ class WebtoonTranslation
     }
 
     /**
-     * @param int $id
-     * @param int $chapter
+     * @param int      $id
+     * @param int      $chapterIndex
      * @param Language $lang
      *
      * @return Result[]
      *
-     * @throws NotFoundException
      * @throws AlreadyExistingRessourceException
      * @throws ApiException
+     * @throws NotFoundException
+     * @throws TranslationException
      */
     public function getTranslatedWebtoonImages(int $id, int $chapterIndex, Language $lang): array {
 
