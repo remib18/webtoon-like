@@ -1,0 +1,23 @@
+#app, form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30vw;
+    align-self: center;
+}
+
+h2, h3 {
+    margin: 0;
+}
+
+@media screen and (max-width: 1080px) {
+    #app, form {
+        width: 70vw;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    #app, form {
+        width: 90vw;
+    }
+}

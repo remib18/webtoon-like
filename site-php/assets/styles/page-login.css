@@ -1,0 +1,33 @@
+#app, form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30vw;
+    align-self: center;
+}
+
+#register-link {
+    font-size: medium;
+    text-align: right;
+    margin-top: 10px;
+}
+
+#register-link a {
+    color: white;
+}
+
+h2, h3 {
+    margin: 0;
+}
+
+@media screen and (max-width: 1080px) {
+    #app, form {
+        width: 70vw;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    #app, form {
+        width: 90vw;
+    }
+}
