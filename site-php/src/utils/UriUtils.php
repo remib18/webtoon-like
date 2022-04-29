@@ -31,7 +31,7 @@ class UriUtils
      * @return void
      */
     private function analyseUri(): void {
-        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|webtoon|login|register|error|@\w+)?)(?:[?\/]([\w\-\/=&]*))?$/';
+        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|report|webtoon|error|@\w+)?)(?:[?\/]([\w\-\/=&+%]*))?$/';
         preg_match_all($re, $_SERVER['REQUEST_URI'], $matches);
         [$_, $pageType, $rawOptions] = $matches;    // Répartition du résultat
 
