@@ -13,15 +13,15 @@ class RegisterManager {
 
         $res = '';
 
-        if(!isset($_GET)) return '';
+        if(empty($_GET)) return '';
 
         foreach ( $_GET as $key => $error ) {
             if(str_contains($key, 'error')) {
-                $res .= '<p>' . $error . '</p>';
+                $res .= '<p>' . $error . '.</p>';
             }
         }
 
-        return $res;
+        return "<div id='erreur-box'>" . $res . "</div>";
     }
 
 }
