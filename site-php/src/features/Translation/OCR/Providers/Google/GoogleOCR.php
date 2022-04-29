@@ -26,9 +26,6 @@ class GoogleOCR implements OCRInterface
     /** @var Result[]  */
     private array $results= [];
 
-    /** @var Image[] $toGetFromDB Buffer pour les images à aller chercher dans la db */
-    private array $toGetFromDB = [];
-
     private int $chapterId;
 
     /**
@@ -66,8 +63,7 @@ class GoogleOCR implements OCRInterface
         } catch (\Google\ApiCore\ApiException $e) {
             // TODO gérer les erreurs (nota too many images for request)
             var_dump($e->getMessage());
-            var_dump($this->images);
-            throw new ApiException('[OCR]: Unable to perform OCR using Google Cloud API.');
+            throw new ApiException('Internal server error. Please try again later, if the problem subsist, contact the administrator.');
         }
 
         $this->getResults();
