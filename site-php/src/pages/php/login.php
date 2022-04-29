@@ -9,7 +9,11 @@
     <form action="/@login" method="post" required>
         <input type="email" name="email" placeholder="Adresse email" required>
         <input type="password" name="password" placeholder="Mot de passe" required>
+        <label for="rememberMe">Rester connecter
+            <input type="checkbox" name="rememberMe">
+        </label>
         <input type="submit" value="Connexion">
+
     </form>
 
     <p id="register-link">Non-inscrit? Consultez la <a href="/register">page d'inscription</a>.</p>
