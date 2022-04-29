@@ -6,10 +6,10 @@
     <div id="erreur"><?= WebtoonLike\Site\pageManager\RegisterManager::getErrors() ?></div>
 
     <form action="/@register" method="post">
-        <input type="text" name="username" required>
-        <input type="email" name="email" required>
-        <input type="password" name="password" required>
-        <input type="password" name="confirmation_password" required>
+        <input type="text" name="username" placeholder="Pseudonyme" required>
+        <input type="email" name="email" placeholder="Adresse email" required>
+        <input type="password" name="password" placeholder="Mot de passe" required>
+        <input type="password" name="confirmation_password" placeholder="Répéter le mot de passe" required>
         <input type="submit" value="Connexion">
     </form>
 </section>
