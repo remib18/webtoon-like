@@ -25,4 +25,4 @@ if($res === true) {
     Router::redirect('/');
 }
 
-Router::redirect('/register', null, $res);
+Router::redirect('/register', 301, $res);

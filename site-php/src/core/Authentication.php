@@ -72,12 +72,12 @@ class Authentication {
             $errors['errorEmail'] = 'Email déjà utilisé';
         }
 
-        if( !is_null(UserController::getByEmail($username)) ) {
+        if( !is_null(UserController::getByUsername($username)) ) {
             $errors['errorUsername'] = 'Username déjà utilisé';
         }
 
         if ( $password !== $password_confirmation ) {
-            $errors['errorPassword'] = 'Mots de passes non-identique.';
+            $errors['errorPassword'] = 'Mots de passes non-identique';
         }
 
         if( empty($errors) ) {
@@ -111,7 +111,7 @@ class Authentication {
      */
     public static function login(String $email, String $password): string|bool
     {
-        $error = 'Le mot de passe ne correspond à l\'adresse email fournie.';
+        $error = 'Le mot de passe ne correspond à l\'adresse email fournie';
 
         $user = UserController::getByEmail($email);
 

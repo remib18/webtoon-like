@@ -2,6 +2,9 @@
 
 <section aria-describedby="#s1-title" id="app" xmlns:input="http://www.w3.org/1999/html">
     <h2 id="s1-title">Register</h2>
+
+    <div id="erreur"><?= WebtoonLike\Site\pageManager\RegisterManager::getErrors() ?></div>
+
     <form action="/@register" method="post">
         <input type="text" name="username" required>
         <input type="email" name="email" required>
