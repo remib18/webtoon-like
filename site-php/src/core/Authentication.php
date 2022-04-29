@@ -119,7 +119,7 @@ class Authentication {
             return $error;
         }
 
-        $identicalPsd = password_verify($password, $user->getPassword() );
+        $identicalPsd = password_verify($password, str_replace("'", "", $user->getPassword()));
 
         if( $identicalPsd === true ) {
 
