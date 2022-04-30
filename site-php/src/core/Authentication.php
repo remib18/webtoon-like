@@ -152,7 +152,7 @@ class Authentication {
     }
 
     /**
-     * Logout from website.
+     * Logout du site web.
      *
      * @return void
      */
@@ -169,34 +169,37 @@ class Authentication {
     }
 
     /**
-     * Handles the deletion of rememberMe cookies.
+     * Gère la suppression des cookies rememberMe.
      *
      * @param LoginToken|null $tokenEntity
      * @return void
      */
     private static function deleteRememberMeCookie(?LoginToken $tokenEntity): void {
         LoginTokenController::remove($tokenEntity);
+        // On supprime le cookie en le mettant à un temps antérieur.
         setcookie('rememberMe', 'outdated', time() - 2022);
     }
 
     /**
-     * Verify rememberMe cookies are valid and delete them if necessary.
+     * Vérifie que les cookies rememberMe sont valides les supprimes si invalide.
      *
      * @return void
      */
     private static function tryLoggingFromCookie(): void
     {
-        if(isset($_COOKIE['rememberMe']) && !empty($_COOKIE['rememberMe'])) {
+        if(isset($_COOKIE['rememberMe']) && !empty($_COOKIE['rememberMe']) && $_SESSION['accessLevel'] === AccessLevel::everyone) {
+            // Risque d'injection SQL.
             $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
             $tokenEntity =  LoginTokenController::getByToken($token);
 
+            // Pas de token en BDD
             if($tokenEntity === null) return;
 
             if($tokenEntity->getLifeSpan() > time()) {
                 $_SESSION['accessLevel'] = AccessLevel::authenticated;
                 $_SESSION['id'] = $tokenEntity->getUserID();
             } else{
-                // Deletes entry if outdated.
+                // Suppression si invalide
                 self::deleteRememberMeCookie($tokenEntity);
             }
         }
