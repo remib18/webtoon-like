@@ -23,7 +23,7 @@
         <label for="email">Répéter  le mot de passe:
             <input type="password" name="confirmation_password" id="confirmation_password" placeholder="Répéter le mot de passe" required>
         </label>
-        
+
         <input type="submit" value="Connexion">
     </form>
 </section>

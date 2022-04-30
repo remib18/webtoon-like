@@ -18,8 +18,11 @@ class Authentication {
      *
      * @return void
      */
-    public static function innitSession(): void {
-        session_start();
+    private static function innitSession(): void {
+        if(!isset($_SESSION)){
+            session_start();
+        }
+
         if(!isset($_SESSION['accessLevel'])) {
             $_SESSION['accessLevel'] = AccessLevel::everyone;
         }
@@ -42,6 +45,8 @@ class Authentication {
      * @return bool
      */
     public static function hasAccess(?AccessLevel $requiredLevel = null, bool $strict = false): bool {
+
+        self::innitSession();
 
         if(is_null($requiredLevel)) {
             $requiredLevel = PageUtils::getPageAccess();
