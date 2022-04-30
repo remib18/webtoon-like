@@ -3,7 +3,7 @@
 namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\NoIdOverwritingException;
-use WebtoonLike\Site\entities\user;
+use WebtoonLike\Site\entities\User;
 use WebtoonLike\Site\utils\Database;
 
 class UserController
@@ -18,7 +18,7 @@ class UserController
      */
     public static function getAll(string|array $col = '*', array $where = []): array
     {
-        return Database::getAll('user', User::class, $col, $where);
+        return Database::getAll('User', User::class, $col, $where);
     }
 
     /* Obtention de l'user avec l'identifiant correspondant.
@@ -28,7 +28,7 @@ class UserController
     */
     public static function getById(int $id): ?User
     {
-        return Database::getFirst('User', user::class, '*', ['userID' => "userID = $id"]);
+        return Database::getFirst('User', User::class, '*', ['userID' => "userID = $id"]);
     }
 
     /* Obtention de l'user avec l'email correspondant.
@@ -38,7 +38,7 @@ class UserController
     */
     public static function getByEmail(string $email): ?User
     {
-        return Database::getFirst('User', user::class, '*', ['email' => "email = '$email'"]);
+        return Database::getFirst('User', User::class, '*', ['email' => "email = '$email'"]);
     }
 
     /* Obtention de l'user avec l'username correspondant.
@@ -48,7 +48,7 @@ class UserController
     */
     public static function getByUsername(string $username): ?User
     {
-        return Database::getFirst('User', user::class, '*', ['username' => "username = '$username'"]);
+        return Database::getFirst('User', User::class, '*', ['username' => "username = '$username'"]);
     }
 
     /**
