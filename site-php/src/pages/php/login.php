@@ -6,9 +6,15 @@
     <?= WebtoonLike\Site\pageManager\LoginManager::getErrors() ?>
     <hr>
 
-    <form action="/@login" method="post" required>
-        <input type="email" name="email" placeholder="Adresse email" required>
-        <input type="password" name="password" placeholder="Mot de passe" required>
+    <form action="/@login" method="post">
+        <label for="email">Votre email:
+            <input type="email" name="email" id="email" placeholder="Adresse email" required>
+        </label>
+
+        <label for="password">Votre mot de pass:
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+        </label>
+
         <input type="submit" value="Connexion">
     </form>
 
