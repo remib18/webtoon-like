@@ -62,14 +62,14 @@ class Authentication {
     /**
      * Register user to the database.
      *
-     * @param String $username
-     * @param String $email
-     * @param String $password
+     * @param string $username
+     * @param string $email
+     * @param string $password
      * @param string $password_confirmation
      * @return bool|array
      * @throws NoIdOverwritingException
      */
-    public static function register(String $username, String $email, String $password, string $password_confirmation): bool|array
+    public static function register(string $username, string $email, string $password, string $password_confirmation): bool|array
     {
         $errors = [];
 
@@ -110,8 +110,8 @@ class Authentication {
     /**
      * Log on website.
      *
-     * @param String $email
-     * @param String $password
+     * @param string $email
+     * @param string $password
      * @return string|bool
      */
     public static function login(string $email, string $password): string|bool
