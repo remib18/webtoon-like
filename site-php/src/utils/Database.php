@@ -103,7 +103,8 @@ class Database
      */
     public static function remove(string $table, EntityInterface $entity): bool {
         $where = self::whereIds($entity);
-        $q = "DELETE FROM `$table` WHERE $where";
+        $q = "DELETE FROM `$table` WHERE " . $where;
+        var_dump($q);
         return self::getDB()
             ->query($q);
     }
@@ -220,7 +221,7 @@ class Database
         $where = '';
         foreach ($entity::getIdentifiers() as $id) {
             $value = $entity->__toArray()[$id];
-            $where .= "`$id` = $value" . ' AND ';
+            $where .= "`$id` =" . self::normalizeValue($value) . ' AND ';
         }
         return substr($where, 0, -5);
     }
