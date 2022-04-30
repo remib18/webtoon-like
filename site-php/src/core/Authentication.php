@@ -109,7 +109,7 @@ class Authentication {
      * @param String $password
      * @return string|bool
      */
-    public static function login(String $email, String $password): string|bool
+    public static function login(string $email, string $password): string|bool
     {
         $error = 'Le mot de passe ne correspond à l\'adresse email fournie';
 
