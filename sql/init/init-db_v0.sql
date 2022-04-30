@@ -83,3 +83,12 @@ CREATE TABLE TranslationProposition (
     FOREIGN KEY (blockID) REFERENCES `Block`(blockID),
     FOREIGN KEY (userID) REFERENCES `User`(userID)
 )  ENGINE=INNODB;
+
+CREATE TABLE LoginToken (
+    token VARCHAR(1024) NOT NULL,
+    lifeSpan BIGINT NOT NULL,
+    userID BIGINT NOT NULL,
+    PRIMARY KEY (token),
+    FOREIGN KEY (userID) REFERENCES `User`(userID)
+)  ENGINE=INNODB;
+
