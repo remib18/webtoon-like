@@ -85,7 +85,7 @@ CREATE TABLE TranslationProposition (
 )  ENGINE=INNODB;
 
 CREATE TABLE LoginToken (
-    token VARCHAR(1024) NOT NULL,
+    token VARCHAR(64) NOT NULL,
     lifeSpan BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     PRIMARY KEY (token),

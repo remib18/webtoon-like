@@ -5,7 +5,9 @@ namespace WebtoonLike\Site\core;
 
 use DateTime;
 use JetBrains\PhpStorm\NoReturn;
+use WebtoonLike\Site\controller\LoginTokenController;
 use WebtoonLike\Site\controller\UserController;
+use WebtoonLike\Site\entities\LoginToken;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\entities\User;
 use WebtoonLike\Site\utils\Database;
@@ -19,7 +21,7 @@ class Authentication {
      * @return void
      */
     private static function innitSession(): void {
-        if(!isset($_SESSION)){
+        if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
 
@@ -47,6 +49,7 @@ class Authentication {
     public static function hasAccess(?AccessLevel $requiredLevel = null, bool $strict = false): bool {
 
         self::innitSession();
+        self::tryLoggingFromCookie();
 
         if(is_null($requiredLevel)) {
             $requiredLevel = PageUtils::getPageAccess();
@@ -114,7 +117,7 @@ class Authentication {
      * @param String $password
      * @return string|bool
      */
-    public static function login(string $email, string $password): string|bool
+    public static function login(string $email, string $password, bool $rememberMe): string|bool
     {
         $error = 'Le mot de passe ne correspond à l\'adresse email fournie';
 
@@ -131,8 +134,19 @@ class Authentication {
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['id'] = $user->getId();
 
+            if( $rememberMe ) {
+                $lifeSpan = time() + 86400 * 14;
+                $token = md5(bin2hex(openssl_random_pseudo_bytes(64)));
+
+                $res = LoginTokenController::create(new LoginToken($token, $lifeSpan, $user->getId(), false));
+                if($res !== false ) {
+                    setcookie('rememberMe', $token, time() + 86400);
+                }
+            }
+
             return true;
         }
+
 
         return $error;
     }
@@ -143,8 +157,34 @@ class Authentication {
      * @return void
      */
     #[NoReturn] public static function logout(): void {
+        self::deleteRememberMeCookie();
         session_destroy();
-        Router::redirect('/home');
+        Router::redirect('/');
+    }
+
+    private static function deleteRememberMeCookie(): void {
+        setcookie('rememberMe', 'outdated', time() - 2022); // date d'expiration antérieure au present.
+    }
+
+    private static function tryLoggingFromCookie(): void
+    {
+        if(isset($_COOKIE['rememberMe'])
+            && !empty($_COOKIE['rememberMe'])
+            && $_SESSION['accessLevel'] === AccessLevel::everyone
+        ) {
+            $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
+            $tokenEntity =  LoginTokenController::getByToken($token);
+
+            if($tokenEntity === null) return;
+
+            if($tokenEntity->getLifeSpan() > time()) {
+                $_SESSION['accessLevel'] = AccessLevel::authenticated;
+                $_SESSION['id'] = $tokenEntity->getUserID();
+            } else{
+                self::deleteRememberMeCookie();
+            }
+        }
+
     }
 
 }

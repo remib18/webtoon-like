@@ -9,7 +9,7 @@ class LoginTokenController
 {
     public static function getByToken(string $token): ?LoginToken
     {
-        return Database::getFirst('LoginToken', LoginToken::class, '*', ['userID' => "userID = '$token'"]);
+        return Database::getFirst('LoginToken', LoginToken::class, '*', ['token' => "token = '$token'"]);
     }
 
     public static function create(LoginToken &$entity): bool

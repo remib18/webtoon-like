@@ -152,7 +152,11 @@ class LoginToken implements EntityInterface
      * @inheritDoc
      */
     public function setId(int $id): void {
-        if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
+    }
+
+    public function getId(): string
+    {
+        return $this->id;
     }
 }
