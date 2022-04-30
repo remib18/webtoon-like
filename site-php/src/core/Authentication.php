@@ -136,7 +136,7 @@ class Authentication {
 
             if( $rememberMe ) {
                 $lifeSpan = time() + 86400 * 14;
-                $token = md5(bin2hex(openssl_random_pseudo_bytes(64)));
+                $token = strtoupper(md5(openssl_random_pseudo_bytes(64)));
 
                 $res = LoginTokenController::create(new LoginToken($token, $lifeSpan, $user->getId(), false));
                 if($res !== false ) {
@@ -157,21 +157,36 @@ class Authentication {
      * @return void
      */
     #[NoReturn] public static function logout(): void {
-        self::deleteRememberMeCookie();
+
+        if(isset($_COOKIE['rememberMe'])) {
+            $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
+            $tokenEntity =  LoginTokenController::getByToken($token);
+            self::deleteRememberMeCookie($tokenEntity);
+        }
+
         session_destroy();
         Router::redirect('/');
     }
 
-    private static function deleteRememberMeCookie(): void {
-        setcookie('rememberMe', 'outdated', time() - 2022); // date d'expiration antérieure au present.
+    /**
+     * Handles the deletion of rememberMe cookies.
+     *
+     * @param LoginToken|null $tokenEntity
+     * @return void
+     */
+    private static function deleteRememberMeCookie(?LoginToken $tokenEntity): void {
+        LoginTokenController::remove($tokenEntity);
+        setcookie('rememberMe', 'outdated', time() - 2022);
     }
 
+    /**
+     * Verify rememberMe cookies are valid and delete them if necessary.
+     *
+     * @return void
+     */
     private static function tryLoggingFromCookie(): void
     {
-        if(isset($_COOKIE['rememberMe'])
-            && !empty($_COOKIE['rememberMe'])
-            && $_SESSION['accessLevel'] === AccessLevel::everyone
-        ) {
+        if(isset($_COOKIE['rememberMe']) && !empty($_COOKIE['rememberMe'])) {
             $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
             $tokenEntity =  LoginTokenController::getByToken($token);
 
@@ -181,10 +196,10 @@ class Authentication {
                 $_SESSION['accessLevel'] = AccessLevel::authenticated;
                 $_SESSION['id'] = $tokenEntity->getUserID();
             } else{
-                self::deleteRememberMeCookie();
+                // Deletes entry if outdated.
+                self::deleteRememberMeCookie($tokenEntity);
             }
         }
-
     }
 
 }
