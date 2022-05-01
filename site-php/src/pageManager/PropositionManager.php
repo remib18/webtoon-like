@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\pageManager;
 use WebtoonLike\Site\controller\BlockController;
 use WebtoonLike\Site\controller\TranslationController;
 use WebtoonLike\Site\controller\TranslationPropositionController;
+use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Translation;
 use WebtoonLike\Site\entities\TranslationProposition;
@@ -21,13 +22,11 @@ class PropositionManager
             if (isset($_GET['BlockId']/*BlockId*/)) {
                 self::$block = BlockController::getById((int)$_GET['BlockId']);
             } else {
-                var_dump($_GET);
-                header('Location: http://localhost/error?');
+                header('Location: /error?');
             }
         }
         if (is_null(self::$block)) {
-            var_dump(self::$block);
-            header('Location: http://localhost/error?');
+            header('Location: /error?');
         }
         return self::$block;
     }
@@ -58,7 +57,6 @@ class PropositionManager
             }
         }
         if (is_null(self::$translation)) {
-            var_dump(self::$translation);
             header('Location: http://localhost/error?');
         }
         return self::$translation;
@@ -77,18 +75,18 @@ class PropositionManager
     public static function SaveProposition(): void
     {
         $Proposition="";
-        if(isset($_GET['TranslationId']) && isset($_GET['BlockId']) /*&& isset($_GET['UserId'])*/) {
-            #$userId=$_SESSION['id'];
-            $userId='25';
+        if(isset($_GET['TranslationId']) && isset($_GET['BlockId'])) {
+            $userId=$_SESSION['id'];
             $blockId=$_GET['BlockId'];
             $Proposition .=$_POST['proposition'];
             $PropositionTranslation = self::setProposition($userId, $blockId, $Proposition);
-            var_dump($PropositionTranslation);
             if(TranslationPropositionController::create($PropositionTranslation)) {
                 header('Location: /');
-            }else{echo "Pas de connection";}
+            }else{
+                Router::redirect('/proposition', 301, ['error' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
+            }
         }else{
-            echo "Pas de proposition";
+            Router::redirect('/proposition', 301, ['error' => 'Nous n\'avons pas retrouver le texte']);
         }
     }
 

@@ -20,7 +20,7 @@ require dirname(__DIR__, 2) . '/components/header.php';
             </svg>
         </label>
     </span>
-    <form action="http://localhost/proposition?BlockId=<?= $_GET['BlockId'] ?>&TranslationId=<?= $_GET['TranslationId'] ?>" method="post">
+    <form action="/proposition?BlockId=<?= $_GET['BlockId'] ?>&TranslationId=<?= $_GET['TranslationId'] ?>" method="post">
         <div class="grid-container">
             <p class="title-small-1">Texte original</p>
             <pre class="false-input small-1"><?=trim(PropositionManager::getOriginalContent())/*Renvoie le texte original*/?></pre>
