@@ -4,8 +4,10 @@ namespace WebtoonLike\Site\pageManager;
 
 use WebtoonLike\Site\controller\BlockController;
 use WebtoonLike\Site\controller\TranslationController;
+use WebtoonLike\Site\controller\TranslationPropositionController;
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Translation;
+use WebtoonLike\Site\entities\TranslationProposition;
 
 class PropositionManager
 {
@@ -67,5 +69,27 @@ class PropositionManager
         return self::getTranslation()->getContent()/*Translation*/ ;
     }
 
+    public static function setProposition(int $userId, int $blockId, string $Proposition): ?TranslationProposition
+    {
+        return new TranslationProposition(null,$Proposition,$blockId,$userId,false);
+    }
+
+    public static function SaveProposition(): void
+    {
+        $Proposition="";
+        if(isset($_GET['TranslationId']) && isset($_GET['BlockId']) /*&& isset($_GET['UserId'])*/) {
+            #$userId=$_SESSION['id'];
+            $userId='25';
+            $blockId=$_GET['BlockId'];
+            $Proposition .=$_POST['proposition'];
+            $PropositionTranslation = self::setProposition($userId, $blockId, $Proposition);
+            var_dump($PropositionTranslation);
+            if(TranslationPropositionController::create($PropositionTranslation)) {
+                header('Location: /');
+            }else{echo "Pas de connection";}
+        }else{
+            echo "Pas de proposition";
+        }
+    }
 
 }

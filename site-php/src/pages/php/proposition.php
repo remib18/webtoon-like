@@ -1,7 +1,9 @@
 <?php
 
 use WebtoonLike\Site\pageManager\PropositionManager;
-
+if(isset($_POST['proposition'])) {
+    PropositionManager::SaveProposition();
+}else{echo "Pas de proposition";}
 require dirname(__DIR__, 2) . '/components/header.php';
 
 ?>
@@ -18,21 +20,20 @@ require dirname(__DIR__, 2) . '/components/header.php';
             </svg>
         </label>
     </span>
-    <div class="grid-container">
-        <p class="title-small-1">Texte original</p>
-        <pre class="false-input small-1">
-        <?= PropositionManager::getOriginalContent()/*Renvoie le texte original*/ ?>
-            </pre>
-        <p class="title-small-2">Traduction actuelle</p>
-        <pre class="false-input small-2">
-        <?= PropositionManager::getContent()/*Trad actuel*/ ?>
-            </pre>
-        <label class="title-large" for="proposition">Proposition</label>
-        <textarea class="large-1" name="proposition" id="proposition" cols="100" rows="10">
-         <?= PropositionManager:: getContent()/*Affiche le résultat pour réécrire par-dessus*/ ?>
-        </textarea>
-        <input type="submit" value="Valider" class="action large">
-    </div>
+    <form action="http://localhost/proposition?BlockId=<?= $_GET['BlockId'] ?>&TranslationId=<?= $_GET['TranslationId'] ?>" method="post">
+        <div class="grid-container">
+            <p class="title-small-1">Texte original</p>
+            <pre class="false-input small-1"><?=trim(PropositionManager::getOriginalContent())/*Renvoie le texte original*/?></pre>
+            <p class="title-small-2">Traduction actuelle</p>
+            <pre class="false-input small-2"><?=trim(PropositionManager::getContent())/*Trad actuel*/?></pre>
+            <label class="title-large" for="proposition">Proposition</label>
+            <textarea class="large-1" name="proposition" id="proposition" cols="100" rows="10"><?= trim(PropositionManager:: getContent())/*Affiche le résultat pour réécrire par-dessus*/ ?></textarea>
+            <input type="submit" value="Valider" class="action large">
+        </div>
+    </form>
 </div>
 
-<?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>
+<?php
+
+require dirname(__DIR__, 2) . '/components/footer.php';
+?>
