@@ -339,6 +339,8 @@ a.button.outlined:hover {
 input[type=text],
 input[type=search],
 input[type=number],
+input[type=password],
+input[type=email],
 textarea,
 .false-input {
     background-color: #656D6D;
@@ -359,6 +361,8 @@ textarea,
 input[type=text].large,
 input[type=search].large,
 input[type=number].large,
+input[type=password].large,
+input[type=email].large,
 textarea.large {
     padding: .5rem 1rem;
 }
@@ -366,6 +370,8 @@ textarea.large {
 input[type=text]::placeholder,
 input[type=search]::placeholder,
 input[type=number]::placeholder,
+input[type=password]::placeholder,
+input[type=email]::placeholder,
 textarea::placeholder {
     color: #ffffffad;
     transition: all .3s ease;

@@ -86,6 +86,7 @@ class Database
         $selectedColumns = self::getSelectedColumns($select, $entityClass);
         $whereConditions = sizeof($where) > 0 ? ' WHERE' . self::getWhereConditions($where, $entityClass) : '';
         $q = "SELECT $selectedColumns FROM `$table` $whereConditions;";
+
         $res = self::getDB()
             ->query($q)
             ->fetch_assoc();
