@@ -193,7 +193,7 @@ class Authentication {
             $tokenEntity =  LoginTokenController::getByToken($token);
 
             // Pas de token en BDD
-            if($tokenEntity === null) return;
+            if(is_null($tokenEntity)) return;
 
             if($tokenEntity->getLifeSpan() > time()) {
                 $_SESSION['accessLevel'] = AccessLevel::authenticated;
