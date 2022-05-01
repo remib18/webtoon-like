@@ -195,13 +195,13 @@ class Authentication {
             // Pas de token en BDD
             if(is_null($tokenEntity)) return;
 
-            if($tokenEntity->getLifeSpan() > time()) {
-                $_SESSION['accessLevel'] = AccessLevel::authenticated;
-                $_SESSION['id'] = $tokenEntity->getUserID();
-            } else{
-                // Suppression si invalide
+            if($tokenEntity->getLifeSpan() < time()) {
                 self::deleteRememberMeCookie($tokenEntity);
+                return;
             }
+
+            $_SESSION['accessLevel'] = AccessLevel::authenticated;
+            $_SESSION['id'] = $tokenEntity->getUserID();
         }
     }
 
