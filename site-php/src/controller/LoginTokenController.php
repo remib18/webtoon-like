@@ -30,7 +30,7 @@ class LoginTokenController
      * @param LoginToken $entity
      * @return bool
      */
-    public static function remove(LoginToken $entity): bool
+    public static function remove(LoginToken &$entity): bool
     {
         return Database::remove('LoginToken', $entity);
     }
