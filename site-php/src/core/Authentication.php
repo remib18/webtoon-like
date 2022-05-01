@@ -136,7 +136,7 @@ class Authentication {
 
             if( $rememberMe ) {
                 $lifeSpan = time() + 86400 * 14;
-                $token = strtoupper(md5(openssl_random_pseudo_bytes(64)));
+                $token = strtoupper(md5(openssl_random_pseudo_bytes(64) . time()));
 
                 $res = LoginTokenController::create(new LoginToken($token, $lifeSpan, $user->getId(), false));
                 if($res !== false ) {
