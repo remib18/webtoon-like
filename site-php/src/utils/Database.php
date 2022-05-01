@@ -220,7 +220,7 @@ class Database
         $where = '';
         foreach ($entity::getIdentifiers() as $id) {
             $value = $entity->__toArray()[$id];
-            $where .= "`$id` =" . self::normalizeValue($value) . ' AND ';
+            $where .= "`$id` = " . self::normalizeValue($value) . ' AND ';
         }
         return substr($where, 0, -5);
     }
