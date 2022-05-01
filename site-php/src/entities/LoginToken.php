@@ -9,7 +9,6 @@ class LoginToken implements EntityInterface
 
     private array $fieldsToSave = [];
 
-    private string $id;
     private string $token;
     private int $lifeSpan;
     private int $userID;
@@ -20,7 +19,6 @@ class LoginToken implements EntityInterface
         int $userID,
         bool $fromDB = true
     ) {
-        $this->id = $token;
         $this->setToken($token);
         $this->setLifeSpan($lifeSpan);
         $this->setUserID($userID);
@@ -151,12 +149,6 @@ class LoginToken implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {
-        $this->id = $id;
-    }
+    public function setId(int $id): void {}
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
 }
