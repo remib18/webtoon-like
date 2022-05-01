@@ -36,9 +36,7 @@ class Router
      * @return bool
      */
     private static function isRessourceAccessibleForUser(): bool {
-        // TODO: [User system] @gabey
-        // note: utilises self::getRouter()->pageType pour savoir le template
-        return true;
+        return Authentication::hasAccess();
     }
 
     /**
@@ -111,7 +109,7 @@ class Router
      *
      * @return void
      */
-    #[NoReturn] public static function redirect(string $url, int $code = 301, array $getParams = [], string $htmlId = ''): void {
+    #[NoReturn] public static function redirect(string $url, null|int $code = 301, array $getParams = [], string $htmlId = ''): void {
         if (self::$redirected) return;
         self::$redirected = true;
         self::getRouter()->generatedHTMLRouting(false, 'error');
