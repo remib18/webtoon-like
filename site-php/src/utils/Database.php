@@ -103,8 +103,7 @@ class Database
      */
     public static function remove(string $table, EntityInterface $entity): bool {
         $where = self::whereIds($entity);
-        $q = "DELETE FROM `$table` WHERE " . $where;
-        var_dump($q);
+        $q = "DELETE FROM `$table` WHERE $where";
         return self::getDB()
             ->query($q);
     }
