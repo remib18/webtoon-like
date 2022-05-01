@@ -16,7 +16,7 @@
         </label>
 
         <label for="rememberMe">Rester connecter
-            <input type="checkbox" name="rememberMe">
+            <input type="checkbox" name="rememberMe" id="rememberMe">
         </label>
 
         <input type="submit" value="Connexion">
