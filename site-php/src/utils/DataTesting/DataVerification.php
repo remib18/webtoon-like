@@ -120,7 +120,6 @@ class DataVerification {
         if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) return false;
 
         return True;
-
     }
 
     /**
