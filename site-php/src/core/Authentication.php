@@ -98,10 +98,11 @@ class Authentication {
                 false
             );
 
-            $_SESSION['accessLevel'] = AccessLevel::authenticated;
-            $_SESSION['id'] = $user->getId();
+            if(!UserController::create($user)) {
+                return ['error' => 'L\'un de vos champ est invalide.'];
+            }
 
-            return UserController::create($user);
+            return self::login($email, $password);
         }
 
         return $errors;
