@@ -102,7 +102,7 @@ class Authentication {
             );
 
             if(!UserController::create($user)) {
-                return ['error' => 'L\'un de vos champ est invalide.'];
+                return ['error' => 'L\'un de vos champ est invalide'];
             }
 
             return self::login($email, $password);

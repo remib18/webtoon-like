@@ -155,7 +155,7 @@ class User implements EntityInterface
             'userID' => new DataField($this->id, DataType::int, true),
             'username' => new DataField($this->username, DataType::string, false, null, null, Regex::username->value),
             'email' => new DataField($this->email, DataType::email),
-            'password' => new DataField($this->password, DataType::email),
+            'password' => new DataField($this->password, DataType::string),
             'registeredAt' => new DataField($this->registeredAt, DataType::date)
         ];
     }
