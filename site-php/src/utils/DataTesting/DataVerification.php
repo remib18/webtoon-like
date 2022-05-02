@@ -46,21 +46,13 @@ class DataVerification {
 
         if($this->field->getNullable() === true && empty($email) === true) return true;
 
-        if($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) {
-            return false;
-        }
+        if($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) return false;
 
-        if($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) {
-            return false;
-        }
+        if($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) return false;
 
-        if($this->field->getNullable() === false && empty($str) === true) {
-            return false;
-        }
+        if($this->field->getNullable() === false && empty($str) === true) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$str) === 0) {
-            return false;
-        }
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$str) === 0) return false;
 
         return true;
     }
@@ -75,17 +67,11 @@ class DataVerification {
 
         if($this->field->getNullable() === true && empty($email) === true) return true;
 
-        if($this->field->getNullable() === false && empty($email) === true) {
-            return false;
-        }
+        if($this->field->getNullable() === false && empty($email) === true) return false;
 
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return false;
-        }
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $email) === 0) {
-            return false;
-        }
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $email) === 0) return false;
 
         return true;
     }
@@ -100,13 +86,9 @@ class DataVerification {
 
         if($this->field->getNullable() === true && empty($int) === true) return true;
 
-        if($this->field->getNullable() === false && empty($int) === true) {
-            return false;
-        }
+        if($this->field->getNullable() === false && empty($int) === true) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$int) === 0) {
-            return false;
-        }
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$int) === 0) return false;
 
         return true;
     }
@@ -116,13 +98,9 @@ class DataVerification {
 
         if($this->field->getNullable() === true && empty($float) === true) return true;
 
-        if($this->field->getNullable() === false && empty($float) === true) {
-            return false;
-        }
+        if($this->field->getNullable() === false && empty($float) === true) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$float) === 0) {
-            return false;
-        }
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$float) === 0) return false;
 
         return true;
     }
@@ -137,13 +115,9 @@ class DataVerification {
 
         if($this->field->getNullable() === true && empty($date) === true) return true;
 
-        if($this->field->getNullable() === false && empty($date) === true) {
-            return false;
-        }
+        if($this->field->getNullable() === false && empty($date) === true) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) {
-            return false;
-        }
+        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) return false;
 
         return True;
 
@@ -156,9 +130,7 @@ class DataVerification {
      */
     public function verifyBool(): bool {
         $bool = $this->field->getData();
-        if($this->field->getNullable() === false && $bool === null) {
-            return false;
-        }
+        if($this->field->getNullable() === false && $bool === null) return false;
 
         return true;
     }
