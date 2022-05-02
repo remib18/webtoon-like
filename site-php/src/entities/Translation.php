@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class Translation implements EntityInterface
 {
@@ -67,13 +69,13 @@ class Translation implements EntityInterface
      * @inheritDoc
      */
     #[ArrayShape([
-        'identifier' => "int",
-        'blockId' => "string",
+        'identifier' => "string",
+        'blockId' => "int",
         'content' => "string"
     ])]
     public function __toArray(): array {
         return [
-            'identifier' => $this->languageIdentifier,
+            'languageIdentifier' => $this->languageIdentifier,
             'blockId' => $this->blockId,
             'content' => $this->content
         ];
@@ -104,9 +106,9 @@ class Translation implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'identifier' => "int",
-            'blockId' => "string",
-            'content' => "string"
+            'languageIdentifier' => new DataField($this->languageIdentifier, DataType::string),
+            'blockId' => new DataField($this->blockId, DataType::int),
+            'content' => new DataField($this->content, DataType::string)
         ];
     }
 
