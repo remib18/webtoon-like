@@ -98,10 +98,8 @@ class Authentication {
                 false
             );
 
-            $_SESSION['accessLevel'] = AccessLevel::authenticated;
-            $_SESSION['id'] = $user->getId();
-
-            return UserController::create($user);
+            UserController::create($user);
+            return self::login($email, $password);
         }
 
         return $errors;
