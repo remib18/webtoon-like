@@ -115,7 +115,7 @@ class Authentication {
      * @param string $password
      * @return string|bool
      */
-    public static function login(string $email, string $password, bool $rememberMe): string|bool
+    public static function login(string $email, string $password, bool $rememberMe = false): string|bool
     {
         $error = 'Le mot de passe ne correspond à l\'adresse email fournie';
 
