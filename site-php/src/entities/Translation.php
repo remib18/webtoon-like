@@ -69,7 +69,7 @@ class Translation implements EntityInterface
      * @inheritDoc
      */
     #[ArrayShape([
-        'identifier' => "string",
+        'languageIdentifier' => "string",
         'blockId' => "int",
         'content' => "string"
     ])]
