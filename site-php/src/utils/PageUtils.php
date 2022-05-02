@@ -53,7 +53,14 @@ const NAVIGATION = [
         'label' => 'Déconnexion',
         'tooltip' => 'Se déconnecter du site web.',
         'accessLevel' => AccessLevel::authenticated
-    ]
+    ],
+    'actions' => [
+        'target' => 'actions',
+        'icon' => '',
+        'label' => 'Actions',
+        'tooltip' => 'Options diverses',
+        'accessLevel' => AccessLevel::authenticated
+    ],
 ];
 
 class PageUtils

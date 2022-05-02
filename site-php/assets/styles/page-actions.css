@@ -1,0 +1,15 @@
+#gestion a{
+ color: white;
+}
+
+#gestion {
+    margin-left: 20px;
+    border-left: 2px white solid;
+    padding: 5px 5px 5px 10px;
+}
+
+#gestion p {
+    line-height: 30px;
+}
+
+
