@@ -4,6 +4,8 @@ namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class TranslationProposition implements EntityInterface
 {
@@ -130,13 +132,13 @@ class TranslationProposition implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'translationPropositionID' => "int",
-            'proposedTranslation' => "string",
-            'blockID' => "int",
-            'userID' => "int"
+            'translationPropositionID' => new DataField($this->id, DataType::int),
+            'proposedTranslation' => new DataField($this->proposedTranslation, DataType::string),
+            'blockID' => new DataField($this->blockId, DataType::int),
+            'userID' => new DataField($this->userId, DataType::int)
         ];
     }
 

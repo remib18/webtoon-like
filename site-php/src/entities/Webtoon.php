@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class Webtoon implements EntityInterface
 {
@@ -145,10 +147,10 @@ class Webtoon implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'webtoonID' => 'integer',
-            'name' => 'string',
-            'author' => 'string',
-            'description' => 'string'
+            'webtoonID' => new DataField($this->id, DataType::int),
+            'name' => new DataField($this->name, DataType::string),
+            'author' => new DataField($this->author, DataType::string),
+            'description' => new DataField($this->description, DataType::string)
         ];
     }
 

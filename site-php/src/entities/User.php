@@ -6,6 +6,9 @@ use DateTime;
 use Google\Type\Date;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
+use WebtoonLike\Site\utils\DataTesting\Regex;
 
 class User implements EntityInterface
 {
@@ -149,11 +152,11 @@ class User implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'userID' => "int",
-            'username' => "string",
-            'email' => "string",
-            'password' => "string",
-            'registeredAt' => "\DateTime"
+            'userID' => new DataField($this->id, DataType::int),
+            'username' => new DataField($this->username, DataType::string, false, null, null, Regex::username),
+            'email' => new DataField($this->email, DataType::email),
+            'password' => new DataField($this->password, DataType::email),
+            'registeredAt' => new DataField($this->registeredAt, DataType::date)
         ];
     }
 
