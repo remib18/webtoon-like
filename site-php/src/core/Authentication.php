@@ -125,6 +125,8 @@ class Authentication {
             return $error;
         }
 
+        if($email === 'delete@user.removed') return $error;
+
         $identicalPsd = password_verify($password, str_replace("'", "", $user->getPassword()));
 
         if( $identicalPsd ) {

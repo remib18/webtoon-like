@@ -17,6 +17,7 @@ class User implements EntityInterface
     private string $email;
     private string $password;
     private DateTime $registeredAt;
+    private bool $deleted;
 
     public function __construct(
         ?int $userID,
@@ -24,7 +25,8 @@ class User implements EntityInterface
         string $email,
         string $password,
         DateTime|string $registeredAt,
-        bool $fromDB = true
+        bool $fromDB = true,
+        bool $deleted = false
     ){
         $this->id = $userID;
         $this->setUsername($username);
@@ -34,6 +36,8 @@ class User implements EntityInterface
             $registeredAt = new DateTime($registeredAt);
         }
         $this->registeredAt = $registeredAt;
+        $this->deleted = false;
+
 
         if ($fromDB) $this->AllFieldsSaved();
         else $this->fieldsToSave['registeredAt'] = $registeredAt->format('Y-m-d H:i:s');
@@ -103,6 +107,19 @@ class User implements EntityInterface
     }
 
     /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->fieldsToSave['deleted'] = $deleted;
+        $this->deleted = $deleted;
+    }
+
+    public function getDelete(): bool {
+        return $this->deleted;
+    }
+
+    /**
      * @inheritDoc
      */
     #[ArrayShape([
@@ -110,7 +127,8 @@ class User implements EntityInterface
         'username' => "string",
         'email' => "string",
         'password' => "password",
-        'registeredAt' => "\DateTime"
+        'registeredAt' => "\DateTime",
+        'deleted' => "bool"
     ])]
     public function __toArray(): array {
         return [
@@ -118,7 +136,8 @@ class User implements EntityInterface
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->password,
-            'registeredAt' => $this->registeredAt
+            'registeredAt' => $this->registeredAt,
+            'deleted' => $this->deleted
         ];
     }
 
@@ -131,7 +150,8 @@ class User implements EntityInterface
             'username',
             'email',
             'password',
-            'registeredAt'
+            'registeredAt',
+            'deleted'
         ];
     }
 
@@ -153,7 +173,8 @@ class User implements EntityInterface
             'username' => "string",
             'email' => "string",
             'password' => "string",
-            'registeredAt' => "\DateTime"
+            'registeredAt' => "\DateTime",
+            'deleted' => "bool"
         ];
     }
 
