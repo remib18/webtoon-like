@@ -129,7 +129,7 @@ class Authentication {
 
         $identicalPsd = password_verify($password, str_replace("'", "", $user->getPassword()));
 
-        if( $identicalPsd === true ) {
+        if( $identicalPsd ) {
 
             $_SESSION['accessLevel'] = AccessLevel::authenticated;
             $_SESSION['id'] = $user->getId();
@@ -187,22 +187,25 @@ class Authentication {
      */
     private static function tryLoggingFromCookie(): void
     {
-        if(isset($_COOKIE['rememberMe']) && !empty($_COOKIE['rememberMe']) && $_SESSION['accessLevel'] === AccessLevel::everyone) {
-            // Risque d'injection SQL.
-            $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
-            $tokenEntity =  LoginTokenController::getByToken($token);
+        if(!isset($_COOKIE['rememberMe'])
+            || empty($_COOKIE['rememberMe'])
+            || $_SESSION['accessLevel'] === AccessLevel::everyone
+        ) return;
 
-            // Pas de token en BDD
-            if(is_null($tokenEntity)) return;
+        // Risque d'injection SQL.
+        $token = mysqli_real_escape_string(Database::getDB(), $_COOKIE['rememberMe']);
+        $tokenEntity =  LoginTokenController::getByToken($token);
 
-            if($tokenEntity->getLifeSpan() < time()) {
-                self::deleteRememberMeCookie($tokenEntity);
-                return;
-            }
+        // Pas de token en BDD
+        if(is_null($tokenEntity)) return;
 
-            $_SESSION['accessLevel'] = AccessLevel::authenticated;
-            $_SESSION['id'] = $tokenEntity->getUserID();
+        if($tokenEntity->getLifeSpan() < time()) {
+            self::deleteRememberMeCookie($tokenEntity);
+            return;
         }
+
+        $_SESSION['accessLevel'] = AccessLevel::authenticated;
+        $_SESSION['id'] = $tokenEntity->getUserID();
     }
 
 }
