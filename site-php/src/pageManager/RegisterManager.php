@@ -17,7 +17,7 @@ class RegisterManager {
 
         foreach ( $_GET as $key => $error ) {
             if(str_contains($key, 'error')) {
-                $res .= '<p>' . $error . '.</p>';
+                $res .= '<p>' . $error . '</p>';
             }
         }
 

@@ -188,7 +188,7 @@ class Authentication {
     {
         if(!isset($_COOKIE['rememberMe'])
             || empty($_COOKIE['rememberMe'])
-            || $_SESSION['accessLevel'] === AccessLevel::everyone
+            || $_SESSION['accessLevel'] !== AccessLevel::everyone
         ) return;
 
         // Risque d'injection SQL.
