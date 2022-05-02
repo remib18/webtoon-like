@@ -173,9 +173,10 @@ class Authentication {
      * @return void
      */
     private static function deleteRememberMeCookie(?LoginToken $tokenEntity): void {
-        LoginTokenController::remove($tokenEntity);
         // On supprime le cookie en le mettant à un temps antérieur.
         setcookie('rememberMe', 'outdated', time() - 2022);
+        if(is_null($tokenEntity)) return;
+        LoginTokenController::remove($tokenEntity);
     }
 
     /**
