@@ -44,10 +44,7 @@ class DataVerification {
     public function verifyString(): bool {
         $str = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($email) === true) {
-            return true;
-        }
-
+        if($this->field->getNullable() === true && empty($email) === true) return true;
 
         if($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) {
             return false;
@@ -76,10 +73,7 @@ class DataVerification {
     public function verifyEmail(): bool {
         $email = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($email) === true) {
-            return true;
-        }
-
+        if($this->field->getNullable() === true && empty($email) === true) return true;
 
         if($this->field->getNullable() === false && empty($email) === true) {
             return false;
@@ -104,10 +98,7 @@ class DataVerification {
     public function verifyInt(): bool {
         $int = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($int) === true) {
-            return true;
-        }
-
+        if($this->field->getNullable() === true && empty($int) === true) return true;
 
         if($this->field->getNullable() === false && empty($int) === true) {
             return false;
@@ -123,10 +114,7 @@ class DataVerification {
     public function verifyFloat(): bool {
         $float = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($float) === true) {
-            return true;
-        }
-
+        if($this->field->getNullable() === true && empty($float) === true) return true;
 
         if($this->field->getNullable() === false && empty($float) === true) {
             return false;
@@ -147,18 +135,11 @@ class DataVerification {
     public function verifyDate(): bool {
         $date = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($date) === true) {
-            return true;
-        }
+        if($this->field->getNullable() === true && empty($date) === true) return true;
 
         if($this->field->getNullable() === false && empty($date) === true) {
             return false;
         }
-
-        // Todo: Validate date
-        // Is it even necessary? Isn't PHP handling it in all cases?
-        // Users would
-        // using the regex would leave more flexibility.
 
         if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) {
             return false;

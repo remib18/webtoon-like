@@ -47,12 +47,12 @@ $res = DataVerification::verify($a);
 echo '<pre>' . var_dump($res) . '</pre>';
 
 
-$a = new DataField("<www>", DataType::string, false, 2, 16, Regex::username->value);
+$a = new DataField("<www>", DataType::string, false, 2, 16, '/^[a-zA-Z0-9_\-]/');
 $res = DataVerification::verify($a);
 
 echo '<pre>' . var_dump($res) . '</pre>';
 
-$a = new DataField("Tester", DataType::string, false, 2, 16, Regex::username->value);
+$a = new DataField("Tester", DataType::string, false, 2, 16, '/^[a-zA-Z0-9_\-]/');
 $res = DataVerification::verify($a);
 
 echo '<pre>' . var_dump($res) . '</pre>';
