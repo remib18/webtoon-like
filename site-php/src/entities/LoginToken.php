@@ -38,7 +38,7 @@ class LoginToken implements EntityInterface
     /**
      * @param string $token
      */
-    public function setToken(string $token): void
+    private function setToken(string $token): void
     {
         $this->fieldsToSave['token'] = $token;
         $this->token = $token;
