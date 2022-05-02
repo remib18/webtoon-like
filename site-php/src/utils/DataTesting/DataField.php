@@ -18,10 +18,12 @@ class DataField {
         private mixed $data,
         private DataType  $type,
         private bool $nullable, // null ou pas
-        private null|int|DateTime $minLength,
-        private null|int|DateTime $maxLength,
-        private null|Regex|string $regex
-    ) {}
+        private null|int|DateTime $minLength = null,
+        private null|int|DateTime $maxLength = null,
+        private null|Regex|string $regex = null
+    ) {
+
+    }
 
     /**
      * @return mixed
