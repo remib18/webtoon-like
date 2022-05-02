@@ -8,7 +8,6 @@ use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use WebtoonLike\Site\utils\DataTesting\DataField;
 use WebtoonLike\Site\utils\DataTesting\DataType;
-use WebtoonLike\Site\utils\DataTesting\Regex;
 
 class User implements EntityInterface
 {
@@ -153,7 +152,7 @@ class User implements EntityInterface
     {
         return [
             'userID' => new DataField($this->id, DataType::int, true),
-            'username' => new DataField($this->username, DataType::string, false, null, null, Regex::username->value),
+            'username' => new DataField($this->username, DataType::string, false, null, null, '/^[a-zA-Z0-9_\-]/'),
             'email' => new DataField($this->email, DataType::email),
             'password' => new DataField($this->password, DataType::string),
             'registeredAt' => new DataField($this->registeredAt, DataType::date)

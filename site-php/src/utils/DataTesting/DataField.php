@@ -12,7 +12,7 @@ class DataField {
      * @param bool $nullable
      * @param int|DateTime|null $minLength
      * @param int|DateTime|null $maxLength
-     * @param Regex|string|null $regex
+     * @param ?string $regex
      */
     public function __construct(
         private mixed $data,
@@ -20,7 +20,7 @@ class DataField {
         private bool $nullable = false, // null ou pas
         private null|int|DateTime $minLength = null,
         private null|int|DateTime $maxLength = null,
-        private null|Regex|string $regex = null
+        private ?string $regex = null
     ) {
 
     }
@@ -63,9 +63,9 @@ class DataField {
     }
 
     /**
-     * @return string|Regex|null
+     * @return string|null
      */
-    public function getRegex(): string|Regex|null
+    public function getRegex(): ?string
     {
         return $this->regex;
     }
