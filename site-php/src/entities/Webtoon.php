@@ -148,8 +148,8 @@ class Webtoon implements EntityInterface
     {
         return [
             'webtoonID' => new DataField($this->id, DataType::int, true),
-            'name' => new DataField($this->name, DataType::string),
-            'author' => new DataField($this->author, DataType::string),
+            'name' => new DataField($this->name, DataType::string, false, null, 256, null),
+            'author' => new DataField($this->author, DataType::string, false, null, 128, null),
             'description' => new DataField($this->description, DataType::string)
         ];
     }

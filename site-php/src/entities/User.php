@@ -152,9 +152,9 @@ class User implements EntityInterface
     {
         return [
             'userID' => new DataField($this->id, DataType::int, true),
-            'username' => new DataField($this->username, DataType::string, false, null, null, '/^[a-zA-Z0-9_\-]/'),
+            'username' => new DataField($this->username, DataType::string, false, 2, 32, '/^[a-zA-Z0-9_\-]/'),
             'email' => new DataField($this->email, DataType::email),
-            'password' => new DataField($this->password, DataType::string),
+            'password' => new DataField($this->password, DataType::string, false, 5, null, null),
             'registeredAt' => new DataField($this->registeredAt, DataType::date)
         ];
     }

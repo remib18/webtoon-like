@@ -241,7 +241,7 @@ class Image implements EntityInterface
             'path' => new DataField($this->path, DataType::string),
             'needOCR' => new DataField($this->needOCR, DataType::bool),
             'chapterID' => new DataField($this->chapterId, DataType::int),
-            'originalLanguage' => new DataField($this->chapterId, DataType::string),
+            'originalLanguage' => new DataField($this->chapterId, DataType::string, 2, 256, null),
             'fontSize' => new DataField($this->fontSize, DataType::int, true)
         ];
     }
