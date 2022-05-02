@@ -17,7 +17,7 @@ class DataField {
     public function __construct(
         private mixed $data,
         private DataType  $type,
-        private bool $nullable, // null ou pas
+        private bool $nullable = false, // null ou pas
         private null|int|DateTime $minLength = null,
         private null|int|DateTime $maxLength = null,
         private null|Regex|string $regex = null

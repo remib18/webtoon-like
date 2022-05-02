@@ -239,13 +239,13 @@ class Block implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'blockID' => new DataField($this->id, DataType::int, false),
-            'startX' => new DataField($this->startX, DataType::int, false),
-            'startY' => new DataField($this->startY, DataType::int, false),
-            'endX' => new DataField($this->endX, DataType::int, false),
-            'endY' => new DataField($this->endY, DataType::int, false),
-            'originalContent' => new DataField($this->originalContent, DataType::string, false),
-            'imageID' =>  new DataField($this->imageId, DataType::int, false)
+            'blockID' => new DataField($this->id, DataType::int),
+            'startX' => new DataField($this->startX, DataType::int),
+            'startY' => new DataField($this->startY, DataType::int),
+            'endX' => new DataField($this->endX, DataType::int),
+            'endY' => new DataField($this->endY, DataType::int),
+            'originalContent' => new DataField($this->originalContent, DataType::string),
+            'imageID' =>  new DataField($this->imageId, DataType::int)
         ];
     }
 
