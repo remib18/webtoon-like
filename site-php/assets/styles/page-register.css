@@ -1,0 +1,36 @@
+#app, form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+
+form {
+    width: 30vw;
+    margin-top: 10px;
+}
+
+#erreur-box {
+    margin-top: 14px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    font-size: medium;
+    line-height: 1.5em;
+}
+
+h2, h3 {
+    margin: 0;
+}
+
+@media screen and (max-width: 1080px) {
+    #app, form {
+        width: 70vw;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    #app, form {
+        width: 90vw;
+    }
+}

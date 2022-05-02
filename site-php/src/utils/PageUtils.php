@@ -2,6 +2,9 @@
 
 namespace WebtoonLike\Site\utils;
 
+use WebtoonLike\Site\core\Authentication;
+use WebtoonLike\Site\core\AccessLevel;
+
 require_once 'UriUtils.php';
 
 const SCRIPTS_PAGE_TYPE = [
@@ -9,13 +12,23 @@ const SCRIPTS_PAGE_TYPE = [
     'import' => ['importFormController']
 ];
 
-const NAVIGUATION = [
+const PAGES = [
+    'home' => ['accessLevel' => AccessLevel::everyone],
+    'error' => ['accessLevel' => AccessLevel::everyone],
+    'webtoon' => ['accessLevel' => AccessLevel::everyone],
+    '@login' => ['accessLevel' => AccessLevel::everyone],
+    '@register' => ['accessLevel' => AccessLevel::everyone],
+    'login' => ['accessLevel' => AccessLevel::everyone],
+    'register' => ['accessLevel' => AccessLevel::everyone]
+];
+
+const NAVIGATION = [
     'home' => [
         'target' => '/',
         'icon' => '',
         'label' => 'Tous les webtoons',
         'tooltip' => '',
-        //'access' => 'everyone' // TODO[user-system]
+        'accessLevel' => AccessLevel::everyone
     ],
     'import' => [
         'target' => '/import?type=webtoon',
@@ -25,7 +38,21 @@ const NAVIGUATION = [
                    </svg>',
         'label' => 'Importer',
         'tooltip' => 'Importer un webtoon',
-        //'access' => 'everyone' // TODO[user-system]
+        'accessLevel' => AccessLevel::authenticated
+    ],
+    'login' => [
+        'target' => 'login',
+        'icon' => '',
+        'label' => 'Connexion',
+        'tooltip' => 'Se connecter au site web.',
+        'accessLevel' => AccessLevel::everyone
+    ],
+    'logout' => [
+        'target' => '@logout',
+        'icon' => '',
+        'label' => 'Déconnexion',
+        'tooltip' => 'Se déconnecter du site web.',
+        'accessLevel' => AccessLevel::authenticated
     ]
 ];
 
@@ -42,6 +69,15 @@ class PageUtils
     private static function getInstance(): PageUtils {
         if (is_null(self::$instance)) self::$instance = new PageUtils();
         return self::$instance;
+    }
+
+    /**
+     * Retourne le niveau minimum pour accéder à la ressource.
+     *
+     * @return AccessLevel
+     */
+    public static function getPageAccess(): AccessLevel {
+        return PAGES[UriUtils::getPageType()]['accessLevel'] ?? AccessLevel::authenticated;
     }
 
     /**
@@ -106,16 +142,19 @@ class PageUtils
      */
     public static function getNavigation(): string {
         $res = '';
-        foreach (NAVIGUATION as $page => $item) {
+        foreach (NAVIGATION as $page => $item) {
             $isCurrent = self::getInstance()->pageType === $page;
-            $res .= '<li data-tooltip="' . '">';
-            $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
-            $res .= $item['icon'];
-            $res .= '<span>' . $item['label'] . '</span>';
-            $res .= $isCurrent ? '' : '</a>';
-            $res .= '</li>';
+
+            if(Authentication::hasAccess($item['accessLevel'], true)) {
+                $res .= '<li data-tooltip="' . '">';
+                $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
+                $res .= $item['icon'];
+                $res .= '<span>' . $item['label'] . '</span>';
+                $res .= $isCurrent ? '' : '</a>';
+                $res .= '</li>';
+            }
         }
         return $res;
     }
-    
+
 }
