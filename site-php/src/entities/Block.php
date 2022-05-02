@@ -5,6 +5,9 @@ namespace WebtoonLike\Site\entities;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use WebtoonLike\Site\features\Translation\Result\Bloc;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
+use WebtoonLike\Site\utils\DataTesting\DataVerification;
 
 class Block implements EntityInterface
 {
@@ -236,13 +239,13 @@ class Block implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'blockID' => "int",
-            'startX' => "int",
-            'startY' => "int",
-            'endX' => "int",
-            'endY' => "int",
-            'originalContent' => "string",
-            'imageID' => "int"
+            'blockID' => new DataField($this->id, DataType::int, false, null, null, null),
+            'startX' => new DataField($this->startX, DataType::int, false, null, null, null),
+            'startY' => new DataField($this->startY, DataType::int, false, null, null, null),
+            'endX' => new DataField($this->endX, DataType::int, false, null, null, null),
+            'endY' => new DataField($this->endY, DataType::int, false, null, null, null),
+            'originalContent' => new DataField($this->originalContent, DataType::string, false, null, null, null),
+            'imageID' =>  new DataField($this->imageId, DataType::int, false, null, null, null)
         ];
     }
 
