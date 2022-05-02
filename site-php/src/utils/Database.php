@@ -119,6 +119,8 @@ class Database
      * @return bool
      */
     public static function remove(string $table, EntityInterface $entity): bool {
+        if(!self::runTests($entity)) return false;
+
         $where = self::whereIds($entity);
         $q = "DELETE FROM `$table` WHERE $where";
         return self::getDB()
@@ -137,6 +139,8 @@ class Database
      * @throws NoIdOverwritingException
      */
     public static function create(string $table, EntityInterface &$entity): bool {
+        if(!self::runTests($entity)) return false;
+
         $fields = '';
         $values = '';
         foreach ($entity->getFieldsToSave() as $key => $value) {
@@ -197,6 +201,8 @@ class Database
      * @return bool Faux en cas d'erreur
      */
     public static function edit(string $table, EntityInterface &$entity): bool {
+        if(!self::runTests($entity)) return false;
+
         $sets = self::buildEditSet($entity);
         $where = self::whereIds($entity);
         $q = "UPDATE `$table` SET $sets WHERE $where;";
