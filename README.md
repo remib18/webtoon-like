@@ -33,7 +33,7 @@ V1 est l'objectif de l'état du projet à la fin de semestre.
 - [ ] Masquage basique des images
 - [ ] Réécriture des traductions
 ### V1
-- [ ] Système d'utilisateur
+- [x] Système d'utilisateur
 - [ ] Propositions d'amélioration de la traduction par les utilisateurs
 - [ ] Report d'erreur de masquage des images
 ### V2
