@@ -30,6 +30,7 @@
         "ext-curl": "*",
         "ext-gd": "*",
         "ext-mbstring": "*",
-        "ext-mysqli": "*"
+        "ext-mysqli": "*",
+      "ext-openssl": "*"
     }
 }
