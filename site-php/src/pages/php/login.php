@@ -15,7 +15,12 @@
             <input type="password" name="password" id="password" placeholder="Mot de passe" required>
         </label>
 
+        <label for="rememberMe">Rester connecter
+            <input type="checkbox" name="rememberMe" id="rememberMe">
+        </label>
+
         <input type="submit" value="Connexion">
+
     </form>
 
     <p id="register-link">Non-inscrit? Consultez la <a href="/register">page d'inscription</a>.</p>
