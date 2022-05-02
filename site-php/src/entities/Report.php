@@ -112,7 +112,7 @@ class Report implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'reportID' => new DataField($this->id, DataType::int),
+            'reportID' => new DataField($this->id, DataType::int, true),
             'type' => new DataField($this->type, DataType::int),
             'userID' => new DataField($this->userId, DataType::int)
         ];

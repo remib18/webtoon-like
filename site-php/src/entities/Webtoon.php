@@ -147,7 +147,7 @@ class Webtoon implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'webtoonID' => new DataField($this->id, DataType::int),
+            'webtoonID' => new DataField($this->id, DataType::int, true),
             'name' => new DataField($this->name, DataType::string),
             'author' => new DataField($this->author, DataType::string),
             'description' => new DataField($this->description, DataType::string)

@@ -90,7 +90,7 @@ class Language implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'identifier' => new DataField($this->identifier, DataType::string),
+            'identifier' => new DataField($this->identifier, DataType::string, false, 2, 5),
             'name' => new DataField($this->name, DataType::string)
         ];
     }

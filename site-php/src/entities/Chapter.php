@@ -145,7 +145,7 @@ class Chapter implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'chapterID' => new DataField($this->id, DataType::int),
+            'chapterID' => new DataField($this->id, DataType::int, true),
             'index' => new DataField($this->index, DataType::int),
             'title' =>  new DataField($this->title, DataType::string),
             'webtoonID' => new DataField($this->webtoonId, DataType::int)

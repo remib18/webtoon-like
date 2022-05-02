@@ -3,6 +3,8 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class LoginToken implements EntityInterface
 {
@@ -121,12 +123,12 @@ class LoginToken implements EntityInterface
         'token' => "string",
         'lifeSpan' => "string",
         'userID' => "string"])]
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'token' => "string",
-            'lifeSpan' => "int",
-            'userID' => "int"
+            'token' => new DataField($this->token, DataType::string),
+            'lifeSpan' => new DataField($this->lifeSpan, DataType::int),
+            'userID' => new DataField($this->userID, DataType::int)
         ];
     }
 

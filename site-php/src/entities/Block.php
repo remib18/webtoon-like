@@ -239,7 +239,7 @@ class Block implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'blockID' => new DataField($this->id, DataType::int),
+            'blockID' => new DataField($this->id, DataType::int, true),
             'startX' => new DataField($this->startX, DataType::int),
             'startY' => new DataField($this->startY, DataType::int),
             'endX' => new DataField($this->endX, DataType::int),

@@ -135,7 +135,7 @@ class TranslationProposition implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'translationPropositionID' => new DataField($this->id, DataType::int),
+            'translationPropositionID' => new DataField($this->id, DataType::int, true),
             'proposedTranslation' => new DataField($this->proposedTranslation, DataType::string),
             'blockID' => new DataField($this->blockId, DataType::int),
             'userID' => new DataField($this->userId, DataType::int)

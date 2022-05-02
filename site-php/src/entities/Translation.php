@@ -106,7 +106,7 @@ class Translation implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'languageIdentifier' => new DataField($this->languageIdentifier, DataType::string),
+            'languageIdentifier' => new DataField($this->languageIdentifier, DataType::string, false, 2, 5),
             'blockId' => new DataField($this->blockId, DataType::int),
             'content' => new DataField($this->content, DataType::string)
         ];
