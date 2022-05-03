@@ -123,4 +123,7 @@ use WebtoonLike\Site\pageManager\ImportManager;
     </form>
 </div>
 
+/*Todo: Supprimer*/
+<script src="/assets/scripts/importFormController.js"></script>
+
 <?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>
