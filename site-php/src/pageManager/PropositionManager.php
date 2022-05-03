@@ -15,6 +15,12 @@ class PropositionManager
     static ?Block $block = null;
     static ?Translation $translation = null;
 
+    public static function ChecKUser() :void {
+        if(!(isset($_SESSION['id']))){
+            Router::redirect('/login', 301, ['error' => 'Vous devez vous connecter pour faire des proposition']);
+        }
+    }
+
     ############# TEXTE ORIGINAL ##############
     private static function getBlock(): Block
     {
@@ -48,16 +54,15 @@ class PropositionManager
         if (is_null(self::$translation)) {
             if (isset($_GET['TranslationId']/*TranslationId*/)) {
                 $trId = $_GET['TranslationId'];
-                $BlkId = self::getBId();
-                self::$translation = TranslationController::get($trId, $BlkId);
+                $BlkId = self::getBId();#en faire une vérification(if...)
+                self::$translation = TranslationController::get($trId, $BlkId);#initiation
 
             } else {
-                var_dump($_GET);
-                header('Location: http://localhost/error?');
+                header('Location: /error?');#
             }
         }
         if (is_null(self::$translation)) {
-            header('Location: http://localhost/error?');
+            header('Location: /error?');#Nous n'avons pas pus trouver le texte(Pb lors de l'initiation de l'entité translation)
         }
         return self::$translation;
     }
@@ -83,10 +88,10 @@ class PropositionManager
             if(TranslationPropositionController::create($PropositionTranslation)) {
                 header('Location: /');
             }else{
-                Router::redirect('/proposition', 301, ['error' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
+                Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
             }
         }else{
-            Router::redirect('/proposition', 301, ['error' => 'Nous n\'avons pas retrouver le texte']);
+            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas retrouver le texte']);
         }
     }
 
