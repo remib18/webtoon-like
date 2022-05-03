@@ -32,11 +32,11 @@ class User implements EntityInterface
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setPassword($password);
+        $this->setDeleted($deleted);
         if(is_string($registeredAt)) {
             $registeredAt = new DateTime($registeredAt);
         }
         $this->registeredAt = $registeredAt;
-        $this->deleted = false;
 
 
         if ($fromDB) $this->AllFieldsSaved();
@@ -115,7 +115,7 @@ class User implements EntityInterface
         $this->deleted = $deleted;
     }
 
-    public function getDelete(): bool {
+    public function getDeleted(): bool {
         return $this->deleted;
     }
 
