@@ -34,7 +34,7 @@
                    placeholder="Mot de passe (fort si possible)"
                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                    title="Doit contenir au moins un chiffre, une majuscule, une minuscule et doit être d'au minimum 8 caractères."
-                   autocomplete="off"
+                   autocomplete="on"
                    required>
         </label>
 
