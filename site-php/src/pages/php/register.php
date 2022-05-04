@@ -45,7 +45,7 @@
             <input type="password"
                    name="confirmation_password" id="confirmation_password"
                    placeholder="Répéter le mot de passe"
-                   autocomplete="off",
+                   autocomplete="off"
                    class = 'large'
                    required>
         </label>
