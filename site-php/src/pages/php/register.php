@@ -14,7 +14,7 @@
                    placeholder="J0hn_Doe"
                    pattern="^[a-zA-Z0-9_\-]{3,32}$"
                    title="Votre pseudo doit contenir entre 3 et 32 characters alphanumérique, underscore et tirets autorisés."
-                   autocomplete="off",
+                   autocomplete="off"
                    class = 'large'
                    required>
         </label>
@@ -25,7 +25,7 @@
                    placeholder="john.doe@deer.bleat"
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                    title="Entrez un email valid."
-                   autocomplete="on",
+                   autocomplete="on"
                    class = 'large'
                    required>
         </label>
@@ -36,7 +36,7 @@
                    placeholder="Mot de passe (fort si possible)"
                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                    title="Doit contenir au moins un chiffre, une majuscule, une minuscule et doit être d'au minimum 8 caractères."
-                   autocomplete="on",
+                   autocomplete="on"
                    class = 'large'
                    required>
         </label>
@@ -45,7 +45,7 @@
             <input type="password"
                    name="confirmation_password" id="confirmation_password"
                    placeholder="Répéter le mot de passe"
-                   autocomplete="off",
+                   autocomplete="off"
                    class = 'large'
                    required>
         </label>
