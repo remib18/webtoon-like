@@ -352,17 +352,6 @@ a.button.outlined:hover {
 }
 
 /* Text inputs */
-input[type=text],
-input[type=search],
-input[type=number],
-input[type=password],
-input[type=email],
-textarea,
-.false-input {
-    --border: #ffffff20;
-    --bg: #656D6D;
-}
-
 input[type=text].danger,
 input[type=search].danger,
 input[type=number].danger,
@@ -380,6 +369,9 @@ input[type=password],
 input[type=email],
 textarea,
 .false-input {
+    --border: #ffffff20;
+    --bg: #656D6D;
+
     background-color: var(--bg);
     border: solid 1px var(--border);
     border-radius: .5rem;
