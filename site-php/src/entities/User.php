@@ -117,7 +117,7 @@ class User implements EntityInterface
         $this->deleted = $deleted;
     }
 
-    public function getDeleted(): bool {
+    public function isDeleted(): bool {
         return $this->deleted;
     }
 

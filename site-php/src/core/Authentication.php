@@ -128,7 +128,7 @@ class Authentication {
             return $error;
         }
 
-        if( $user->getDeleted() ) return $error;
+        if( $user->isDeleted() ) return $error;
 
         $identicalPsd = password_verify($password, str_replace("'", "", $user->getPassword()));
 
