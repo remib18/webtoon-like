@@ -9,6 +9,7 @@ CREATE TABLE `User` (
     password VARCHAR(256) not null,
     registeredAt DATETIME not null default CURRENT_TIMESTAMP,
     deleted bool not null default false,
+    `rank` int not null default 1,
     PRIMARY KEY (userID)
 )  ENGINE=INNODB;
 
