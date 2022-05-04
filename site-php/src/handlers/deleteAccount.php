@@ -15,7 +15,7 @@ if ( !isset($_POST['deleteAccount'], $_POST['password'], $_SESSION['id'])
 
 $res = deleteAccount::deleteAccount($_SESSION['id'], $_POST['password']);
 
-if($res === true) {
+if($res) {
     Authentication::logout();
 } else {
     Router::redirect('/deleteAccount', 301, ['errorDeletion' => $res]);
