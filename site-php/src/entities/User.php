@@ -6,6 +6,8 @@ use DateTime;
 use Google\Type\Date;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class User implements EntityInterface
 {
@@ -146,14 +148,14 @@ class User implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'userID' => "int",
-            'username' => "string",
-            'email' => "string",
-            'password' => "string",
-            'registeredAt' => "\DateTime"
+            'userID' => new DataField($this->id, DataType::int, true),
+            'username' => new DataField($this->username, DataType::string, false, 3, 32, '/^[a-zA-Z0-9_\-]/'),
+            'email' => new DataField($this->email, DataType::email),
+            'password' => new DataField($this->password, DataType::string, false, 8, null, null),
+            'registeredAt' => new DataField($this->registeredAt, DataType::date)
         ];
     }
 
