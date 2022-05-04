@@ -5,6 +5,8 @@ namespace WebtoonLike\Site\entities;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
 use WebtoonLike\Site\controller\WebtoonController;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class Chapter implements EntityInterface
 {
@@ -140,13 +142,13 @@ class Chapter implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'chapterID' => "int",
-            'index' => "mixed",
-            'title' => "string",
-            'webtoonID' => "int"
+            'chapterID' => new DataField($this->id, DataType::int, true),
+            'index' => new DataField($this->index, DataType::int),
+            'title' =>  new DataField($this->title, DataType::string),
+            'webtoonID' => new DataField($this->webtoonId, DataType::int)
         ];
     }
 

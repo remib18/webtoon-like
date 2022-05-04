@@ -1,7 +1,11 @@
-<?php require dirname(__DIR__, 2) . '/components/header.php'; ?>
+<?php require dirname(__DIR__, 2) . '/components/header.php';
+
+$user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
+
+?>
 
 <section aria-describedby="#s1-title" id="app">
-    <h3>Actions:</h3>
+    <h3>Bienvenue <?= $user->getUsername() ?></h3>
     <div id="gestion">
         <p>Je souhaite <a href="/deleteAccount">supprimer mon compte</a></p>
         <p>Je souhaite <a href="/">devenir editeur</a></p>

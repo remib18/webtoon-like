@@ -8,7 +8,7 @@ CREATE TABLE `User` (
     email VARCHAR(256) not null,
     password VARCHAR(256) not null,
     registeredAt DATETIME not null,
-    deleted bool not null,
+    deleted bool not null default false,
     PRIMARY KEY (userID)
 )  ENGINE=INNODB; 
 
