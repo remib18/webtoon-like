@@ -8,15 +8,15 @@
 
     <form action="/@login" method="post">
         <label for="email">Votre email:
-            <input type="email" name="email" id="email" placeholder="Adresse email" required>
+            <input type="email" name="email" id="email" class='large' placeholder="Adresse email" required>
         </label>
 
         <label for="password">Votre mot de pass:
-            <input type="password" name="password" id="password" placeholder="Mot de passe" required>
+            <input type="password" name="password" class='large'  id="password" placeholder="Mot de passe" required>
         </label>
 
         <label for="rememberMe">Rester connecter
-            <input type="checkbox" name="rememberMe" id="rememberMe">
+            <input type="checkbox" name="rememberMe" class='large'  id="rememberMe">
         </label>
 
         <input type="submit" value="Connexion">
