@@ -3,24 +3,25 @@
 namespace WebtoonLike\Site\utils\DataTesting;
 
 
-use DateTime;
-
-class DataVerification {
+class DataVerification
+{
 
     private function __construct(
-        private DataField $field
-    ) {}
+        private readonly DataField $field
+    ) {
+    }
 
     /**
      * Call the right set of test depending on the types.
      *
      * @param DataField $field
+     *
      * @return bool|void
      */
     public static function verify(DataField $field) {
         $instance = new DataVerification($field);
 
-        switch ( $field->getType() ) {
+        switch ($field->getType()) {
             case DataType::string:
                 return $instance->verifyString();
             case DataType::email:
@@ -41,18 +42,18 @@ class DataVerification {
      *
      * @return bool
      */
-    public function verifyString(): bool {
+    private function verifyString(): bool {
         $str = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($email) === true) return true;
+        if ($this->field->getNullable() === true && empty($email) === true) return true;
 
-        if($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) return false;
+        if ($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) return false;
 
-        if($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) return false;
+        if ($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) return false;
 
-        if($this->field->getNullable() === false && empty($str) === true) return false;
+        if ($this->field->getNullable() === false && empty($str) === true) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$str) === 0) return false;
+        if ($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $str) === 0) return false;
 
         return true;
     }
@@ -62,74 +63,77 @@ class DataVerification {
      *
      * @return bool
      */
-    public function verifyEmail(): bool {
+    private function verifyEmail(): bool {
         $email = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($email) === true) return true;
+        if ($this->field->getNullable() && empty($email)) return true;
 
-        if($this->field->getNullable() === false && empty($email) === true) return false;
+        if (!$this->field->getNullable() && empty($email)) return false;
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $email) === 0) return false;
+        if (!is_null($this->field->getRegex()) && preg_match($this->field->getRegex(), $email) === 0) return false;
 
         return true;
     }
 
     /**
-     * Tests ints.
+     * Tests d'entiers.
      *
      * @return bool
      */
-    public function verifyInt(): bool {
+    private function verifyInt(): bool {
         $int = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($int) === true) return true;
+        if ($this->field->getNullable() && empty($int)) return true;
 
-        if($this->field->getNullable() === false && empty($int) === true) return false;
+        if (!$this->field->getNullable() && empty($int)) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$int) === 0) return false;
+        if (!is_null($this->field->getRegex()) && preg_match($this->field->getRegex(), $int) === 0) return false;
 
         return true;
     }
 
-    public function verifyFloat(): bool {
+    /**
+     * Test de décimaux
+     *
+     * @return bool
+     */
+    private function verifyFloat(): bool {
         $float = $this->field->getData();
 
-        if($this->field->getNullable() === true && empty($float) === true) return true;
+        if ($this->field->getNullable() && empty($float)) return true;
 
-        if($this->field->getNullable() === false && empty($float) === true) return false;
+        if (!$this->field->getNullable() && empty($float)) return false;
 
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(),$float) === 0) return false;
+        if (!is_null($this->field->getRegex()) && preg_match($this->field->getRegex(), $float) === 0) return false;
 
         return true;
     }
 
     /**
-     * Tests dates.
+     * Tests de booleans.
      *
      * @return bool
      */
-    public function verifyDate(): bool {
-        $date = $this->field->getData();
-
-        if($this->field->getNullable() === true && empty($date) === true) return true;
-
-        if($this->field->getNullable() === false && empty($date) === true) return false;
-
-        if($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $date) === 0) return false;
-
-        return True;
+    private function verifyBool(): bool {
+        $bool = $this->field->getData();
+        return $this->field->getNullable() || is_bool($bool);
     }
 
     /**
-     * Verify booleans.
+     * Tests de dates.
      *
      * @return bool
      */
-    public function verifyBool(): bool {
-        $bool = $this->field->getData();
-        if($this->field->getNullable() === false && $bool === null) return false;
+    private function verifyDate(): bool {
+        $date = $this->field->getData();
+
+        if ($this->field->getNullable() && empty($date)) return true;
+
+        if (!$this->field->getNullable() && empty($date)) return false;
+
+        if (!is_null($this->field->getRegex()) && preg_match($this->field->getRegex(), $date) === 0) return false;
 
         return true;
     }
