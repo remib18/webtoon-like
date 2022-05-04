@@ -14,7 +14,7 @@
                    placeholder="J0hn_Doe"
                    pattern="^[a-zA-Z0-9_\-]{3,32}$"
                    title="Votre pseudo doit contenir entre 3 et 32 characters alphanumérique, underscore et tirets autorisés."
-                   autocomplete="off",
+                   autocomplete="off"
                    class = 'large'
                    required>
         </label>
