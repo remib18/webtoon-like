@@ -7,6 +7,8 @@ use JetBrains\PhpStorm\Pure;
 use WebtoonLike\Site\controller\LanguageController;
 use WebtoonLike\Site\exceptions\InvalidProtocolException;
 use WebtoonLike\Site\Settings;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class Image implements EntityInterface
 {
@@ -231,16 +233,16 @@ class Image implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'imageID' => "int|null",
-            'index' => "int",
-            'path' => "string",
-            'needOCR' => "bool",
-            'chapterID' => "int",
-            'originalLanguage' => "string",
-            'fontSize' => "int"
+            'imageID' =>  new DataField($this->id, DataType::int, true),
+            'index' =>  new DataField($this->index, DataType::int),
+            'path' => new DataField($this->path, DataType::string),
+            'needOCR' => new DataField($this->needOCR, DataType::bool),
+            'chapterID' => new DataField($this->chapterId, DataType::int),
+            'originalLanguage' => new DataField($this->chapterId, DataType::string, 2, 256, null),
+            'fontSize' => new DataField($this->fontSize, DataType::int, true)
         ];
     }
 

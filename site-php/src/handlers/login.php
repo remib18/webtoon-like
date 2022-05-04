@@ -16,7 +16,7 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $rememberMe = false;
 
-if( isset($_POST['rememberMe'])) {
+if(isset($_POST['rememberMe'])) {
     $rememberMe = true;
 }
 

@@ -33,7 +33,7 @@ interface EntityInterface
      *
      * @return array<string, string>
      */
-    public static function getTypes(): array;
+    public function getTypes(): array;
 
     /**
      * Retourne la liste des champs modifiés à sauvegarder dans la BDD.

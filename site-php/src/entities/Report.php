@@ -4,6 +4,8 @@ namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class Report implements EntityInterface
 {
@@ -107,12 +109,12 @@ class Report implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'reportID' => "int",
-            'type' => "int",
-            'userID' => "int"
+            'reportID' => new DataField($this->id, DataType::int, true),
+            'type' => new DataField($this->type, DataType::int),
+            'userID' => new DataField($this->userId, DataType::int)
         ];
     }
 
