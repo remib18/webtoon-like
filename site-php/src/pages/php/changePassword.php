@@ -14,7 +14,10 @@
         </label>
 
         <label for="new_password">Saisissez un nouveau mot de passe
-            <input type="password" name="new_password" class="large" id="new_password">
+            <input type="password" name="new_password" class="large"
+                   pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                   title="Doit contenir au moins un chiffre, une majuscule, une minuscule et doit être d'au minimum 8 caractères."
+                   id="new_password">
         </label>
 
         <label for="confirmation_new_password">Validez votre nouveau mot de passe
