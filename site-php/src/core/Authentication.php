@@ -128,7 +128,7 @@ class Authentication {
             return $error;
         }
 
-        if( $user->isDeleted() ) return $error;
+        if( $user->isDeleted() ) return 'Ce compte a été supprimé';
 
         $identicalPsd = password_verify($password, str_replace("'", "", $user->getPassword()));
 
