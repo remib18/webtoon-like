@@ -6,7 +6,7 @@ $user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
 
 <section aria-describedby="#s1-title" id="app">
     <h3>Bienvenue <?= $user->getUsername() ?> !</h3>
-    <?= WebtoonLike\Site\pageManager\userManager::getErrors() ?>
+    <?= WebtoonLike\Site\pageManager\UserManager::getErrors() ?>
     <p>Merci de nous faire confiance depuis le <?= $user->getRegisteredAt()->format('j M Y')?>.</p>
     <div id="changeUserInformation">
         <form action="/@changeEmail" method="post" id="changeEmail">
