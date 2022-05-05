@@ -22,7 +22,7 @@ if(isset($_POST['rememberMe'])) {
 
 $res = Authentication::login($email, $password, $rememberMe);
 
-if($res === true) {
+if(is_bool($res) && $res) {
     header("Location: /");
 } else {
     Router::redirect('/login', 301, ['errorAuth' => $res]);

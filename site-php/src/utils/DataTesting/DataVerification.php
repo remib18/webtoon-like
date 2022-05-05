@@ -45,15 +45,15 @@ class DataVerification
     private function verifyString(): bool {
         $str = $this->field->getData();
 
-        if ($this->field->getNullable() === true && empty($email) === true) return true;
+        if ($this->field->getNullable() && empty($str)) return true;
 
         if ($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) return false;
 
         if ($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) return false;
 
-        if ($this->field->getNullable() === false && empty($str) === true) return false;
+        if (!$this->field->getNullable() && empty($str)) return false;
 
-        if ($this->field->getRegex() !== null && preg_match($this->field->getRegex(), $str) === 0) return false;
+        if (!is_null($this->field->getRegex()) && preg_match($this->field->getRegex(), $str) === 0) return false;
 
         return true;
     }
