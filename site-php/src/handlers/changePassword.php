@@ -3,7 +3,6 @@
 namespace WebtoonLike\Site\handler;
 
 use WebtoonLike\Site\core\Authentication;
-use WebtoonLike\Site\core\editAccount;
 use WebtoonLike\Site\core\Router;
 
 
@@ -16,7 +15,7 @@ if (
     Router::redirect('/changePassword', 301, ['error' => 'Un ou plusieurs champ n\'est pas rempli']);
 }
 
-$res = editAccount::editPassword(
+$res = Authentication::editPassword(
     $_SESSION['id'],
     $_POST['password'],
     $_POST['new_password'],
