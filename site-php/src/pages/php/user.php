@@ -25,7 +25,7 @@ $user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
     </div>
 
     <p class="link">Je souhaite <a href="/deleteAccount">supprimer mon compte</a>.</p>
-    <p class="link">Je souhaite <a href="/deleteAccount">changer mon mot de passe</a>.</p>
+    <p class="link">Je souhaite <a href="/changePassword">changer mon mot de passe</a>.</p>
 
 
 </section>
