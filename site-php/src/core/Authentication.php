@@ -69,7 +69,7 @@ class Authentication {
      * @param string $email
      * @param string $password
      * @param string $password_confirmation
-     * @return bool|array
+     * @return bool|array: bool si succès, array si erreur.
      * @throws NoIdOverwritingException
      */
     public static function register(string $username, string $email, string $password, string $password_confirmation): bool|array
@@ -116,7 +116,8 @@ class Authentication {
      *
      * @param string $email
      * @param string $password
-     * @return string|bool
+     * @return string|bool: bool si succès, string si erreur.
+     * @throws NoIdOverwritingException
      */
     public static function login(string $email, string $password, bool $rememberMe = false): string|bool
     {
@@ -217,7 +218,7 @@ class Authentication {
      *
      * @param int $userId
      * @param string $email
-     * @return bool|string
+     * @return bool|string: bool si succès, string si erreur.
      */
     public static function editEmail(int $userId, string $email): bool|string {
 
@@ -242,7 +243,7 @@ class Authentication {
      *
      * @param int $userId
      * @param string $username
-     * @return bool|string
+     * @return bool|string: bool si succès, string si erreur.
      */
     public static function editUsername(int $userId, string $username): bool|string {
 
@@ -262,6 +263,15 @@ class Authentication {
         return 'Ce pseudo n\'est pas disponible';
     }
 
+    /**
+     * Edition du mot de passe.
+     *
+     * @param int $userId
+     * @param string $password
+     * @param $new_password
+     * @param $confirmationNewPassword
+     * @return bool|string: bool si succès, string si erreur.
+     */
     public static function editPassword(
         int $userId,
         string $password,
@@ -291,7 +301,7 @@ class Authentication {
      *
      * @param int $userId
      * @param string $password
-     * @return bool|string
+     * @return bool|string: bool si succès, string si erreur.
      */
     public static function deleteAccount(int $userId, string $password): bool|string {
 
