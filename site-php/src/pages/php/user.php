@@ -11,14 +11,20 @@ $user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
     <div id="changeUserInformation">
         <form action="/@changeEmail" method="post" id="changeEmail">
             <label for="email">Votre email:
-                <input type="email" name="email" id="email" class='large' value="<?= $user->getEmail() ?>" required>
+                <input type="email" name="email" id="email" class='large' value="<?= $user->getEmail() ?>"
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       title="Entrez un email valid."
+                       required>
             </label>
             <input type="submit" value="Changer d'email">
         </form>
 
         <form action="/@changeUsername" method="post" id="changeUsername">
             <label for="email">Votre pseudonyme:
-                <input type="text" name="username" class='large'  id="username" value="<?= $user->getUsername() ?>" required>
+                <input type="text" name="username" class='large'  id="username" value="<?= $user->getUsername() ?>"
+                       pattern="^[a-zA-Z0-9_\-]{3,32}$"
+                       title="Votre pseudo doit contenir entre 3 et 32 characters alphanumérique, underscore et tirets autorisés."
+                       required>
             </label>
             <input type="submit" value="Changer de pseudo">
         </form>
