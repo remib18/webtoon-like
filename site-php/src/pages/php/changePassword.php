@@ -22,6 +22,7 @@
         </label>
 
         <input type="submit" value="Changer de mot de passe">
+        <button type="button" onclick="window.location.href='/user';">Annuler</button>
     </form>
 
 </section>

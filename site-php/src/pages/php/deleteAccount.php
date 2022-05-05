@@ -22,6 +22,7 @@
         </label>
 
         <input type="submit" value="Supprimer mon compte." class="danger">
+        <button type="button" id="boutonAnnuler" onclick="window.location.href='/user';">Annuler</button>
     </form>
 
 </section>
