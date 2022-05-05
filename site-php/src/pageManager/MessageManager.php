@@ -2,7 +2,7 @@
 
 namespace WebtoonLike\Site\pageManager;
 
-class messageManager
+class MessageManager
 {
     /**
      * Génère les paragraphes avec les erreurs.

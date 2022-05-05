@@ -3,7 +3,7 @@
 <section aria-describedby="#s1-title" id="app">
 
     <h2 id="s1-title">Supprimer votre compte:</h2>
-    <?= WebtoonLike\Site\pageManager\deleteAccountManager::getErrors() ?>
+    <?= WebtoonLike\Site\pageManager\MessageManager::getErrors() ?>
     <hr>
 
     <form action="/@deleteAccount" method="post">

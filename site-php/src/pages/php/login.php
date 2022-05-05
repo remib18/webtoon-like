@@ -3,7 +3,7 @@
 <section aria-describedby="#s1-title" id="app" xmlns:input="http://www.w3.org/1999/html">
 
     <h2 id="s1-title">Connexion au site web:</h2>
-    <?= WebtoonLike\Site\pageManager\LoginManager::getErrors() ?>
+    <?= WebtoonLike\Site\pageManager\MessageManager::getErrors() ?>
     <hr>
 
     <form action="/@login" method="post">

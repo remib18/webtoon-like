@@ -3,8 +3,8 @@
 <section aria-describedby="#s1-title" id="app">
 
     <h2 id="s1-title">Changer votre mot de passe:</h2>
-    <?= WebtoonLike\Site\pageManager\ChangePasswordManager::getErrors() ?>
-    <?= WebtoonLike\Site\pageManager\ChangePasswordManager::getMessages() ?>
+    <?= WebtoonLike\Site\pageManager\MessageManager::getErrors() ?>
+    <?= WebtoonLike\Site\pageManager\MessageManager::getMessages() ?>
     <hr>
 
     <form action="/@changePassword" method="post">
