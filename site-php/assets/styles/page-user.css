@@ -1,15 +1,41 @@
-#gestion a{
- color: white;
+#changeUserInformation {
+    width: 425px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
-#gestion {
-    margin-left: 20px;
-    border-left: 2px white solid;
-    padding: 5px 5px 5px 10px;
+#erreur-box {
+    margin-top: 14px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    font-size: medium;
+    line-height: 1.5em;
+    margin-bottom: 25px;
+    width: 409px;
 }
 
-#gestion p {
-    line-height: 30px;
+.link a {
+    color: white;
 }
 
+.link {
+    line-height: 25px;
+}
+
+#app {
+    margin-left: 25px;
+}
+
+h3 {
+    margin-left: 0;
+}
+
+form input[type='submit']  {
+    width: 100%;
+}
+
+#changeEmail {
+    margin-bottom: 20px;
+}
 
