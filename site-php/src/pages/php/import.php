@@ -6,6 +6,8 @@ use WebtoonLike\Site\pageManager\ImportManager;
 
 if (!isset($_GET['step'])){
     Router::redirect('/import', 301, ['step'=>1]);
+}elseif(!isset($_GET['Id']) && (int)$_GET['step']===2){
+    Router::redirect('/import', 301, ['step'=>1]);
 }
 
 require dirname(__DIR__, 2) . '/components/header.php';

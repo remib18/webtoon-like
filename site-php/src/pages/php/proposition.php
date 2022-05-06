@@ -6,9 +6,11 @@ use WebtoonLike\Site\pageManager\PropositionManager;
 
 
 PropositionManager::ChecKUser();
+
 if(!(isset($_GET['BlockId']) || isset($_GET['TranslationId']))){
     Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussi à trouver le texte']);
 }
+PropositionManager::CheckNull();
 $userName = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id'])->getUsername();
 require dirname(__DIR__, 2) . '/components/header.php';
 

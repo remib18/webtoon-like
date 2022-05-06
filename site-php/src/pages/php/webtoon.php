@@ -1,7 +1,12 @@
 <?php
 
+use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\pageManager\WebtoonManager;
 
+if(!isset($_GET['id'])){
+    Router::redirect('/home');
+}
+WebtoonManager::CheckNull();
 require dirname(__DIR__, 2) . '/components/header.php';
 
 ?>

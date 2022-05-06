@@ -12,8 +12,11 @@ use WebtoonLike\Site\entities\TranslationProposition;
 
 class PropositionManager
 {
-    static ?Block $block = null;
-    static ?Translation $translation = null;
+    public static function CheckNull(): void{
+        if(is_null(self::getBlock()) || is_null(self::getTranslation())){
+            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussi à trouver le texte']);
+        }
+    }
 
     public static function ChecKUser() :void {
         if(!(isset($_SESSION['id']))){
@@ -22,19 +25,9 @@ class PropositionManager
     }
 
     ############# TEXTE ORIGINAL ##############
-    private static function getBlock(): Block
+    private static function getBlock(): ?Block
     {
-        if (is_null(self::$block)) {
-            if (isset($_GET['BlockId']/*BlockId*/)) {
-                self::$block = BlockController::getById((int)$_GET['BlockId']);
-            } else {
-                header('Location: /error?');
-            }
-        }
-        if (is_null(self::$block)) {
-            header('Location: /error?');
-        }
-        return self::$block;
+        return BlockController::getById((int)$_GET['BlockId']);
     }
 
     public static function getOriginalContent(): string
@@ -49,22 +42,11 @@ class PropositionManager
         return self::getBlock()->getId()/*Block*/ ;
     }
 
-    private static function getTranslation(): Translation
+    private static function getTranslation(): ?Translation
     {
-        if (is_null(self::$translation)) {
-            if (isset($_GET['TranslationId']/*TranslationId*/)) {
-                $trId = $_GET['TranslationId'];
-                $BlkId = self::getBId();#en faire une vérification(if...)
-                self::$translation = TranslationController::get($trId, $BlkId);#initiation
-
-            } else {
-                header('Location: /error?');#
-            }
-        }
-        if (is_null(self::$translation)) {
-            header('Location: /error?');#Nous n'avons pas pus trouver le texte(Pb lors de l'initiation de l'entité translation)
-        }
-        return self::$translation;
+        $trId = $_GET['TranslationId'];
+        $BlkId = self::getBId();#en faire une vérification(if...)
+        return TranslationController::get($trId, $BlkId);#initiation
     }
 
     public static function getContent(): string

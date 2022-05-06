@@ -49,24 +49,12 @@ class ImportManager
             $path=self::saveCover('cover',$Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
-            header('Location: /import?step=2');
+            header('Location: /import?step=2&Id='.$Id);
         }else{
             Router::redirect('/import?step=1', 301, ['step'=>1,'msg' => 'Nous n\'avez pas remplis tous les champs']);
         }
     }
 
-    static function uploadImage():void{
-        $uploads_dir = '/assets/pictures/'.getName().'/'.chapNum();
-        foreach ($_FILES["pictures"]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
-                // basename() peut empêcher les attaques de système de fichiers;
-                // la validation/assainissement supplémentaire du nom de fichier peut être approprié
-                $name = basename($_FILES["pictures"]["name"][$key]);
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
-            }
-        }
-    }
     static function saveCover(string $pic, int $Id): string{
         $file = '../assets/webtoons-imgs/';
         if(!file_exists($file)) {
@@ -82,20 +70,21 @@ class ImportManager
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']);
         }
     }
+    /*
+     * Sauvegarder les chapitre dans la base de donné
+     */
+    static function saveChapter(int $webtoonId):void {
 
-    /*static function saveChapter():void {
-
-        $Id= self::getId();
          foreach (self::$chapters as $Chapter) {
             $index = $Chapter[0];
             $titre = $Chapter[1];
-            $Chapter = new Chapter(null, $index, $titre, $Id, false);
+            $Chapter = new Chapter(null, $index, $titre, $webtoonId, false);
             if (ChapterController::create($Chapter)) {
             } else {
                 Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer un chapitre']);
             }
          }
-    }*/
+    }
 
 
     static function chapListMaj(): void
@@ -117,6 +106,18 @@ class ImportManager
             }
     }
 
+    static function uploadImage():void{
+        $uploads_dir = '/assets/pictures/'.getName().'/'.chapNum();
+        foreach ($_FILES["pictures"]["error"] as $key => $error) {
+            if ($error == UPLOAD_ERR_OK) {
+                $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
+                // basename() peut empêcher les attaques de système de fichiers;
+                // la validation/assainissement supplémentaire du nom de fichier peut être approprié
+                $name = basename($_FILES["pictures"]["name"][$key]);
+                move_uploaded_file($tmp_name, "$uploads_dir/$name");
+            }
+        }
+    }
 
 
 
