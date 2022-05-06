@@ -16,6 +16,23 @@ class ImportManager
     static ?array $chapterNum = null;
     static ?array $image = null;
 
+    static function CheckNull():void{
+        $error=false;
+        if (!isset($_GET['step'])){
+            $error=true;
+        }elseif((int)$_GET['step']===1 && sizeof($_GET)>1){
+            $error=true;
+        }elseif(!isset($_GET['id']) && (int)$_GET['step']===2){
+            $error=true;
+        }elseif((int)$_GET['step']===2 && is_null(self::getWebtoon()) ){
+            $error=true;
+        }
+        if ($error) Router::redirect('/import', 301, ['step'=>1]);
+    }
+
+    private static function getWebtoon(): ?Webtoon {
+        return WebtoonController::getById((int)$_GET['id']);
+    }
 
     static function getStep(): void{
         $step=((int)$_GET['step'])??1;
@@ -49,7 +66,7 @@ class ImportManager
             $path=self::saveCover('cover',$Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
-            header('Location: /import?step=2&Id='.$Id);
+            header('Location: /import?step=2&id='.$Id);
         }else{
             Router::redirect('/import?step=1', 301, ['step'=>1,'msg' => 'Nous n\'avez pas remplis tous les champs']);
         }
