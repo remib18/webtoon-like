@@ -7,7 +7,6 @@ CREATE TABLE `User` (
     username VARCHAR(32) not null,
     email VARCHAR(256) not null,
     password VARCHAR(256) not null,
-    gabriel/default-value
     registeredAt DATETIME not null default CURRENT_TIMESTAMP,
     deleted bool not null default false,
     PRIMARY KEY (userID)
