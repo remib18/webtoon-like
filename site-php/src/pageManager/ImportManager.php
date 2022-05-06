@@ -52,7 +52,7 @@ class ImportManager
                 Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le webtoon']);
             }
             $Id= self::getId();
-            $path=self::saveCover($_FILES['cover']['name'],$Id);
+            $path=self::saveCover('cover',$Id);
             #mofifier le path du webtoon
             header('Location: /import?step=2');
         }else{
@@ -72,25 +72,22 @@ class ImportManager
             }
         }
     }
-    static function saveCover(string $pic, int $Id):string{
-        $file = '/assets/pictures/covers/'.$Id;
-        if(!(file_exists($file))) {
+    static function saveCover(string $pic, int $Id): string{
+        $file = '../assets/pictures/covers/'.$Id;
+        if(!file_exists($file)) {
             mkdir($file, 0777, true);
+        }else{
+            Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le cover']);
         }
-        foreach ($_FILES[$pic]["error"] as $key => $error) { #y a à le faire qu'une fois
-            $tmp_name = $_FILES[$pic]['tmp_name'];
-            // basename() peut empêcher les attaques de système de fichiers;
-            // la validation/assainissement supplémentaire du nom de fichier peut être approprié
-            $name = basename($_FILES[$pic]['name']);
-            $location ="$file/$name";
-            if(move_uploaded_file($tmp_name,$location)){
-                return $location;
-            }else{
-                Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']);
-                return "";
-            }
+
+        $tmp_name = $_FILES[$pic]['tmp_name'];
+        $name = basename($_FILES[$pic]['name']);
+        $location ="$file/$name";
+        if(move_uploaded_file($tmp_name,$location)){
+            return $location;
+        }else{
+            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']);
         }
-        return"";
     }
 
     static function newChapter():void {
