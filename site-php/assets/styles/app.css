@@ -1,6 +1,7 @@
 :root {
     --text-primary: #ffffffcd;
     --accent: #ffffff14;
+    --danger: #a94040;
 }
 
 /***************/
@@ -269,6 +270,7 @@ label.file {
     position: relative;
     cursor: pointer;
 }
+
 /* label:has(input[type=file]) input, Experimental on Safari active */
 label.file input {
     position: absolute;
@@ -281,13 +283,27 @@ label.file input {
 
 button,
 input[type=submit],
+label.file,
+a.button {
+    --btn-color: var(--accent);
+}
+
+button.danger,
+input[type=submit].danger,
+label.file.danger,
+a.button.danger {
+    --btn-color: var(--danger);
+}
+
+button,
+input[type=submit],
     /* label:has(input[type=file]), Experimental on Safari active */
 label.file,
 a.button {
     display: block;
     -webkit-appearance: none;
     appearance: none;
-    background-color: var(--accent);
+    background-color: var(--btn-color);
     color: var(--text-primary);
     padding: .5rem 1rem;
     border: solid .125rem transparent;
@@ -314,7 +330,7 @@ input[type=submit]:hover,
 label.file:hover,
 a.button:hover {
     background-color: transparent;
-    border: solid .125rem var(--accent);
+    border: solid .125rem var(--btn-color);
     color: #fff;
     text-decoration: none;
 }
@@ -324,14 +340,14 @@ input[type=submit].outlined,
 label.file.outlined,
 a.button.outlined {
     background-color: transparent;
-    border: solid .125rem var(--accent);
+    border: solid .125rem var(--btn-color);
 }
 button.outlined:hover,
 input[type=submit].outlined:hover,
     /* label:has(input[type=file]).outlined:hover, Experimental on Safari active */
 label.file.outlined:hover,
 a.button.outlined:hover {
-    background-color: var(--accent);
+    background-color: var(--btn-color);
     border: solid .125rem transparent;
 }
 
@@ -343,8 +359,29 @@ input[type=password],
 input[type=email],
 textarea,
 .false-input {
-    background-color: #656D6D;
-    border: solid 1px #ffffff20;
+    --border: #ffffff20;
+    --bg: #656D6D;
+}
+
+input[type=text].danger,
+input[type=search].danger,
+input[type=number].danger,
+input[type=password].danger,
+input[type=email].danger,
+textarea.danger,
+.false-input.danger {
+    --border: var(--danger);
+}
+
+input[type=text],
+input[type=search],
+input[type=number],
+input[type=password],
+input[type=email],
+textarea,
+.false-input {
+    background-color: var(--bg);
+    border: solid 1px var(--border);
     border-radius: .5rem;
     color: var(--text-primary);
     box-sizing: border-box;

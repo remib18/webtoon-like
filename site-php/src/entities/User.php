@@ -6,6 +6,8 @@ use DateTime;
 use Google\Type\Date;
 use JetBrains\PhpStorm\ArrayShape;
 use JetBrains\PhpStorm\Pure;
+use WebtoonLike\Site\utils\DataTesting\DataField;
+use WebtoonLike\Site\utils\DataTesting\DataType;
 
 class User implements EntityInterface
 {
@@ -17,6 +19,7 @@ class User implements EntityInterface
     private string $email;
     private string $password;
     private DateTime $registeredAt;
+    private bool $deleted;
 
     public function __construct(
         ?int $userID,
@@ -24,16 +27,19 @@ class User implements EntityInterface
         string $email,
         string $password,
         DateTime|string $registeredAt,
-        bool $fromDB = true
+        bool $fromDB = true,
+        bool $deleted = false
     ){
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setPassword($password);
+        $this->setDeleted($deleted);
         if(is_string($registeredAt)) {
             $registeredAt = new DateTime($registeredAt);
         }
         $this->registeredAt = $registeredAt;
+
 
         if ($fromDB) $this->AllFieldsSaved();
         else $this->fieldsToSave['registeredAt'] = $registeredAt->format('Y-m-d H:i:s');
@@ -103,6 +109,19 @@ class User implements EntityInterface
     }
 
     /**
+     * @param bool $deleted
+     */
+    public function setDeleted(bool $deleted): void
+    {
+        $this->fieldsToSave['deleted'] = $deleted;
+        $this->deleted = $deleted;
+    }
+
+    public function isDeleted(): bool {
+        return $this->deleted;
+    }
+
+    /**
      * @inheritDoc
      */
     #[ArrayShape([
@@ -110,7 +129,8 @@ class User implements EntityInterface
         'username' => "string",
         'email' => "string",
         'password' => "password",
-        'registeredAt' => "\DateTime"
+        'registeredAt' => "\DateTime",
+        'deleted' => "bool"
     ])]
     public function __toArray(): array {
         return [
@@ -118,7 +138,8 @@ class User implements EntityInterface
             'username' => $this->username,
             'email' => $this->email,
             'password' => $this->password,
-            'registeredAt' => $this->registeredAt
+            'registeredAt' => $this->registeredAt,
+            'deleted' => $this->deleted
         ];
     }
 
@@ -131,7 +152,8 @@ class User implements EntityInterface
             'username',
             'email',
             'password',
-            'registeredAt'
+            'registeredAt',
+            'deleted'
         ];
     }
 
@@ -146,14 +168,15 @@ class User implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getTypes(): array
+    public function getTypes(): array
     {
         return [
-            'userID' => "int",
-            'username' => "string",
-            'email' => "string",
-            'password' => "string",
-            'registeredAt' => "\DateTime"
+            'userID' => new DataField($this->id, DataType::int, true),
+            'username' => new DataField($this->username, DataType::string, false, 3, 32, '/^[a-zA-Z0-9_\-]+$/'),
+            'email' => new DataField($this->email, DataType::email),
+            'password' => new DataField($this->password, DataType::string, false, 8, null, null),
+            'registeredAt' => new DataField($this->registeredAt, DataType::date),
+            'deleted' => new DataField($this->deleted, DataType::bool)
         ];
     }
 
