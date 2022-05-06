@@ -1,8 +1,15 @@
 <?php
 
+
+use WebtoonLike\Site\core\Router;
+use WebtoonLike\Site\pageManager\ImportManager;
+
+if (!isset($_GET['step'])){
+    Router::redirect('/import', 301, ['step'=>1]);
+}
+
 require dirname(__DIR__, 2) . '/components/header.php';
 
-use WebtoonLike\Site\pageManager\ImportManager;
 
 ?>
 
@@ -65,7 +72,7 @@ use WebtoonLike\Site\pageManager\ImportManager;
         </defs>
     </svg>
 
-
+<?= WebtoonLike\Site\pageManager\MessageManager::getMessages() ?>
 <?php ImportManager::getStep()?>
 
 

@@ -20,6 +20,7 @@ class ImportManager
 
     static function getStep(): void{
         $step=((int)$_GET['step'])??1;
+
         if($step===1){
             require dirname(__DIR__, 1) . '/components/import/step1.php';
         }else{
@@ -36,18 +37,26 @@ class ImportManager
      *Creer un Webtoon
      */
     static function newWebtoon(): void {
-        if(isset($_POST['title']) && isset($_POST['desc']) && isset($_FILES['cover']['name']) && isset($_POST['auteur'])){
+        if(isset($_POST['title'])
+            && isset($_POST['desc'])
+            && isset($_FILES['cover']['name'])
+            && isset($_POST['auteur'])
+            && !( empty($_POST['title'])
+                || empty($_POST['desc'])
+                || empty($_FILES['cover']['name'])
+                || empty($_POST['auteur']) )
+            ){
             self::$Webtoon = new Webtoon(null,$_POST['title'],$_POST['auteur'],$_POST['desc'],$_FILES['cover']['name'],false);
             if(WebtoonController::create(self::$Webtoon)) {
             }else{
-                Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer le webtoon']);
+                Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le webtoon']);
             }
             $Id= self::getId();
             $path=self::saveCover($_FILES['cover']['name'],$Id);
             #mofifier le path du webtoon
             header('Location: /import?step=2');
         }else{
-            Router::redirect('/error', 301, ['msg' => 'Nous n\'avez pas remplis tous les champs']);
+            Router::redirect('/import?step=1', 301, ['step'=>1,'msg' => 'Nous n\'avez pas remplis tous les champs']);
         }
     }
 
