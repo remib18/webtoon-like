@@ -1,3 +1,8 @@
+<?php
+
+use WebtoonLike\Site\pageManager\ImportManager;
+
+?>
 
 
 <section class="panel current" id="step-2">
@@ -16,18 +21,18 @@
                     </label>
                     <label for="chapter-img" class="file">
                         Importer images du chapitre
-                        <input type="file" name="chapter-x-parts[]" id="chapter-parts" multiple  accept="image/jpeg,image/png" required>
+                        <input type="file" name="chapter-x-parts[]" id="chapter-parts" multiple accept="image/jpeg,image/png" required>
                     </label>
                 </div>
-                <input type="submit" value="Ajouter le chapitre"> <?= /*importManager::chapListMaj()*/""?>
+                <input type="submit" value="Ajouter le chapitre">
+                <input type="hidden" name="id" value="<?=$_GET['id']?>"
             </div>
             <div class="col">
                 <h3>Liste des chapitres importés</h3>
                 <ul class="list">
-                    <?=/*importManager::$chapList*/""?>
+                    <?=importManager::chapList()?>
                 </ul>
             </div>
         </div>
-        <input type="submit" value="Sauvegarder"><?=/*newChapter()*/""?>
     </form>
 </section>
