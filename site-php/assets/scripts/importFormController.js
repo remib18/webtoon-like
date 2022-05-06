@@ -15,3 +15,4 @@ function next() {
 function submit(e) {
     if (current === 1) e.preventDefault()
 }
+
