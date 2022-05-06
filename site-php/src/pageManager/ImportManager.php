@@ -11,7 +11,6 @@ use WebtoonLike\Site\entities\Webtoon;
 
 class ImportManager
 {
-    static ?Webtoon $Webtoon = null;
     static ?array $chapList=null;
     static ?array $chapters = null;
     static ?array $chapterNum = null;
@@ -28,11 +27,6 @@ class ImportManager
         }
     }
 
-    static function getId(): int
-    {
-        return self::$Webtoon->getId();
-    }
-
     /*
      *Creer un Webtoon
      */
@@ -46,14 +40,15 @@ class ImportManager
                 || empty($_FILES['cover']['name'])
                 || empty($_POST['auteur']) )
             ){
-            self::$Webtoon = new Webtoon(null,$_POST['title'],$_POST['auteur'],$_POST['desc'],$_FILES['cover']['name'],false);
-            if(WebtoonController::create(self::$Webtoon)) {
+            $Webtoon = new Webtoon(null,$_POST['title'],$_POST['auteur'],$_POST['desc'],$_FILES['cover']['name'],false);
+            if(WebtoonController::create($Webtoon)) {
             }else{
                 Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le webtoon']);
             }
-            $Id= self::getId();
+            $Id= $Webtoon->getId();
             $path=self::saveCover('cover',$Id);
-            #mofifier le path du webtoon
+            $Webtoon->setCover($path);
+            WebtoonController::edit($Webtoon);
             header('Location: /import?step=2');
         }else{
             Router::redirect('/import?step=1', 301, ['step'=>1,'msg' => 'Nous n\'avez pas remplis tous les champs']);
@@ -73,24 +68,22 @@ class ImportManager
         }
     }
     static function saveCover(string $pic, int $Id): string{
-        $file = '../assets/pictures/covers/'.$Id;
+        $file = '../assets/webtoons-imgs/';
         if(!file_exists($file)) {
             mkdir($file, 0777, true);
-        }else{
-            Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le cover']);
         }
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename($_FILES[$pic]['name']);
-        $location ="$file/$name";
+        $location =$file.$Id."_".$name;
         if(move_uploaded_file($tmp_name,$location)){
-            return $location;
+            return $Id."_".$name;
         }else{
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']);
         }
     }
 
-    static function newChapter():void {
+    /*static function saveChapter():void {
 
         $Id= self::getId();
          foreach (self::$chapters as $Chapter) {
@@ -102,7 +95,7 @@ class ImportManager
                 Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer un chapitre']);
             }
          }
-    }
+    }*/
 
 
     static function chapListMaj(): void
