@@ -118,7 +118,10 @@ class ImportManager
     }
 
     static function uploadImage():void{
-        $uploads_dir = '/assets/pictures/'.getName().'/'.chapNum();
+        $file = '../assets/webtoons-imgs/'.getName().'/'.chapNum();;
+        if(!file_exists($file)) {
+            mkdir($file, 0777, true);
+        }
         foreach ($_FILES["pictures"]["error"] as $key => $error) {
             if ($error == UPLOAD_ERR_OK) {
                 $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
