@@ -91,7 +91,7 @@ class ImportManager
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename($_FILES[$pic]['name']);
         $location = $file . $Id . '_' . $name;
-        if(move_uploaded_file($tmp_name,$location)){
+        if(move_uploaded_file($tmp_name, $location)){
             return $Id."_".$name;
         }else{
             Router::redirect('/error', 301,
