@@ -62,19 +62,16 @@ class PropositionManager
     public static function SaveProposition(): void
     {
         $Proposition="";
-        if(isset($_GET['TranslationId']) && isset($_GET['BlockId'])) {
-            $userId=$_SESSION['id'];
-            $blockId=$_GET['BlockId'];
-            $Proposition .=$_POST['proposition'];
-            $PropositionTranslation = self::setProposition($userId, $blockId, $Proposition);
-            if(TranslationPropositionController::create($PropositionTranslation)) {
-                header('Location: /');
-            }else{
-                Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
-            }
+        $userId=$_SESSION['id'];
+        $blockId=$_GET['BlockId'];
+        $Proposition .=$_POST['proposition'];
+        $PropositionTranslation = self::setProposition($userId, $blockId, htmlentities($Proposition));
+        if(TranslationPropositionController::create($PropositionTranslation)) {
+            Router::redirect('/home', null , ['msg' => 'Proposition soumise']);
         }else{
-            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas retrouver le texte']);
+            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
         }
+
     }
 
 }

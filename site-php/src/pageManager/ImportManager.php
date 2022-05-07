@@ -12,18 +12,18 @@ use WebtoonLike\Site\entities\Webtoon;
 class ImportManager
 {
 
-    static function CheckNull():void{
-        $error=false;
-        if (!isset($_GET['step'])){
-            $error=true;
-        }elseif((int)$_GET['step']===1 && sizeof($_GET)>1){
-            $error=true;
-        }elseif(!isset($_GET['id']) && (int)$_GET['step']===2){
-            $error=true;
-        }elseif((int)$_GET['step']===2 && is_null(self::getWebtoon()) ){
-            $error=true;
-        }
-        if ($error) Router::redirect('/import', 301, ['step'=>1]);
+    static function CheckNull():void {
+
+       if(
+           !isset($_GET['step'])
+           || ((int)$_GET['step'] !== 2 && (int)$_GET['step'] !== 1)
+           || ((int)$_GET['step']===2
+               && !isset($_GET['id'])
+               && is_null(self::getWebtoon()))
+       ){
+           Router::redirect('/import', 301, ['step'=>1,'error' => 'Opération impossible']);
+       }
+
     }
 
     private static function getWebtoon(): ?Webtoon {
@@ -53,10 +53,20 @@ class ImportManager
                 || empty($_FILES['cover']['name'])
                 || empty($_POST['auteur']) )
             ){
-            $Webtoon = new Webtoon(null,$_POST['title'],$_POST['auteur'],$_POST['desc'],$_FILES['cover']['name'],false);
+            $Webtoon = new Webtoon(
+                null,
+                htmlentities($_POST['title']),
+                htmlentities($_POST['auteur']),
+                htmlentities($_POST['desc']),
+                str_ireplace($_FILES['cover']['name']),
+                false
+            );
+
             if(WebtoonController::create($Webtoon)) {
             }else{
-                Router::redirect('/import', 301, ['step'=>1,'msg' => 'Nous n\'avons pas réussie à enregistrer le webtoon']);
+                Router::redirect('/import', 301,
+                    ['step'=>1,'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
+                );
             }
             $Id= $Webtoon->getId();
             $path=self::saveCover('cover',$Id);
@@ -64,7 +74,9 @@ class ImportManager
             WebtoonController::edit($Webtoon);
             header('Location: /import?step=2&id='.$Id);
         }else{
-            Router::redirect('/import?step=1', 301, ['step'=>1,'msg' => 'Nous n\'avez pas remplis tous les champs']);
+            Router::redirect('/import?step=1', 301,
+                ['step'=>1,'error' => 'Nous n\'avez pas remplis tous les champs']
+            );
         }
     }
 
@@ -80,7 +92,9 @@ class ImportManager
         if(move_uploaded_file($tmp_name,$location)){
             return $Id."_".$name;
         }else{
-            Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']);
+            Router::redirect('/error', 301,
+                ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']
+            );
         }
     }
     /*
@@ -89,7 +103,13 @@ class ImportManager
     static function saveChapter():void {
 
         $webtoonId=(int)$_POST['id'];
-        $Chapter = new Chapter(null, (int)$_POST['chapter-x-number'], $_POST['chapter-x-title'], $webtoonId, false);
+        $Chapter = new Chapter(null,
+            (int)$_POST['chapter-x-number'],
+            htmlentities($_POST['chapter-x-title']),
+            $webtoonId,
+            false
+        );
+
         if(!ChapterController::getByIndex($webtoonId, (int)$_POST['chapter-x-number'])) {
             if (ChapterController::create($Chapter)) {
                 $ChapterId=$Chapter->getId();
@@ -97,7 +117,9 @@ class ImportManager
                 Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);# A voir
             }
         }else{
-            Router::redirect('/import', 301, ['msg' => 'Le chapitre existe déjà','step' => 2, 'id' => $webtoonId]);# A voir
+            Router::redirect('/import', 301,
+                ['error' => 'Le chapitre existe déjà','step' => 2, 'id' => $webtoonId]
+            );
         }
     }
 

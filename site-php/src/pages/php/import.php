@@ -13,6 +13,8 @@ require dirname(__DIR__, 2) . '/components/header.php';
 
 <div aria-describedby="#s1-title" id="app">
     <?= WebtoonLike\Site\pageManager\MessageManager::getMessages() ?>
+    <?= WebtoonLike\Site\pageManager\MessageManager::getErrors() ?>
+
     <svg xmlns="http://www.w3.org/2000/svg" width="976" height="100" viewBox="0 0 976 130" fill="none" id="completion">
         <style>
             :root {
