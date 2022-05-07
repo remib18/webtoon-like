@@ -104,7 +104,7 @@ class ImportManager
      */
     static function saveChapter(): void {
 
-        $webtoonId=(int)$_POST['id'];
+        $webtoonId = (int)$_POST['id'];
         $Chapter = new Chapter(null,
             (int)$_POST['chapter-x-number'],
             htmlentities($_POST['chapter-x-title']),
