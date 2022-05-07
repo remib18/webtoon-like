@@ -54,10 +54,7 @@ class ImportManager
      * Créer un Webtoon
      */
     static function newWebtoon(): void {
-        if(isset($_POST['title'])
-            && isset($_POST['desc'])
-            && isset($_FILES['cover']['name'])
-            && isset($_POST['auteur'])
+        if(isset($_POST['title'], $_POST['desc'], $_FILES['cover']['name'], $_POST['auteur'])
             && !( empty($_POST['title'])
                 || empty($_POST['desc'])
                 || empty($_FILES['cover']['name'])
@@ -81,10 +78,10 @@ class ImportManager
             $path = self::saveCover('cover', $Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
-            Router::redirect('/import', 301, ['step'=>2,'id' => $Id]);
+            Router::redirect('/import', 301, ['step' => 2, 'id' => $Id]);
         } else {
-            Router::redirect('/import?step=1', 301,
-                ['step' =>1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
+            Router::redirect('/import', 301,
+                ['step' => 1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
             );
         }
     }
@@ -93,7 +90,7 @@ class ImportManager
      * Sauvegarde des covers en BDD.
      *
      */
-    static function saveCover(string $pic, int $Id): string {
+    static function saveCover(string $pic, int $Id): string{
         $file = '../assets/webtoons-imgs/';
         if(!file_exists($file)) {
             mkdir($file, 0777, true);
@@ -114,7 +111,7 @@ class ImportManager
     /*
      * Sauvegarder les chapitres dans la BDD
      */
-    static function saveChapter(): void {
+    static function saveChapter(): void{
         $webtoonId = (int)$_POST['id'];
         $Chapter = new Chapter(null,
             (int)$_POST['chapter-x-number'],
@@ -149,7 +146,7 @@ class ImportManager
     /*
      * Montre les chapitres du Webtoon
      */
-    static function chaptersListForWebtoon(): string {
+    static function chaptersListForWebtoon(): string{
         $chapList = "";
         $chapterIdByIndex = [];
         $webtoonId = self::getWebtoon()->getId();
@@ -176,7 +173,7 @@ class ImportManager
     /*
      * Suppression des chapitres.
      */
-    static function deleteChapter():void{
+    static function deleteChapter(): void{
         $Chapter = ChapterController::getById((int)$_GET['chapterId']);
         if(!is_null($Chapter)) {
             $images = ImageController::getByChapterId((int)$_GET['chapterId']);
@@ -186,7 +183,7 @@ class ImportManager
             ChapterController::remove($Chapter);
         }
 
-        $webtoonId = $_GET['id'];
+        $webtoonId = (int)$_GET['id'];
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
 
