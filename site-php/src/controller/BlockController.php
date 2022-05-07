@@ -88,7 +88,7 @@ class BlockController
      *
      * @return bool
      */
-    public static function remove(Block $entity): bool {
+    public static function remove(Block &$entity): bool {
         return Database::remove('Block', $entity);
     }
 
