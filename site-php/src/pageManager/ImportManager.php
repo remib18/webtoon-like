@@ -44,7 +44,7 @@ class ImportManager
     }
 
     /*
-     *Creer un Webtoon
+     * Créer un Webtoon
      */
     static function newWebtoon(): void {
         if(isset($_POST['title'])
