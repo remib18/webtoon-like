@@ -23,7 +23,7 @@ class ImportManager
            || ((int)$_GET['step'] === 2
                && !isset($_GET['id'])
                && is_null(self::getWebtoon()))
-       ){
+       ) {
            Router::redirect('/import', 301, ['step'=>1,'error' => 'Opération impossible']);
        }
 
