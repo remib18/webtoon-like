@@ -54,7 +54,7 @@ class TranslationController
      *
      * @return bool
      */
-    public static function remove(Translation &$entity): bool {
+    public static function remove(Translation $entity): bool {
         return Database::remove('Translation', $entity);
     }
 
