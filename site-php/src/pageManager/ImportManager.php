@@ -92,7 +92,7 @@ class ImportManager
         $name = basename($_FILES[$pic]['name']);
         $location = $file . $Id . '_' . $name;
         if(move_uploaded_file($tmp_name, $location)){
-            return $Id."_".$name;
+            return $Id . '_' . $name;
         }else{
             Router::redirect('/error', 301,
                 ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']
