@@ -124,7 +124,7 @@ class ImportManager
             );
         }
 
-        $upload=self::uploadImage($Chapter->getId() , (int)$_POST['chapter-x-number']);
+        $upload = self::uploadImage($Chapter->getId(), (int)$_POST['chapter-x-number']);
         if(!is_bool($upload)) {
             ChapterController::remove($Chapter);
             Router::redirect('/import', 301,
