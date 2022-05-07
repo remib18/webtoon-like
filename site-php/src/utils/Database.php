@@ -253,11 +253,11 @@ class Database
     public static function createBatch(string $table, array &$entities): bool {
 
         $fields = '';
-        foreach ($entities[0]->getFieldsToSave() as $field) {
+        foreach ($entities[0]->getFieldsToSave() as $field => $value) {
             $fields .= "`$field`, ";
         }
         $fields = substr($fields, 0, -2);
-        
+
         $values = self::insertValues($entities);
         $q = "INSERT INTO `$table`($fields) VALUES $values";
         $res = Database::getDB()->query($q);
