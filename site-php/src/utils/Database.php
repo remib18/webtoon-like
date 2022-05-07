@@ -146,7 +146,7 @@ class Database
      * @return bool
      */
     public static function remove(string $table, EntityInterface $entity): bool {
-        #if (!self::runTests($entity)) return false;
+        if (!self::runTests($entity)) return false;
 
         $where = self::whereIds($entity);
         $q = "DELETE FROM `$table` WHERE $where";

@@ -180,9 +180,7 @@ class ImportManager
         $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
 
         if(!self::checkLanguage($_POST['language'])) {
-            Router::redirect('/import', 301,
-                ['error' => 'Le language choisi n\'est pas vérifié' ,'step' => 2, 'id' => (int)$_POST['id']]
-                );
+            return 'Le language choisi n\'est pas vérifiée';
         }
         if(!file_exists($folder)) mkdir($folder, 0777, true);
 
