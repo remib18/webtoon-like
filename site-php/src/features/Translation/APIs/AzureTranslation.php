@@ -128,4 +128,17 @@ class AzureTranslation implements TranslationInterface
         $res = mb_split("\n", $res);
         return array_combine(array_keys($texts), array_values($res));
     }
+
+    /**
+     * Retourne la liste des langues disponible.
+     *
+     * @return false|array
+     */
+    public static function availibleLanguageList(): bool|array {
+        $req = ['url' => "https://api.cognitive.microsofttranslator.com/languages?api-version=3.0&scope=translation"];
+        $resp = curlHelper::httpGet($req);
+
+        if($resp['httpCode'] !== 200) return false;
+        return curlHelper::httpGet($req)['response']['translation'];
+    }
 }

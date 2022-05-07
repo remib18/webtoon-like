@@ -210,7 +210,7 @@ class Database
      * @throws NoIdOverwritingException
      */
     public static function create(string $table, EntityInterface &$entity): bool {
-        if (!self::runTests($entity)) return false;
+        # if (!self::runTests($entity)) return false;
 
         $fields = '';
         $values = '';
