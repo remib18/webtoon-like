@@ -264,6 +264,7 @@ class Database
 
         $values = self::insertValues($entities);
         $q = "INSERT INTO `$table`($fields) VALUES $values";
+        var_dump($q);
         $res = Database::getDB()->query($q);
         if ($res) {
             $result = [];
