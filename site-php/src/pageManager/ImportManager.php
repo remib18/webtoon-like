@@ -102,7 +102,7 @@ class ImportManager
     /*
      * Sauvegarder les chapitre dans la base de donné
      */
-    static function saveChapter():void {
+    static function saveChapter(): void {
 
         $webtoonId=(int)$_POST['id'];
         $Chapter = new Chapter(null,
