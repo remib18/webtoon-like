@@ -6,7 +6,7 @@ use WebtoonLike\Site\pageManager\ImportManager;
 
 
 <section class="panel current" id="step-2">
-    <form action="@import-chapter" method="post">
+    <form action="@import-chapter" enctype="multipart/form-data" method="post">
         <div class="cols-2">
             <div class="col">
                 <h2>Importer un nouveau chapitre</h2>

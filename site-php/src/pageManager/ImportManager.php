@@ -92,6 +92,8 @@ class ImportManager
         $Chapter = new Chapter(null, (int)$_POST['chapter-x-number'], $_POST['chapter-x-title'], $webtoonId, false);
         if(!ChapterController::getByIndex($webtoonId, (int)$_POST['chapter-x-number'])) {
             if (ChapterController::create($Chapter)) {
+                $ChapterId=$Chapter->getId();
+                self::uploadImage($ChapterId);
                 Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);# A voir
             }
         }else{
@@ -117,24 +119,18 @@ class ImportManager
         return $chapList;
     }
 
-    static function uploadImage():void{
-        $file = '../assets/webtoons-imgs/'.getName().'/'.chapNum();;
-        if(!file_exists($file)) {
-            mkdir($file, 0777, true);
+    static function uploadImage(int $ChapterId):void{
+
+        $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
+        if(!file_exists($folder)) {
+            mkdir($folder, 0777, true);
         }
-        foreach ($_FILES["pictures"]["error"] as $key => $error) {
-            if ($error == UPLOAD_ERR_OK) {
-                $tmp_name = $_FILES["pictures"]["tmp_name"][$key];
-                // basename() peut empêcher les attaques de système de fichiers;
-                // la validation/assainissement supplémentaire du nom de fichier peut être approprié
-                $name = basename($_FILES["pictures"]["name"][$key]);
-                move_uploaded_file($tmp_name, "$uploads_dir/$name");
-            }
+
+        foreach($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
+            $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
+            move_uploaded_file($tmp_name, "$folder/$name");
         }
     }
-
-
-
 }
 
 
