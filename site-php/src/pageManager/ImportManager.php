@@ -141,7 +141,7 @@ class ImportManager
         $chapList = '';
         $chapterIdByIndex = [];
         $webtoonId= self::getWebtoon()->getId();
-        $everyChapter=ChapterController::getAllForWebtoon($webtoonId);
+        $everyChapter = ChapterController::getAllForWebtoon($webtoonId);
         foreach ($everyChapter as $chapter){
             $chapterIdByIndex[$chapter->getIndex()]= $chapter->getId();
         }
