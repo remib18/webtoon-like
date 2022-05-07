@@ -31,6 +31,9 @@ class WebtoonManager
     public static function getName(): string {
         return self::getWebtoon()->getName();
     }
+    public static function getId(): ?int {
+        return self::getWebtoon()->getId();
+    }
 
     /*
      * Obtenir l'id du webtoon
