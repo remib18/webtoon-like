@@ -75,7 +75,7 @@ class ImportManager
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
             header('Location: /import?step=2&id='.$Id);
-        }else{
+        } else {
             Router::redirect('/import?step=1', 301,
                 ['step'=>1,'error' => 'Nous n\'avez pas remplis tous les champs']
             );
