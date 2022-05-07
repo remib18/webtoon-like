@@ -20,23 +20,30 @@ class ImportManager
        if(
            !isset($_GET['step'])
            || ((int)$_GET['step'] !== 2 && (int)$_GET['step'] !== 1)
+<<<<<<< Updated upstream
            || ((int)$_GET['step'] === 2
                && !isset($_GET['id'])
                && is_null(self::getWebtoon()))
        ) {
            Router::redirect('/import', 301, ['step' => 1, 'error' => 'Opération impossible']);
+=======
+           || (((int)$_GET['step'] === 2 && !isset($_GET['id'])) && is_null(self::getWebtoon()))
+       ){
+           Router::redirect('/import', 301, ['step'=>1,'error' => 'Opération impossible']);
+>>>>>>> Stashed changes
        }
 
     }
 
     private static function getWebtoon(): ?Webtoon {
-        return WebtoonController::getById((int)$_GET['id']);
+        if(is_numeric($_GET['id'])) return WebtoonController::getById((int)$_GET['id']);
+        return null;
     }
 
     static function getStep(): void{
-        $step=((int)$_GET['step'])??1;
+        $step=((int)$_GET['step']) ?? 1;
 
-        if($step===1){
+        if($step === 1){
             require dirname(__DIR__, 1) . '/components/import/step1.php';
         }else{
             require dirname(__DIR__, 1) . '/components/import/step2.php';
@@ -67,6 +74,7 @@ class ImportManager
 
             if(!WebtoonController::create($Webtoon)) {
                 Router::redirect('/import', 301,
+<<<<<<< Updated upstream
                     ['step' => 1, 'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
             }
@@ -78,6 +86,19 @@ class ImportManager
         } else {
             Router::redirect('/import?step=1', 301,
                 ['step' =>1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
+=======
+                    ['step' => 1,'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
+                );
+            }
+            $Id= $Webtoon->getId();
+            $path=self::saveCover('cover', $Id);
+            $Webtoon->setCover($path);
+            WebtoonController::edit($Webtoon);
+            header('Location: /import?step=2&id=' . $Id);
+        }else{
+            Router::redirect('/import?step=1', 301,
+                ['step' => 1, 'error' => 'Nous n\'avez pas remplis tous les champs']
+>>>>>>> Stashed changes
             );
         }
     }
@@ -90,9 +111,15 @@ class ImportManager
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename($_FILES[$pic]['name']);
+<<<<<<< Updated upstream
         $location = $file . $Id . '_' . $name;
         if(move_uploaded_file($tmp_name, $location)){
             return $Id . '_' . $name;
+=======
+        $location = $file . $Id . "_" . $name;
+        if(move_uploaded_file($tmp_name,$location)){
+            return $Id . "_" . $name;
+>>>>>>> Stashed changes
         }else{
             Router::redirect('/error', 301,
                 ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']
@@ -138,12 +165,18 @@ class ImportManager
 
     static function chaptersListForWebtoon(): string
     {
+<<<<<<< Updated upstream
         $chapList = '';
         $chapterIdByIndex = [];
         $webtoonId= self::getWebtoon()->getId();
+=======
+        $chapList = "";
+        $chapterIdByIndex = [];
+        $webtoonId = self::getWebtoon()->getId();
+>>>>>>> Stashed changes
         $everyChapter = ChapterController::getAllForWebtoon($webtoonId);
         foreach ($everyChapter as $chapter){
-            $chapterIdByIndex[$chapter->getIndex()]= $chapter->getId();
+            $chapterIdByIndex[$chapter->getIndex()] = $chapter->getId();
         }
         if(ksort($chapterIdByIndex)) {
             foreach ($chapterIdByIndex as $index => $chapterId) {
@@ -162,16 +195,16 @@ class ImportManager
     }
 
     static function deleteChapter():void{
-        $Chapter=ChapterController::getById((int)$_GET['chapterId']);
+        $Chapter = ChapterController::getById((int)$_GET['chapterId']);
         if(!is_null($Chapter)) {
-            $images=ImageController::getByChapterId((int)$_GET['chapterId']);
+            $images = ImageController::getByChapterId((int)$_GET['chapterId']);
             foreach($images as $image){
                 ImageController::remove($image);
             }
             ChapterController::remove($Chapter);
         }
 
-        $webtoonId=$_GET['id'];
+        $webtoonId = $_GET['id'];
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
 
@@ -187,7 +220,7 @@ class ImportManager
         $images=[];
         foreach($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
             $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
-            $path="$folder/$name";
+            $path = "$folder/$name";
             if(!move_uploaded_file($tmp_name, $path)) return 'Verifiez le nom de votre image';
 
             $images[]=new Image(null,

@@ -105,9 +105,9 @@ class ImageController
      *
      * @throws NoIdOverwritingException
      */
-    public static function createBatch(array &$entity): bool
+    public static function createBatch(array &$entities): bool
     {
-        return Database::createBatch('Image', $entity);
+        return Database::createBatch('Image', $entities);
     }
 
     /**

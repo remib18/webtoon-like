@@ -18,7 +18,7 @@ class TranslationPropositionController
      *
      * @return TranslationProposition|null
      */
-    public static function get(string $proposition, int $blockID, int $userID): ?TranslationProposition {
+    public static function getOne(string $proposition, int $blockID, int $userID): ?TranslationProposition {
         return Database::getFirst('TranslationProposition', TranslationProposition::class, '*', [
             'languageIdentifier' => "languageIdentifier = '$proposition'",
             'blockID' => "AND blockID = $blockID",
