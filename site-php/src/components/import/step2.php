@@ -23,6 +23,13 @@ use WebtoonLike\Site\pageManager\ImportManager;
                         Importer images du chapitre
                         <input type="file" name="chapter-x-parts[]" id="chapter-parts" multiple accept="image/jpeg,image/png" required>
                     </label>
+                    <label >Language du chapitre:
+                        <select name="language" id="langue">
+                            <option value="">--Choisissez un langue--</option>
+                                <?= ImportManager::languageSelect()?>
+                            <option value="autre">autre</option>
+                        </select>
+                    </label>
                 </div>
                 <input type="submit" value="Ajouter le chapitre">
                 <input type="hidden" name="id" value="<?=$_GET['id']?>">

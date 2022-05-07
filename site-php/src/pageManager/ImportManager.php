@@ -5,6 +5,7 @@ namespace WebtoonLike\Site\pageManager;
 
 use WebtoonLike\Site\controller\ChapterController;
 use WebtoonLike\Site\controller\ImageController;
+use WebtoonLike\Site\controller\LanguageController;
 use WebtoonLike\Site\controller\WebtoonController;
 use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\entities\Chapter;
@@ -171,7 +172,7 @@ class ImportManager
     static function uploadImage(int $ChapterId, int $indexChapter):string|bool{
 
         $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
-
+        $language=checkLanguage($_POST['language'], (int)$_POST['id']);
         if(!file_exists($folder)) mkdir($folder, 0777, true);
 
         $images=[];
@@ -184,7 +185,7 @@ class ImportManager
                 $indexChapter,
                 $path,
                 $ChapterId,
-                "en",
+                $language,
                 null,
                 true,
                 false
@@ -194,6 +195,24 @@ class ImportManager
         if(!ImageController::createBatch($images)) return 'Nous avons rencontré des problèmes lors de la sauvegarde des images';
 
         return true;
+    }
+
+    static function languageSelect(): void{
+        $langs = LanguageController::getAll();
+        foreach($langs as $lang){
+            echo '<option value="'.$lang->getIdentifier().'">'.$lang->getName().'</option>';
+        }
+    }
+
+    static function checkLanguage(string $lang, int $webtoonId){
+        $languages = LanguageController::getAll();
+        foreach($languages as $language){
+            if($lang === $language->getIdentifier()) return $lang;
+        }
+        Router::redirect('/import', 301,
+            ['error' => 'Le language choisi n\'est pas vérifié' ,'step' => 2, 'id' => $webtoonId]
+        );
+
     }
 }
 
