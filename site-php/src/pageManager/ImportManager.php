@@ -71,7 +71,7 @@ class ImportManager
                 );
             }
             $Id = $Webtoon->getId();
-            $path=self::saveCover('cover',$Id);
+            $path = self::saveCover('cover', $Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
             header('Location: /import?step=2&id='.$Id);
