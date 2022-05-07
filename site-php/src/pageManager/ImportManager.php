@@ -20,7 +20,7 @@ class ImportManager
        if(
            !isset($_GET['step'])
            || ((int)$_GET['step'] !== 2 && (int)$_GET['step'] !== 1)
-           || ((int)$_GET['step']===2
+           || ((int)$_GET['step'] === 2
                && !isset($_GET['id'])
                && is_null(self::getWebtoon()))
        ){
