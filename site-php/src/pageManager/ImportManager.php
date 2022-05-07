@@ -62,8 +62,7 @@ class ImportManager
                 false
             );
 
-            if(WebtoonController::create($Webtoon)) {
-            }else{
+            if(!WebtoonController::create($Webtoon)) {
                 Router::redirect('/import', 301,
                     ['step'=>1,'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
@@ -115,6 +114,10 @@ class ImportManager
                 $ChapterId=$Chapter->getId();
                 self::uploadImage($ChapterId);
                 Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);# A voir
+            }else{
+                Router::redirect('/import', 301,
+                    ['error' => 'Les champs sont incorects','step' => 2, 'id' => $webtoonId]
+                );
             }
         }else{
             Router::redirect('/import', 301,
@@ -122,6 +125,7 @@ class ImportManager
             );
         }
     }
+    
 
     static function chaptersListForWebtoon(): string
     {
