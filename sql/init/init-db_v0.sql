@@ -7,10 +7,10 @@ CREATE TABLE `User` (
     username VARCHAR(32) not null,
     email VARCHAR(256) not null,
     password VARCHAR(256) not null,
-    registeredAt DATETIME not null,
+    registeredAt DATETIME not null default CURRENT_TIMESTAMP,
     deleted bool not null default false,
     PRIMARY KEY (userID)
-)  ENGINE=INNODB; 
+)  ENGINE=INNODB;
 
 CREATE TABLE Report (
     reportID BIGINT NOT NULL AUTO_INCREMENT,
@@ -47,7 +47,7 @@ CREATE TABLE Image (
     imageID BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `index` INT not null,
     `path` VARCHAR(256) not null,
-    needOCR bool not null,
+    needOCR bool not null default true,
     fontSize int,
     chapterID BIGINT NOT NULL,
     originalLanguage varchar(256) not null,
