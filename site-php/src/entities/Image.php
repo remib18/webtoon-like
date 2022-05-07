@@ -238,9 +238,9 @@ class Image implements EntityInterface
         return [
             'imageID' =>  new DataField($this->id, DataType::int, true),
             'index' =>  new DataField($this->index, DataType::int),
-            'path' => new DataField($this->path, DataType::string,false,1,null, '/^[\w._\-]+$/'),
+            'path' => new DataField($this->path, DataType::string,false,null,null, '/^[\w._\-\\/]+$/'),
             'chapterID' => new DataField($this->chapterId, DataType::int),
-            'originalLanguage' => new DataField($this->originalLanguage, DataType::string, false, 2, 256),
+            'originalLanguage' => new DataField($this->originalLanguage, DataType::string, false, 2, 256, null),
             'fontSize' => new DataField($this->fontSize, DataType::int, true),
             'needOCR' => new DataField($this->needOCR, DataType::bool)
         ];
