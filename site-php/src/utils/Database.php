@@ -252,6 +252,10 @@ class Database
      */
     public static function createBatch(string $table, array &$entities): bool {
 
+        foreach ($entities as $entity) {
+            if (!self::runTests($entity)) return false;
+        }
+
         $fields = '';
         foreach ($entities[0]->getFieldsToSave() as $field => $value) {
             $fields .= "`$field`, ";
