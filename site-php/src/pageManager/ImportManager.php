@@ -58,7 +58,7 @@ class ImportManager
                 htmlentities($_POST['title']),
                 htmlentities($_POST['auteur']),
                 htmlentities($_POST['desc']),
-                str_ireplace($_FILES['cover']['name']),
+                $_FILES['cover']['name'],
                 false
             );
 
