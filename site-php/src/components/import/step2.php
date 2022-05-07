@@ -25,12 +25,12 @@ use WebtoonLike\Site\pageManager\ImportManager;
                     </label>
                 </div>
                 <input type="submit" value="Ajouter le chapitre">
-                <input type="hidden" name="id" value="<?=$_GET['id']?>"
+                <input type="hidden" name="id" value="<?=$_GET['id']?>">
             </div>
             <div class="col">
                 <h3>Liste des chapitres importés</h3>
                 <ul class="list">
-                    <?=importManager::chapList()?>
+                    <?=importManager::chaptersListForWebtoon()?>
                 </ul>
             </div>
         </div>
