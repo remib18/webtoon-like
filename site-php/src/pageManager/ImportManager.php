@@ -67,7 +67,7 @@ class ImportManager
 
             if(!WebtoonController::create($Webtoon)) {
                 Router::redirect('/import', 301,
-                    ['step'=>1,'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
+                    ['step' => 1, 'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
             }
             $Id= $Webtoon->getId();
