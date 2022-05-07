@@ -162,8 +162,14 @@ class ImportManager
     }
 
     static function deleteChapter():void{
-        $Chapter=ChapterController::getById($_GET['chapterId']);
-        if(!is_null($Chapter)) ChapterController::remove($Chapter);
+        $Chapter=ChapterController::getById((int)$_GET['chapterId']);
+        if(!is_null($Chapter)) {
+            $images=ImageController::getByChapterId((int)$_GET['chapterId']);
+            foreach($images as $image){
+                ImageController::remove($image);
+            }
+            ChapterController::remove($Chapter);
+        }
 
         $webtoonId=$_GET['id'];
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
@@ -172,7 +178,12 @@ class ImportManager
     static function uploadImage(int $ChapterId, int $indexChapter):string|bool{
 
         $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
-        $language=checkLanguage($_POST['language'], (int)$_POST['id']);
+
+        if(!self::checkLanguage($_POST['language'])) {
+            Router::redirect('/import', 301,
+                ['error' => 'Le language choisi n\'est pas vérifié' ,'step' => 2, 'id' => (int)$_POST['id']]
+                );
+        }
         if(!file_exists($folder)) mkdir($folder, 0777, true);
 
         $images=[];
@@ -185,11 +196,12 @@ class ImportManager
                 $indexChapter,
                 $path,
                 $ChapterId,
-                $language,
+                $_POST["language"],
                 null,
                 true,
                 false
             );
+
         }
 
         if(!ImageController::createBatch($images)) return 'Nous avons rencontré des problèmes lors de la sauvegarde des images';
@@ -204,14 +216,12 @@ class ImportManager
         }
     }
 
-    static function checkLanguage(string $lang, int $webtoonId){
+    static function checkLanguage(string $identifier): bool{
         $languages = LanguageController::getAll();
         foreach($languages as $language){
-            if($lang === $language->getIdentifier()) return $lang;
+            if($identifier === $language->getIdentifier()) return true;
         }
-        Router::redirect('/import', 301,
-            ['error' => 'Le language choisi n\'est pas vérifié' ,'step' => 2, 'id' => $webtoonId]
-        );
+        return false;
 
     }
 }
