@@ -94,7 +94,7 @@ class UserController
      * @param User $entity L'identifiant de l'user à supprimer.
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    public static function remove(User $entity): bool
+    public static function remove(User &$entity): bool
     {
         return Database::remove('User', $entity);
     }

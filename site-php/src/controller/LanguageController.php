@@ -61,7 +61,7 @@ class LanguageController
      *
      * @return bool
      */
-    public static function remove(Language $entity): bool {
+    public static function remove(Language &$entity): bool {
         return Database::remove('Language', $entity);
     }
 
