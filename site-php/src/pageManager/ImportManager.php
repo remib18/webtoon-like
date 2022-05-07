@@ -139,7 +139,7 @@ class ImportManager
     static function chaptersListForWebtoon(): string
     {
         $chapList = '';
-        $chapterIdByIndex=[];
+        $chapterIdByIndex = [];
         $webtoonId= self::getWebtoon()->getId();
         $everyChapter=ChapterController::getAllForWebtoon($webtoonId);
         foreach ($everyChapter as $chapter){
