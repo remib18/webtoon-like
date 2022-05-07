@@ -14,34 +14,34 @@ use WebtoonLike\Site\entities\Webtoon;
 
 class ImportManager
 {
-
+    /*
+     * Verification de la validité des champs transmis.
+     */
     static function CheckNull():void {
 
        if(
            !isset($_GET['step'])
            || ((int)$_GET['step'] !== 2 && (int)$_GET['step'] !== 1)
-<<<<<<< Updated upstream
-           || ((int)$_GET['step'] === 2
-               && !isset($_GET['id'])
-               && is_null(self::getWebtoon()))
-       ) {
-           Router::redirect('/import', 301, ['step' => 1, 'error' => 'Opération impossible']);
-=======
            || (((int)$_GET['step'] === 2 && !isset($_GET['id'])) && is_null(self::getWebtoon()))
        ){
            Router::redirect('/import', 301, ['step'=>1,'error' => 'Opération impossible']);
->>>>>>> Stashed changes
        }
 
     }
 
+    /*
+     * Obtenir le Webtoon grace à son id
+     */
     private static function getWebtoon(): ?Webtoon {
         if(is_numeric($_GET['id'])) return WebtoonController::getById((int)$_GET['id']);
         return null;
     }
 
+    /*
+     * Obtention de la bonne section dans import-webtoon.
+     */
     static function getStep(): void{
-        $step=((int)$_GET['step']) ?? 1;
+        $step = ((int)$_GET['step']) ?? 1;
 
         if($step === 1){
             require dirname(__DIR__, 1) . '/components/import/step1.php';
@@ -74,7 +74,6 @@ class ImportManager
 
             if(!WebtoonController::create($Webtoon)) {
                 Router::redirect('/import', 301,
-<<<<<<< Updated upstream
                     ['step' => 1, 'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
             }
@@ -86,24 +85,15 @@ class ImportManager
         } else {
             Router::redirect('/import?step=1', 301,
                 ['step' =>1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
-=======
-                    ['step' => 1,'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
-                );
-            }
-            $Id= $Webtoon->getId();
-            $path=self::saveCover('cover', $Id);
-            $Webtoon->setCover($path);
-            WebtoonController::edit($Webtoon);
-            header('Location: /import?step=2&id=' . $Id);
-        }else{
-            Router::redirect('/import?step=1', 301,
-                ['step' => 1, 'error' => 'Nous n\'avez pas remplis tous les champs']
->>>>>>> Stashed changes
             );
         }
     }
 
-    static function saveCover(string $pic, int $Id): string{
+    /*
+     * Sauvegarde des covers en BDD.
+     *
+     */
+    static function saveCover(string $pic, int $Id): string {
         $file = '../assets/webtoons-imgs/';
         if(!file_exists($file)) {
             mkdir($file, 0777, true);
@@ -111,26 +101,20 @@ class ImportManager
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename($_FILES[$pic]['name']);
-<<<<<<< Updated upstream
-        $location = $file . $Id . '_' . $name;
-        if(move_uploaded_file($tmp_name, $location)){
-            return $Id . '_' . $name;
-=======
         $location = $file . $Id . "_" . $name;
         if(move_uploaded_file($tmp_name,$location)){
             return $Id . "_" . $name;
->>>>>>> Stashed changes
         }else{
             Router::redirect('/error', 301,
                 ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']
             );
         }
     }
+
     /*
-     * Sauvegarder les chapitre dans la base de donné
+     * Sauvegarder les chapitres dans la BDD
      */
     static function saveChapter(): void {
-
         $webtoonId = (int)$_POST['id'];
         $Chapter = new Chapter(null,
             (int)$_POST['chapter-x-number'],
@@ -162,18 +146,13 @@ class ImportManager
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
 
-
-    static function chaptersListForWebtoon(): string
-    {
-<<<<<<< Updated upstream
-        $chapList = '';
-        $chapterIdByIndex = [];
-        $webtoonId= self::getWebtoon()->getId();
-=======
+    /*
+     * Montre les chapitres du Webtoon
+     */
+    static function chaptersListForWebtoon(): string {
         $chapList = "";
         $chapterIdByIndex = [];
         $webtoonId = self::getWebtoon()->getId();
->>>>>>> Stashed changes
         $everyChapter = ChapterController::getAllForWebtoon($webtoonId);
         foreach ($everyChapter as $chapter){
             $chapterIdByIndex[$chapter->getIndex()] = $chapter->getId();
@@ -194,6 +173,9 @@ class ImportManager
         return $chapList;
     }
 
+    /*
+     * Suppression des chapitres.
+     */
     static function deleteChapter():void{
         $Chapter = ChapterController::getById((int)$_GET['chapterId']);
         if(!is_null($Chapter)) {
@@ -208,6 +190,9 @@ class ImportManager
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
 
+    /*
+     * Upload des images dans le bon dossier.
+     */
     static function uploadImage(int $ChapterId, int $indexChapter):string|bool{
 
         $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
@@ -217,13 +202,13 @@ class ImportManager
         }
         if(!file_exists($folder)) mkdir($folder, 0777, true);
 
-        $images=[];
+        $images = [];
         foreach($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
             $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
             $path = "$folder/$name";
             if(!move_uploaded_file($tmp_name, $path)) return 'Verifiez le nom de votre image';
 
-            $images[]=new Image(null,
+            $images[] = new Image(null,
                 $indexChapter,
                 $path,
                 $ChapterId,
@@ -232,7 +217,6 @@ class ImportManager
                 true,
                 false
             );
-
         }
 
         if(!ImageController::createBatch($images)) return 'Nous avons rencontré des problèmes lors de la sauvegarde des images';
@@ -240,6 +224,9 @@ class ImportManager
         return true;
     }
 
+    /*
+     * Menu de selections des languages sur la page import, step 2.
+     */
     static function languageSelect(): void{
         $langs = LanguageController::getAll();
         foreach($langs as $lang){
@@ -247,6 +234,9 @@ class ImportManager
         }
     }
 
+    /*
+     * Vérification que language est bien en BDD.
+     */
     static function checkLanguage(string $identifier): bool{
         $languages = LanguageController::getAll();
         foreach($languages as $language){
