@@ -42,7 +42,7 @@ class ImageController
      */
     public static function getByChapterId(int $id): ?Image
     {
-        return Database::getFirst('Image', Image::class, '*', ['chapterID' => "chapterID = $id"]);
+        return Database::getAll('Image', Image::class, '*', ['chapterID' => "chapterID = $id"]);
     }
 
     /**
