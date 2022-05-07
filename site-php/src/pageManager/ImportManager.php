@@ -4,9 +4,11 @@ namespace WebtoonLike\Site\pageManager;
 
 
 use WebtoonLike\Site\controller\ChapterController;
+use WebtoonLike\Site\controller\ImageController;
 use WebtoonLike\Site\controller\WebtoonController;
 use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\entities\Chapter;
+use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\Webtoon;
 
 class ImportManager
@@ -109,23 +111,28 @@ class ImportManager
             false
         );
 
-        if(!ChapterController::getByIndex($webtoonId, (int)$_POST['chapter-x-number'])) {
-            if (ChapterController::create($Chapter)) {
-                $ChapterId=$Chapter->getId();
-                self::uploadImage($ChapterId);
-                Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);# A voir
-            }else{
-                Router::redirect('/import', 301,
-                    ['error' => 'Les champs sont incorects','step' => 2, 'id' => $webtoonId]
-                );
-            }
-        }else{
+        if(!is_null(ChapterController::getByIndex($webtoonId, (int)$_POST['chapter-x-number']))) {
             Router::redirect('/import', 301,
                 ['error' => 'Le chapitre existe déjà','step' => 2, 'id' => $webtoonId]
             );
         }
+
+        if (!ChapterController::create($Chapter)) {
+            Router::redirect('/import', 301,
+                ['error' => 'Les champs sont incorects','step' => 2, 'id' => $webtoonId]
+            );
+        }
+
+        $upload=self::uploadImage($Chapter->getId() , (int)$_POST['chapter-x-number']);
+        if(!is_bool($upload)) {
+            Router::redirect('/import', 301,
+                ['error' => $upload,'step' => 2, 'id' => $webtoonId]
+            );
+        }
+
+        Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
-    
+
 
     static function chaptersListForWebtoon(): string
     {
@@ -160,17 +167,32 @@ class ImportManager
         Router::redirect('/import', 301, ['step' => 2, 'id' => $webtoonId]);
     }
 
-    static function uploadImage(int $ChapterId):void{
+    static function uploadImage(int $ChapterId, int $indexChapter):string|bool{
 
         $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
-        if(!file_exists($folder)) {
-            mkdir($folder, 0777, true);
-        }
 
+        if(!file_exists($folder)) mkdir($folder, 0777, true);
+
+        $images=[];
         foreach($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
             $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
-            move_uploaded_file($tmp_name, "$folder/$name");
+            $path="$folder/$name";
+            if(!move_uploaded_file($tmp_name, $path)) return 'Verifiez le nom de votre image';
+
+            $images[]=new Image(null,
+                $indexChapter,
+                $path,
+                $ChapterId,
+                "en",
+                null,
+                true,
+                false
+            );
         }
+
+        if(!ImageController::createBatch($images)) return 'Nous avons rencontré des problèmes lors de la sauvegarde des images';
+
+        return true;
     }
 }
 

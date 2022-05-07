@@ -87,6 +87,20 @@ class ImageController
     }
 
     /**
+     * Enregistre des images ou <code>false</code> en cas d'erreur.
+     *
+     * @param array $entity
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
+     */
+    public static function createBatch(array &$entity): bool
+    {
+        return Database::createBatch('Image', $entity);
+    }
+
+    /**
      * Modifie l'image
      *
      * @param Image $entity L'image modifiée
