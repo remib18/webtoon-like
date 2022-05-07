@@ -5,6 +5,17 @@
     align-items: center;
 }
 
+#erreur-box, #msg-box {
+    margin-top: 25px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    font-size: medium;
+    line-height: 1.5em;
+    margin-bottom: 25px;
+    width: 409px;
+}
+
 #app, form, section {
     overflow-x: hidden;
 }
