@@ -115,7 +115,7 @@ class ChapterController
      * @param Chapter $entity L'identifiant du chapter à supprimer.
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    public static function remove(Chapter $entity): bool
+    public static function remove(Chapter &$entity): bool
     {
         return Database::remove('Chapter', $entity);
     }
