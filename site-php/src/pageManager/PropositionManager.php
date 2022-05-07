@@ -18,7 +18,7 @@ class PropositionManager
         }
     }
 
-    public static function ChecKUser() :void {
+    public static function ChecKUser(): void {
         if(!(isset($_SESSION['id']))){
             Router::redirect('/login', 301, ['error' => 'Vous devez vous connecter pour faire des proposition']);
         }
@@ -39,32 +39,32 @@ class PropositionManager
 
     public static function getBId(): int
     {
-        return self::getBlock()->getId()/*Block*/ ;
+        return self::getBlock()->getId();
     }
 
     private static function getTranslation(): ?Translation
     {
         $trId = $_GET['TranslationId'];
-        $BlkId = self::getBId();#en faire une vérification(if...)
-        return TranslationController::get($trId, $BlkId);#initiation
+        $BlkId = self::getBId();
+        return TranslationController::get($trId, $BlkId);
     }
 
     public static function getContent(): string
     {
-        return self::getTranslation()->getContent()/*Translation*/ ;
+        return self::getTranslation()->getContent();
     }
 
     public static function setProposition(int $userId, int $blockId, string $Proposition): ?TranslationProposition
     {
-        return new TranslationProposition(null,$Proposition,$blockId,$userId,false);
+        return new TranslationProposition(null, $Proposition, $blockId, $userId, false);
     }
 
     public static function SaveProposition(): void
     {
-        $Proposition="";
-        $userId=$_SESSION['id'];
-        $blockId=$_GET['BlockId'];
-        $Proposition .=$_POST['proposition'];
+        $Proposition = "";
+        $userId = $_SESSION['id'];
+        $blockId = $_GET['BlockId'];
+        $Proposition .= $_POST['proposition'];
         $PropositionTranslation = self::setProposition($userId, $blockId, htmlentities($Proposition));
         if(TranslationPropositionController::create($PropositionTranslation)) {
             Router::redirect('/home', null , ['msg' => 'Proposition soumise']);

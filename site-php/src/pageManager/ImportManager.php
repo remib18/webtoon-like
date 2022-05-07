@@ -81,7 +81,7 @@ class ImportManager
             $path = self::saveCover('cover', $Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
-            header('Location: /import?step=2&id='.$Id);
+            Router::redirect('/import', 301, ['step'=>2,'id' => $Id]);
         } else {
             Router::redirect('/import?step=1', 301,
                 ['step' =>1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
@@ -193,9 +193,9 @@ class ImportManager
     /*
      * Upload des images dans le bon dossier.
      */
-    static function uploadImage(int $ChapterId, int $indexChapter):string|bool{
+    static function uploadImage(int $ChapterId, int $indexChapter): string|bool{
 
-        $folder = '../assets/webtoons-imgs/chapters/'.$ChapterId;
+        $folder = '../assets/webtoons-imgs/chapters/' . $ChapterId;
 
         if(!self::checkLanguage($_POST['language'])) {
             return 'Le language choisi n\'est pas vérifiée';
