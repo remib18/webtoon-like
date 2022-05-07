@@ -127,7 +127,7 @@ class ImageController
      * @param Image $entity L'identifiant de l'image à supprimer.
      * @return bool Retourne vrai si la suppression a été effectuée avec succès.
      */
-    public static function remove(Image &$entity): bool
+    public static function remove(Image $entity): bool
     {
         return Database::remove('Image', $entity);
     }
