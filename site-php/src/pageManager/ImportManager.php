@@ -70,7 +70,7 @@ class ImportManager
                     ['step' => 1, 'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
             }
-            $Id= $Webtoon->getId();
+            $Id = $Webtoon->getId();
             $path=self::saveCover('cover',$Id);
             $Webtoon->setCover($path);
             WebtoonController::edit($Webtoon);
