@@ -9,7 +9,7 @@ use WebtoonLike\Site\entities\Webtoon;
 
 class WebtoonManager
 {
-    public static function CheckNull():void{
+    public static function CheckNull(): void{
         if(is_null(self::getWebtoon())){
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à trouver le Webtoon']);
         }
