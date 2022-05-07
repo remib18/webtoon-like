@@ -35,6 +35,17 @@ class ImageController
     }
 
     /**
+     * Obtention de l'image avec le chapter ID correspondant.
+     *
+     * @param int $id Identifiant recherché
+     * @return Image|null
+     */
+    public static function getByChapterId(int $id): ?Image
+    {
+        return Database::getFirst('Image', Image::class, '*', ['chapterID' => "chapterID = $id"]);
+    }
+
+    /**
      * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
      *
      * @param Chapter $chapterID
