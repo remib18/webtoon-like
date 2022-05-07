@@ -11,6 +11,7 @@ use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\entities\Chapter;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\Webtoon;
+use WebtoonLike\Site\Settings;
 
 class ImportManager
 {
@@ -91,7 +92,7 @@ class ImportManager
      *
      */
     static function saveCover(string $pic, int $Id): string{
-        $file = '../assets/webtoons-imgs/';
+        $file = Settings::get('webtoonsCovers');
         if(!file_exists($file)) {
             mkdir($file, 0777, true);
         }
@@ -192,7 +193,7 @@ class ImportManager
      */
     static function uploadImage(int $ChapterId, int $indexChapter): string|bool{
 
-        $folder = '../assets/webtoons-imgs/chapters/' . $ChapterId;
+        $folder = Settings::get('webtoonsChapterImage') . $ChapterId;
 
         if(!self::checkLanguage($_POST['language'])) {
             return 'Le language choisi n\'est pas vérifiée';
