@@ -31,8 +31,7 @@ class ChapterController
      * @param string|array $col
      * @return array
      */
-    public static function getAllForWebtoon(int $webtoonId, string|array $col = '*'): array
-    {
+    public static function getAllForWebtoon(int $webtoonId, string|array $col = '*'): array {
         return Database::getAll('Chapter', Chapter::class, $col, ['webtoonID' => "webtoonID = $webtoonId"]);
     }
 
@@ -51,7 +50,7 @@ class ChapterController
      * Obtention du chapter avec l'identifiant correspondant.
      *
      * @param int $webtoonID
-     * @param int $index index recherché
+     * @param int     $index index recherché
      *
      * @return Chapter|null
      */
@@ -59,7 +58,7 @@ class ChapterController
     {
         return Database::getFirst('Chapter', Chapter::class, '*', [
             'index,webtoonID' => "`index` = $index AND webtoonID = $webtoonID"
-        ]);
+            ]);
     }
 
     /**
@@ -69,8 +68,7 @@ class ChapterController
      *
      * @return Image[]
      */
-    public static function getImages(int $chapterId): array
-    {
+    public static function getImages(int $chapterId): array {
         return Database::getAll('Image', Image::class, '*', ['chapterID' => "chapterID = $chapterId"]);
     }
 
@@ -80,8 +78,7 @@ class ChapterController
      * @param int $id Ressource correspondante
      * @return bool
      */
-    public static function exists(int $id): bool
-    {
+    public static function exists(int $id): bool {
         $q = "SELECT chapterID FROM Chapter WHERE chapterID = $id";
         $res = Database::getDB()->query($q)->fetch_assoc();
         return sizeof($res ?? []) > 0;

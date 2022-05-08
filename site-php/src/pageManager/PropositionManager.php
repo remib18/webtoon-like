@@ -12,16 +12,14 @@ use WebtoonLike\Site\entities\TranslationProposition;
 
 class PropositionManager
 {
-    public static function CheckNull(): void
-    {
-        if (is_null(self::getBlock()) || is_null(self::getTranslation())) {
+    public static function CheckNull(): void{
+        if(is_null(self::getBlock()) || is_null(self::getTranslation())){
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussi à trouver le texte']);
         }
     }
 
-    public static function ChecKUser(): void
-    {
-        if (!(isset($_SESSION['id']))) {
+    public static function ChecKUser(): void {
+        if(!(isset($_SESSION['id']))){
             Router::redirect('/login', 301, ['error' => 'Vous devez vous connecter pour faire des proposition']);
         }
     }
@@ -68,9 +66,9 @@ class PropositionManager
         $blockId = $_GET['BlockId'];
         $Proposition .= $_POST['proposition'];
         $PropositionTranslation = self::setProposition($userId, $blockId, htmlentities($Proposition));
-        if (TranslationPropositionController::create($PropositionTranslation)) {
-            Router::redirect('/home', null, ['msg' => 'Proposition soumise']);
-        } else {
+        if(TranslationPropositionController::create($PropositionTranslation)) {
+            Router::redirect('/home', null , ['msg' => 'Proposition soumise']);
+        }else{
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à enregistrer la proposition']);
         }
 

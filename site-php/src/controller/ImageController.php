@@ -48,7 +48,7 @@ class ImageController
      * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
      *
      * @param Chapter $chapterID
-     * @param int $index index recherché
+     * @param int     $index index recherché
      *
      * @return Image|null
      */
@@ -66,8 +66,7 @@ class ImageController
      *
      * @return Block[]
      */
-    public static function getBlocks(int $id): array
-    {
+    public static function getBlocks(int $id): array {
         return Database::getAll('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
     }
 
@@ -77,8 +76,7 @@ class ImageController
      * @param int $id Ressource correspondante
      * @return bool
      */
-    public static function exists(int $id): bool
-    {
+    public static function exists(int $id): bool {
         $q = "SELECT imageID FROM Image WHERE imageID = $id";
         $res = Database::getDB()->query($q)->fetch_assoc();
         return sizeof($res ?? []) > 0;
