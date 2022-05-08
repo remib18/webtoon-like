@@ -57,3 +57,26 @@ aside .genre {
     max-width: 100%;
     white-space: pre-wrap;
 }
+
+section[data-container] {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.imageBlock {
+    position: relative;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
+}
+
+.imageBlock .image {
+}
+
+.imageBlock p {
+    position: absolute;
+    background-color: #fff;
+    z-index: 10;
+    color: #000;
+}

@@ -190,23 +190,25 @@ class Block implements EntityInterface
      * @inheritDoc
      */
     #[ArrayShape([
-        'blockID' => "int",
-        'startX' => "int",
-        'startY' => "int",
-        'endX' => "int",
-        'endY' => "int",
+        'blockID'         => "int",
+        'startX'          => "int",
+        'startY'          => "int",
+        'endX'            => "int",
+        'endY'            => "int",
         'originalContent' => "string",
-        'imageID' => "int"
+        'imageID'         => "int",
+        'translations'    => "array"
     ])]
     public function __toArray(): array {
         return [
-            'blockID' => $this->id,
-            'startX' => $this->startX,
-            'startY' => $this->startY,
-            'endX' => $this->endX,
-            'endY' => $this->endY,
+            'blockID'         => $this->id,
+            'startX'          => $this->startX,
+            'startY'          => $this->startY,
+            'endX'            => $this->endX,
+            'endY'            => $this->endY,
             'originalContent' => $this->originalContent,
-            'imageID' => $this->imageId
+            'imageID'         => $this->imageId,
+            'translations'    => $this->translations
         ];
     }
 
@@ -236,16 +238,16 @@ class Block implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function getTypes(): array
+    public static function getTypes(): array
     {
         return [
-            'blockID' => new DataField($this->id, DataType::int, true),
-            'startX' => new DataField($this->startX, DataType::int),
-            'startY' => new DataField($this->startY, DataType::int),
-            'endX' => new DataField($this->endX, DataType::int),
-            'endY' => new DataField($this->endY, DataType::int),
-            'originalContent' => new DataField($this->originalContent, DataType::string),
-            'imageID' =>  new DataField($this->imageId, DataType::int)
+            'blockID' => "int",
+            'startX' => "int",
+            'startY' => "int",
+            'endX' => "int",
+            'endY' => "int",
+            'originalContent' => "string",
+            'imageID' => "int"
         ];
     }
 

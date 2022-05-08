@@ -8,8 +8,9 @@ use WebtoonLike\Site\core\AccessLevel;
 require_once 'UriUtils.php';
 
 const SCRIPTS_PAGE_TYPE = [
-    'all' => ['search'],
-    'import' => ['importFormController']
+    'all'     => ['search'],
+    'import'  => ['importFormController'],
+    'webtoon' => ['webtoonLoader']
 ];
 
 const PAGES = [

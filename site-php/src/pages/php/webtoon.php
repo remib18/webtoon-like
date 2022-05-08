@@ -38,7 +38,7 @@ require dirname(__DIR__, 2) . '/components/header.php';
         <span class="genre">BBB</span>-->
         <a href="/import?step=2&id=<?= WebtoonManager::getId()?>" class="button outlined">Importer un nouveau chapitre</a>
     </aside>
-    <section aria-describedby="content">
+    <section aria-describedby="content" data-container>
         <!-- Todo: Javascript to load the images of the webtoon -->
     </section>
 </div>
