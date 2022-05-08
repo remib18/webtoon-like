@@ -26,7 +26,7 @@ class WebtoonManager
     }
 
     public static function getChapters(): string {
-        $requestedIndex = (int)( $_GET['chapter'] ?? 1 );
+        $requestedIndex = (int)($_GET['chapter']) ?? 1;
         $res = '';
 
         foreach (ChapterController::getAllForWebtoon(self::getWebtoon()->getId()) as $chapter) {
