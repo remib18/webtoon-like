@@ -29,16 +29,13 @@ class DatabaseLoader {
         // supression des données outdated.
         $languageInDb = LanguageController::getAll();
         foreach ($languageInDb as $language) {
-            if( !in_array($language->getIdentifier(), $languages)) {
+            if(!array_key_exists($language->getIdentifier(), $languages)) {
                 LanguageController::remove($language);
             }
         }
 
     }
 }
-
-DatabaseLoader::updateFromAzure();
-
 
 
 
