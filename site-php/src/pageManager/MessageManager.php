@@ -9,18 +9,19 @@ class MessageManager
      *
      * @return string
      */
-    public static function getErrors(): string {
+    public static function getErrors(): string
+    {
 
         $res = '';
-        if(empty($_GET)) return '';
+        if (empty($_GET)) return '';
 
-        foreach ( $_GET as $key => $error ) {
-            if(str_contains($key, 'error')) {
+        foreach ($_GET as $key => $error) {
+            if (str_contains($key, 'error')) {
                 $res .= '<p>' . $error . '</p>';
             }
         }
 
-        if(empty($res)) return '';
+        if (empty($res)) return '';
         return "<div id='erreur-box'>" . $res . "</div>";
     }
 
@@ -29,18 +30,19 @@ class MessageManager
      *
      * @return string
      */
-    public static function getMessages(): string {
+    public static function getMessages(): string
+    {
 
         $res = '';
-        if(empty($_GET)) return '';
+        if (empty($_GET)) return '';
 
-        foreach ( $_GET as $key => $msg ) {
-            if(str_contains($key, 'msg')) {
+        foreach ($_GET as $key => $msg) {
+            if (str_contains($key, 'msg')) {
                 $res .= '<p>' . $msg . '</p>';
             }
         }
 
-        if(empty($res)) return '';
+        if (empty($res)) return '';
         return "<div id='msg-box' class='success'>" . $res . "</div>";
     }
 }
