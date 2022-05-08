@@ -4,8 +4,7 @@ namespace WebtoonLike\Site\utils\DataTesting;
 
 use DateTime;
 
-class DataField
-{
+class DataField {
 
     /**
      * @param mixed $data
@@ -16,14 +15,13 @@ class DataField
      * @param ?string $regex
      */
     public function __construct(
-        private mixed             $data,
-        private DataType          $type,
-        private bool              $nullable = false, // null ou pas
+        private mixed $data,
+        private DataType  $type,
+        private bool $nullable = false, // null ou pas
         private null|int|DateTime $minLength = null,
         private null|int|DateTime $maxLength = null,
-        private ?string           $regex = null
-    )
-    {
+        private ?string $regex = null
+    ) {
 
     }
 

@@ -26,16 +26,15 @@ class Block implements EntityInterface
     private array $translations = [];
 
     public function __construct(
-        ?int   $blockID,
+        ?int $blockID,
         string $originalContent,
-        int    $startX,
-        int    $startY,
-        int    $endX,
-        int    $endY,
-        int    $imageID,
-        bool   $fromDB = true
-    )
-    {
+        int $startX,
+        int $startY,
+        int $endX,
+        int $endY,
+        int $imageID,
+        bool $fromDB = true
+    ) {
         $this->id = $blockID;
         $this->setOriginalContent($originalContent);
         $this->setStartX($startX);
@@ -47,8 +46,7 @@ class Block implements EntityInterface
         if ($fromDB) $this->AllFieldsSaved();
     }
 
-    public static function merge(Block $current, Block $next): Block
-    {
+    public static function merge(Block $current, Block $next): Block {
         if ($next->getStartX() < $current->getStartX()) {
             $current->setStartX($next->getStartX());
         }
@@ -180,13 +178,11 @@ class Block implements EntityInterface
         $this->startY = $startY;
     }
 
-    public function registerTranslation(string $languageId, string $translation): void
-    {
+    public function registerTranslation(string $languageId, string $translation): void {
         $this->translations[$languageId] = $translation;
     }
 
-    public function getTranslation(string $languageId): string
-    {
+    public function getTranslation(string $languageId): string {
         return $this->translations[$languageId];
     }
 
@@ -202,8 +198,7 @@ class Block implements EntityInterface
         'originalContent' => "string",
         'imageID' => "int"
     ])]
-    public function __toArray(): array
-    {
+    public function __toArray(): array {
         return [
             'blockID' => $this->id,
             'startX' => $this->startX,
@@ -218,8 +213,7 @@ class Block implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array
-    {
+    public static function getColumnsKeys(): array {
         return [
             'blockID',
             'originalContent',
@@ -251,7 +245,7 @@ class Block implements EntityInterface
             'endX' => new DataField($this->endX, DataType::int),
             'endY' => new DataField($this->endY, DataType::int),
             'originalContent' => new DataField($this->originalContent, DataType::string),
-            'imageID' => new DataField($this->imageId, DataType::int)
+            'imageID' =>  new DataField($this->imageId, DataType::int)
         ];
     }
 
@@ -274,8 +268,7 @@ class Block implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

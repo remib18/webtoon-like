@@ -20,8 +20,7 @@ class BlockController
      *
      * @return Block[]
      */
-    public static function getAll(Image $image): array
-    {
+    public static function getAll(Image $image): array {
         $imgId = $image->getId();
         return Database::getAll('Block', Block::class, '*', ['ImageID' => "ImageID = $imgId"]);
     }
@@ -33,13 +32,11 @@ class BlockController
      *
      * @return Block|null
      */
-    public static function getById(int $id): ?Block
-    {
+    public static function getById(int $id): ?Block {
         return Database::getFirst('Block', Block::class, '*', ['blockID' => "blockID = $id"]);
     }
 
-    public static function getByImageId(int $id): ?Block
-    {
+    public static function getByImageId(int $id): ?Block {
         return Database::getFirst('Block', Block::class, '*', ['imageID' => "imageID = $id"]);
     }
 
@@ -50,8 +47,7 @@ class BlockController
      *
      * @return bool
      */
-    public static function edit(Block &$entity): bool
-    {
+    public static function edit(Block &$entity): bool {
         return Database::edit('Block', $entity);
     }
 
@@ -64,8 +60,7 @@ class BlockController
      *
      * @throws NoIdOverwritingException
      */
-    public static function create(Block &$entity): bool
-    {
+    public static function create(Block &$entity): bool {
         return Database::create('Block', $entity);
     }
 
@@ -77,8 +72,7 @@ class BlockController
      * @return bool
      * @throws NoIdOverwritingException
      */
-    public static function createBatch(array &$entities): bool
-    {
+    public static function createBatch(array &$entities): bool {
         try {
             return Database::createBatch('Block', $entities);
         } catch (UnsupportedOperationException) {
@@ -94,21 +88,19 @@ class BlockController
      *
      * @return bool
      */
-    public static function remove(Block $entity): bool
-    {
+    public static function remove(Block $entity): bool {
         return Database::remove('Block', $entity);
     }
 
     /**
      * Détermine si le block a été traduit dans la langue fournit
      *
-     * @param int $id
+     * @param int    $id
      * @param string $languageId
      *
      * @return bool
      */
-    public static function isTranslatedIn(int $id, string $languageId): bool
-    {
+    public static function isTranslatedIn(int $id, string $languageId): bool {
         $res = Database::getFirst(
             'Translation',
             Translation::class,

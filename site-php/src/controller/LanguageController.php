@@ -14,8 +14,7 @@ class LanguageController
      *
      * @return Language[]
      */
-    public static function getAll(): array
-    {
+    public static function getAll(): array {
         return Database::getAll('Language', Language::class, '*', []);
     }
 
@@ -26,8 +25,7 @@ class LanguageController
      *
      * @return Language|null
      */
-    public static function getById(string $languageId): ?Language
-    {
+    public static function getById(string $languageId): ?Language {
         return Database::getFirst('Language', Language::class, '*', [
             'identifier' => "identifier = '$languageId'"
         ]);
@@ -40,8 +38,7 @@ class LanguageController
      *
      * @return bool
      */
-    public static function edit(Language &$entity): bool
-    {
+    public static function edit(Language &$entity): bool {
         return Database::edit('Language', $entity);
     }
 
@@ -53,8 +50,7 @@ class LanguageController
      * @return bool
      * @throws NoIdOverwritingException
      */
-    public static function create(Language &$entity): bool
-    {
+    public static function create(Language &$entity): bool {
         return Database::create('Language', $entity);
     }
 
@@ -65,8 +61,7 @@ class LanguageController
      *
      * @return bool
      */
-    public static function remove(Language $entity): bool
-    {
+    public static function remove(Language $entity): bool {
         return Database::remove('Language', $entity);
     }
 

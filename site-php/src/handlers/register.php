@@ -21,7 +21,7 @@ $password = $_POST['password'];
 $confirmation_password = $_POST['confirmation_password'];
 
 $res = Authentication::register($username, $email, $password, $confirmation_password);
-if (is_bool($res) && $res) {
+if(is_bool($res) && $res) {
     Router::redirect('/');
 }
 

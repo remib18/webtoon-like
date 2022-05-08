@@ -12,7 +12,7 @@ $res = [];
 
 foreach ($webtoons as $webtoon) {
     $res[] = [
-        'id' => $webtoon->getId(),
+        'id'    => $webtoon->getId(),
         'title' => $webtoon->getName(),
         'cover' => $webtoon->getCover()
     ];

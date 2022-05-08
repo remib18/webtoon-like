@@ -71,13 +71,11 @@ class PageUtils
 
     private static ?PageUtils $instance = null;
 
-    private function __construct()
-    {
+    private function __construct() {
         $this->pageType = UriUtils::getPageType();
     }
 
-    private static function getInstance(): PageUtils
-    {
+    private static function getInstance(): PageUtils {
         if (is_null(self::$instance)) self::$instance = new PageUtils();
         return self::$instance;
     }
@@ -87,8 +85,7 @@ class PageUtils
      *
      * @return AccessLevel
      */
-    public static function getPageAccess(): AccessLevel
-    {
+    public static function getPageAccess(): AccessLevel {
         return PAGES[UriUtils::getPageType()]['accessLevel'] ?? AccessLevel::authenticated;
     }
 
@@ -98,8 +95,7 @@ class PageUtils
      * @return string
      * @todo : if pageType = webtoon then "WebtoonLike — {webtoon-title}"
      */
-    public static function getPageTitle(): string
-    {
+    public static function getPageTitle(): string {
         return 'WebtoonLike — ' . ucfirst(self::getInstance()->pageType);
     }
 
@@ -108,8 +104,7 @@ class PageUtils
      *
      * @return string
      */
-    public static function getStylesheets(): string
-    {
+    public static function getStylesheets(): string {
         $reset = '<link rel="stylesheet" href="/assets/styles/reset.css">';
         $app = '<link rel="stylesheet" href="/assets/styles/app.css">';
         $page = '';
@@ -124,8 +119,7 @@ class PageUtils
      *
      * @return string
      */
-    public static function getScripts(): string
-    {
+    public static function getScripts(): string {
         $res = '';
         $custom = SCRIPTS_PAGE_TYPE[self::getInstance()->pageType] ?? [];
         $scriptsName = [...SCRIPTS_PAGE_TYPE['all'], ...$custom];
@@ -142,8 +136,7 @@ class PageUtils
      *
      * @return string
      */
-    public static function getLogo(): string
-    {
+    public static function getLogo(): string {
         $logo = '<h1 class="logo">WebtoonLike</h1>';
         if (self::getInstance()->pageType === 'home') {
             return $logo;
@@ -156,13 +149,12 @@ class PageUtils
      *
      * @return string
      */
-    public static function getNavigation(): string
-    {
+    public static function getNavigation(): string {
         $res = '';
         foreach (NAVIGATION as $page => $item) {
             $isCurrent = self::getInstance()->pageType === $page;
 
-            if (Authentication::hasAccess($item['accessLevel'], true)) {
+            if(Authentication::hasAccess($item['accessLevel'], true)) {
                 $res .= '<li data-tooltip="' . '">';
                 $res .= $isCurrent ? '' : '<a href="' . $item['target'] . '">';
                 $res .= $item['icon'];

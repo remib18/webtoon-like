@@ -18,13 +18,12 @@ class TranslationProposition implements EntityInterface
     private int $userId;
 
     public function __construct(
-        ?int   $translationPropositionID,
+        ?int $translationPropositionID,
         string $proposedTranslation,
-        int    $blockID,
-        int    $userID,
-        bool   $fromDB = true
-    )
-    {
+        int $blockID,
+        int $userID,
+        bool $fromDB = true
+    ) {
         $this->id = $translationPropositionID;
         $this->setProposedTranslation($proposedTranslation);
         $this->setBlockId($blockID);
@@ -101,8 +100,7 @@ class TranslationProposition implements EntityInterface
         'blockID' => "int",
         'userID' => "int"
     ])]
-    public function __toArray(): array
-    {
+    public function __toArray(): array {
         return [
             'translationPropositionID' => $this->id,
             'proposedTranslation' => $this->proposedTranslation,
@@ -114,8 +112,7 @@ class TranslationProposition implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array
-    {
+    public static function getColumnsKeys(): array {
         return [
             'translationPropositionID',
             'proposedTranslation',
@@ -164,8 +161,7 @@ class TranslationProposition implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

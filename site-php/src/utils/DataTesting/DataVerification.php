@@ -8,8 +8,7 @@ class DataVerification
 
     private function __construct(
         private readonly DataField $field
-    )
-    {
+    ) {
     }
 
     /**
@@ -19,8 +18,7 @@ class DataVerification
      *
      * @return bool|void
      */
-    public static function verify(DataField $field)
-    {
+    public static function verify(DataField $field) {
         $instance = new DataVerification($field);
 
         switch ($field->getType()) {
@@ -44,8 +42,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyString(): bool
-    {
+    private function verifyString(): bool {
         $str = $this->field->getData();
 
         if ($this->field->getNullable() && empty($str)) return true;
@@ -66,8 +63,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyEmail(): bool
-    {
+    private function verifyEmail(): bool {
         $email = $this->field->getData();
 
         if ($this->field->getNullable() && empty($email)) return true;
@@ -86,8 +82,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyInt(): bool
-    {
+    private function verifyInt(): bool {
         $int = $this->field->getData();
 
         if ($this->field->getNullable() && empty($int)) return true;
@@ -104,8 +99,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyFloat(): bool
-    {
+    private function verifyFloat(): bool {
         $float = $this->field->getData();
 
         if ($this->field->getNullable() && empty($float)) return true;
@@ -122,8 +116,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyBool(): bool
-    {
+    private function verifyBool(): bool {
         $bool = $this->field->getData();
         return $this->field->getNullable() || is_bool($bool);
     }
@@ -133,8 +126,7 @@ class DataVerification
      *
      * @return bool
      */
-    private function verifyDate(): bool
-    {
+    private function verifyDate(): bool {
         $date = $this->field->getData();
 
         if ($this->field->getNullable() && empty($date)) return true;

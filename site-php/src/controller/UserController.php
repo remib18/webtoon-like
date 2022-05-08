@@ -57,8 +57,7 @@ class UserController
      * @param int $id Ressource correspondante
      * @return bool
      */
-    public static function exists(int $id): bool
-    {
+    public static function exists(int $id): bool {
         $q = "SELECT userID FROM User WHERE userID = $id";
         $res = Database::getDB()->query($q)->fetch_assoc();
         return sizeof($res ?? []) > 0;

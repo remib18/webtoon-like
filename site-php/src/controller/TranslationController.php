@@ -13,12 +13,11 @@ class TranslationController
      * Obtenir la traduction correspondante.
      *
      * @param string $languageId
-     * @param int $blockID
+     * @param int    $blockID
      *
      * @return Translation|null
      */
-    public static function get(string $languageId, int $blockID): ?Translation
-    {
+    public static function get(string $languageId, int $blockID): ?Translation {
         return Database::getFirst('Translation', Translation::class, '*', [
             'languageIdentifier' => "languageIdentifier = '$languageId'",
             'blockID' => "AND blockID = $blockID"
@@ -32,8 +31,7 @@ class TranslationController
      *
      * @return bool
      */
-    public static function edit(Translation &$entity): bool
-    {
+    public static function edit(Translation &$entity): bool {
         return Database::edit('Translation', $entity);
     }
 
@@ -45,8 +43,7 @@ class TranslationController
      * @return bool
      * @throws NoIdOverwritingException
      */
-    public static function create(Translation &$entity): bool
-    {
+    public static function create(Translation &$entity): bool {
         return Database::create('Translation', $entity);
     }
 
@@ -57,8 +54,7 @@ class TranslationController
      *
      * @return bool
      */
-    public static function remove(Translation $entity): bool
-    {
+    public static function remove(Translation $entity): bool {
         return Database::remove('Translation', $entity);
     }
 

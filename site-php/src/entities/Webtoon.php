@@ -24,8 +24,7 @@ class Webtoon implements EntityInterface
         string $description,
         string $cover,
         bool   $fromDB = true
-    )
-    {
+    ) {
         $this->id = $webtoonID;
         $this->setName($name);
         $this->setAuthor($author);
@@ -88,19 +87,16 @@ class Webtoon implements EntityInterface
     /**
      * @param string $name
      */
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->fieldsToSave['name'] = $name;
         $this->name = $name;
     }
 
-    public function getCover(): string
-    {
+    public function getCover(): string {
         return $this->cover;
     }
 
-    public function setCover(string $path): void
-    {
+    public function setCover(string $path): void {
         $this->fieldsToSave['cover'] = $path;
         $this->cover = $path;
     }
@@ -108,21 +104,21 @@ class Webtoon implements EntityInterface
     /**
      * @inheritDoc
      */
-    #[ArrayShape([
-        'webtoonID' => "int",
-        'name' => "string",
-        'author' => "string",
+    #[ArrayShape( [
+        'webtoonID'   => "int",
+        'name'        => "string",
+        'author'      => "string",
         'description' => "string",
-        'cover' => "string"
+        'cover'       => "string"
     ])]
     public function __toArray(): array
     {
         return [
-            'webtoonID' => $this->id,
-            'name' => $this->name,
-            'author' => $this->author,
+            'webtoonID'   => $this->id,
+            'name'        => $this->name,
+            'author'      => $this->author,
             'description' => $this->description,
-            'cover' => $this->cover
+            'cover'       => $this->cover
         ];
     }
 
@@ -168,15 +164,14 @@ class Webtoon implements EntityInterface
             'name' => new DataField($this->name, DataType::string, false, 1, 256, '/^[\w_\- \'?!.]+$/'),
             'author' => new DataField($this->author, DataType::string, false, 1, 128, '/^[\w_\- \'?!.]+$/'),
             'description' => new DataField($this->description, DataType::string, false, 1, 128, '/^[\w_\- "\'?!.%;:,]+$/'),
-            'cover' => new DataField($this->cover, DataType::string, false, 1, 256, '/^[\w._\-]+$/')
+            'cover' => new DataField($this->cover, DataType::string, false,1,256, '/^[\w._\-]+$/')
         ];
     }
 
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

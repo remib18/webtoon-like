@@ -18,16 +18,14 @@ class Router
 
     public static ?string $ERROR = null;
 
-    private function __construct()
-    {
+    private function __construct() {
         $this->pageType = UriUtils::getPageType();
     }
 
     /**
      * @return Router
      */
-    private static function getRouter(): Router
-    {
+    private static function getRouter(): Router {
         if (is_null(self::$router)) self::$router = new Router();
         return self::$router;
     }
@@ -37,8 +35,7 @@ class Router
      *
      * @return bool
      */
-    private static function isRessourceAccessibleForUser(): bool
-    {
+    private static function isRessourceAccessibleForUser(): bool {
         return Authentication::hasAccess();
     }
 
@@ -50,8 +47,7 @@ class Router
      *
      * @return void
      */
-    public static function route(RouterMode $mode, ?array $data): void
-    {
+    public static function route(RouterMode $mode, ?array $data): void {
         if (!self::isRessourceAccessibleForUser()) {
             self::redirect('', 403, [], '#register');
         }
@@ -78,26 +74,22 @@ class Router
      *
      * @return void
      */
-    private function pureHTMLRouting(array $data): void
-    {
+    private function pureHTMLRouting(array $data): void {
         // TODO: [TemplateEngine] @MPXH
         try {
             echo TemplateEngine::load($this->pageType, $data);
-        } catch (NotFoundException) {
-            self::notFound();
-        }
+        } catch (NotFoundException) { self::notFound(); }
     }
 
     /**
      * Routing de fichiers php
      *
-     * @param bool $isHandler
+     * @param bool        $isHandler
      * @param string|null $forcePageTemplate
      *
      * @return void
      */
-    private function generatedHTMLRouting(bool $isHandler = false, ?string $forcePageTemplate = null): void
-    {
+    private function generatedHTMLRouting(bool $isHandler = false, ?string $forcePageTemplate = null): void {
         $ressourceLocation = $isHandler ? 'HANDLERS_FOLDER' : 'GENERATED_PAGES_FOLDER';
         $pageType = $isHandler ? substr($this->pageType, 1) : $this->pageType;
         $pageType = $forcePageTemplate ?? $pageType;
@@ -110,15 +102,14 @@ class Router
     /**
      * Effectue une redirection
      *
-     * @param string $url Destination de la redirection
-     * @param int $code Code d'erreur HTTP
-     * @param array $getParams Paramètres $_GET à fournir à la redirection
-     * @param string $htmlId Identifiant HTML
+     * @param string $url       Destination de la redirection
+     * @param int    $code      Code d'erreur HTTP
+     * @param array  $getParams Paramètres $_GET à fournir à la redirection
+     * @param string $htmlId    Identifiant HTML
      *
      * @return void
      */
-    #[NoReturn] public static function redirect(string $url, null|int $code = 301, array $getParams = [], string $htmlId = ''): void
-    {
+    #[NoReturn] public static function redirect(string $url, null|int $code = 301, array $getParams = [], string $htmlId = ''): void {
         if (self::$redirected) return;
         self::$redirected = true;
         self::getRouter()->generatedHTMLRouting(false, 'error');
@@ -134,8 +125,7 @@ class Router
      *
      * @return void
      */
-    #[NoReturn] public static function notFound(): void
-    {
+    #[NoReturn] public static function notFound(): void {
         self::$ERROR = 'Erreur 404: Page non trouvée.';
         self::redirect('/error', 404, [
             'msg' => 'La pas demandée n\'existe pas.'
