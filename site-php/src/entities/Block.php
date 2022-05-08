@@ -3,11 +3,6 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-use WebtoonLike\Site\features\Translation\Result\Bloc;
-use WebtoonLike\Site\utils\DataTesting\DataField;
-use WebtoonLike\Site\utils\DataTesting\DataType;
-use WebtoonLike\Site\utils\DataTesting\DataVerification;
 
 class Block implements EntityInterface
 {
