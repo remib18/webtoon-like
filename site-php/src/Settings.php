@@ -29,7 +29,7 @@ class Settings {
             'HANDLERS_FOLDER' => baseDirectory . '/src/handlers/'
         ],
         'production' => false,
-        'AZURE_API_KEY' => '9b975df258dc4e12a8605381a4fb4b4a',
+        'AZURE_API_KEY' => '...',
         'AZURE_API_LOCATION' => 'westeurope',
         'webtoonsCovers' => '../assets/webtoons-imgs/',
         'webtoonsChapterImage' => '../assets/webtoons-imgs/chapters/'
