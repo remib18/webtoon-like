@@ -2,9 +2,7 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-use Exception;
-
-class UnsupportedLanguageException extends Exception
+class UnsupportedLanguageException extends \Exception
 {
 
 }

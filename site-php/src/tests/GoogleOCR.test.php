@@ -22,7 +22,6 @@ var_dump($singleRes);
 }
 var_dump($ocr->runOCR());*/
 
-function makePath(int $i): string
-{
+function makePath(int $i): string {
     return "black-clover/2/$i.jpg";
 }

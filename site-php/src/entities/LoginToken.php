@@ -17,11 +17,10 @@ class LoginToken implements EntityInterface
 
     public function __construct(
         string $token,
-        int    $lifeSpan,
-        int    $userID,
-        bool   $fromDB = true
-    )
-    {
+        int $lifeSpan,
+        int $userID,
+        bool $fromDB = true
+    ) {
         $this->setToken($token);
         $this->setLifeSpan($lifeSpan);
         $this->setUserID($userID);
@@ -84,9 +83,9 @@ class LoginToken implements EntityInterface
      * @inheritDoc
      */
     #[ArrayShape([
-            'token' => "mixed",
-            'lifeSpan' => "mixed",
-            'userID' => "mixed"]
+        'token' => "mixed",
+        'lifeSpan' => "mixed",
+        'userID' => "mixed"]
     )]
     public function __toArray(): array
     {
@@ -152,8 +151,6 @@ class LoginToken implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void
-    {
-    }
+    public function setId(int $id): void {}
 
 }

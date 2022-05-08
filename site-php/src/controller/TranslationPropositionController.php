@@ -13,13 +13,12 @@ class TranslationPropositionController
      * Obtenir la traduction proposé correspondante.
      *
      * @param string $proposition
-     * @param int $blockID
-     * @param int $userID
+     * @param int    $blockID
+     * @param int    $userID
      *
      * @return TranslationProposition|null
      */
-    public static function getOne(string $proposition, int $blockID, int $userID): ?TranslationProposition
-    {
+    public static function getOne(string $proposition, int $blockID, int $userID): ?TranslationProposition {
         return Database::getFirst('TranslationProposition', TranslationProposition::class, '*', [
             'languageIdentifier' => "languageIdentifier = '$proposition'",
             'blockID' => "AND blockID = $blockID",
@@ -34,8 +33,7 @@ class TranslationPropositionController
      *
      * @return bool
      */
-    public static function edit(TranslationProposition &$entity): bool
-    {
+    public static function edit(TranslationProposition &$entity): bool {
         return Database::edit('TranslationProposition', $entity);
     }
 
@@ -47,8 +45,7 @@ class TranslationPropositionController
      * @return bool
      * @throws NoIdOverwritingException
      */
-    public static function create(TranslationProposition &$entity): bool
-    {
+    public static function create(TranslationProposition &$entity): bool {
         return Database::create('TranslationProposition', $entity);
     }
 
@@ -59,8 +56,7 @@ class TranslationPropositionController
      *
      * @return bool
      */
-    public static function remove(TranslationProposition $entity): bool
-    {
+    public static function remove(TranslationProposition $entity): bool {
         return Database::remove('TranslationProposition', $entity);
     }
 

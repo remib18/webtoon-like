@@ -19,13 +19,12 @@ class Chapter implements EntityInterface
     private int $webtoonId;
 
     public function __construct(
-        ?int   $chapterID,
-        int    $index,
+        ?int $chapterID,
+        int $index,
         string $title,
-        int    $webtoonID,
-        bool   $fromDB = true
-    )
-    {
+        int $webtoonID,
+        bool $fromDB = true
+    ) {
         $this->id = $chapterID;
         $this->setIndex($index);
         $this->setTitle($title);
@@ -123,8 +122,7 @@ class Chapter implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array
-    {
+    public static function getColumnsKeys(): array {
         return [
             'chapterID',
             'index',
@@ -149,7 +147,7 @@ class Chapter implements EntityInterface
         return [
             'chapterID' => new DataField($this->id, DataType::int, true),
             'index' => new DataField($this->index, DataType::int),
-            'title' => new DataField($this->title, DataType::string, false, 1, 256, '/^[\w_\- "\'?!.%;:,]+$/'),
+            'title' =>  new DataField($this->title, DataType::string,false,1,256, '/^[\w_\- "\'?!.%;:,]+$/'),
             'webtoonID' => new DataField($this->webtoonId, DataType::int)
         ];
     }
@@ -173,8 +171,7 @@ class Chapter implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void
-    {
+    public function setId(int $id): void {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

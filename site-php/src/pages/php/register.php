@@ -15,7 +15,7 @@
                    pattern="^[a-zA-Z0-9_\-]{3,32}$"
                    title="Votre pseudo doit contenir entre 3 et 32 characters alphanumérique, underscore et tirets autorisés."
                    autocomplete="off"
-                   class='large'
+                   class = 'large'
                    required>
         </label>
 
@@ -26,7 +26,7 @@
                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                    title="Entrez un email valid."
                    autocomplete="on"
-                   class='large'
+                   class = 'large'
                    required>
         </label>
 
@@ -37,16 +37,16 @@
                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                    title="Doit contenir au moins un chiffre, une majuscule, une minuscule et doit être d'au minimum 8 caractères."
                    autocomplete="on"
-                   class='large'
+                   class = 'large'
                    required>
         </label>
 
-        <label for="confirmation_password">Répéter le mot de passe:
+        <label for="confirmation_password">Répéter  le mot de passe:
             <input type="password"
                    name="confirmation_password" id="confirmation_password"
                    placeholder="Répéter le mot de passe"
                    autocomplete="off"
-                   class='large'
+                   class = 'large'
                    required>
         </label>
 
