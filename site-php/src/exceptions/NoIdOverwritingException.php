@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\entities;
 
-class NoIdOverwritingException extends \Exception
+use Exception;
+
+class NoIdOverwritingException extends Exception
 {
 
 }

@@ -19,15 +19,16 @@ class Database
     /**
      * Retourne toutes les ressources dans la table
      *
-     * @param string       $table       La table
-     * @param string       $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
-     * @param string|array $select      '*' ou un tableau contenant les noms des champs à sélectionner
-     * @param array        $where       Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules
+     * @param string $table La table
+     * @param string $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
+     * @param string|array $select '*' ou un tableau contenant les noms des champs à sélectionner
+     * @param array $where Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules
      *                                  et les tests
      *
      * @return EntityInterface[] Un tableau de l'entité correspondante à celle souhaité
      */
-    public static function getAll(string $table, string $entityClass, string|array $select, array $where): array {
+    public static function getAll(string $table, string $entityClass, string|array $select, array $where): array
+    {
         $selectedColumns = self::getSelectedColumns($select, $entityClass);
         $whereConditions = sizeof($where) > 0 ? ' WHERE' . self::getWhereConditions($where, $entityClass) : '';
         $q = "SELECT $selectedColumns FROM `$table` $whereConditions;";
@@ -41,11 +42,12 @@ class Database
      * Construit la liste des colonnes sélectionnées
      *
      * @param string|array $select
-     * @param string       $entityClass
+     * @param string $entityClass
      *
      * @return string
      */
-    private static function getSelectedColumns(string|array $select, string $entityClass): string {
+    private static function getSelectedColumns(string|array $select, string $entityClass): string
+    {
         if ($select === '*') return $select;
         if (is_string($select)) throw new InvalidArgumentException('Select can only be \'*\' or an array of columns.');
         self::testIfColumnKeysExistsOnEntity($select, $entityClass);
@@ -56,12 +58,13 @@ class Database
      * Vérifie l'existence de la colonne dans la table
      * Note: pourrait avoir été effectué avec des requêtes, mais risque de surcharge de la base.
      *
-     * @param array  $keys
+     * @param array $keys
      * @param string $entityClass
      *
      * @return void
      */
-    private static function testIfColumnKeysExistsOnEntity(array $keys, string $entityClass): void {
+    private static function testIfColumnKeysExistsOnEntity(array $keys, string $entityClass): void
+    {
         foreach ($keys as $key) {
             if (!in_array($key, $entityClass::getColumnsKeys())) {
                 throw new InvalidArgumentException("Key $key does not exist on entity $entityClass.");
@@ -72,12 +75,13 @@ class Database
     /**
      * Construit une condition where
      *
-     * @param array  $where
+     * @param array $where
      * @param string $entityClass
      *
      * @return string
      */
-    private static function getWhereConditions(array $where, string $entityClass): string {
+    private static function getWhereConditions(array $where, string $entityClass): string
+    {
         $res = '';
         foreach ($where as $key => $value) {
             self::testIfColumnKeysExistsOnEntity(mb_split(',', $key), $entityClass);
@@ -91,7 +95,8 @@ class Database
      *
      * @return mysqli
      */
-    public static function getDB(): mysqli {
+    public static function getDB(): mysqli
+    {
         if (!isset(self::$db)) {
             self::$db = new mysqli(...Settings::get('DATABASE'));
         }
@@ -101,12 +106,13 @@ class Database
     /**
      * Transforme une réponse mysqli en tableau d'objets
      *
-     * @param array  $response Réponse mysqli avec un fetchAll assoc
-     * @param string $class    Classe représentant les objects
+     * @param array $response Réponse mysqli avec un fetchAll assoc
+     * @param string $class Classe représentant les objects
      *
      * @return EntityInterface[]|null
      */
-    public static function responseToObjects(array $response, string $class): ?array {
+    public static function responseToObjects(array $response, string $class): ?array
+    {
         $res = [];
         if (sizeof($response) === 1 && is_null($response[0])) return null;
         foreach ($response as $item) {
@@ -118,15 +124,16 @@ class Database
     /**
      * Retourne la première ressource correspondante
      *
-     * @param string       $table       La table
-     * @param string       $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
-     * @param string|array $select      '*' ou un tableau contenant les noms des champs à sélectionner
-     * @param array        $where       Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules
+     * @param string $table La table
+     * @param string $entityClass Le nom de la class d'entité (obtenu avec RessourceEntity::class)
+     * @param string|array $select '*' ou un tableau contenant les noms des champs à sélectionner
+     * @param array $where Tableau contenant comme clé le nom des champs utilisé, séparer par des virgules
      *                                  et les tests
      *
      * @return EntityInterface|null L'entité correspondante à celle souhaité ou null si inexistant
      */
-    public static function getFirst(string $table, string $entityClass, string|array $select, array $where): ?EntityInterface {
+    public static function getFirst(string $table, string $entityClass, string|array $select, array $where): ?EntityInterface
+    {
         $selectedColumns = self::getSelectedColumns($select, $entityClass);
         $whereConditions = sizeof($where) > 0 ? ' WHERE' . self::getWhereConditions($where, $entityClass) : '';
         $q = "SELECT $selectedColumns FROM `$table` $whereConditions;";
@@ -140,12 +147,13 @@ class Database
     /**
      * Supprime la ressource et renvoie vrai si l'opération a été effectué avec succès.
      *
-     * @param string          $table  Le nom de la table
+     * @param string $table Le nom de la table
      * @param EntityInterface $entity La ressource à supprimer
      *
      * @return bool
      */
-    public static function remove(string $table, EntityInterface $entity): bool {
+    public static function remove(string $table, EntityInterface $entity): bool
+    {
         if (!self::runTests($entity)) return false;
 
         $where = self::whereIds($entity);
@@ -161,7 +169,8 @@ class Database
      *
      * @return bool
      */
-    private static function runTests(EntityInterface $entity): bool {
+    private static function runTests(EntityInterface $entity): bool
+    {
         $res = true;
         foreach ($entity->getTypes() as $field) {
             $res = DataVerification::verify($field) && $res;
@@ -176,7 +185,8 @@ class Database
      *
      * @return string
      */
-    private static function whereIds(EntityInterface $entity): string {
+    private static function whereIds(EntityInterface $entity): string
+    {
         $where = '';
         foreach ($entity::getIdentifiers() as $id) {
             $value = $entity->__toArray()[$id];
@@ -192,7 +202,8 @@ class Database
      *
      * @return string
      */
-    public static function normalizeValue(mixed $value): string {
+    public static function normalizeValue(mixed $value): string
+    {
         if (is_null($value)) return 'null';
         if (is_bool($value)) return $value ? 'true' : 'false';
         return is_string($value) ? "'" . self::getDB()->escape_string($value) . "'" : (string)$value;
@@ -201,7 +212,7 @@ class Database
     /**
      * Crée une ressource dans la base de donnée
      *
-     * @param string          $table  Le nom de la table
+     * @param string $table Le nom de la table
      * @param EntityInterface $entity La ressource à enregistrer
      *
      *                                La ressource est modifiée avec son nouvel identifiant
@@ -209,7 +220,8 @@ class Database
      * @return bool Faux en cas d'erreur
      * @throws NoIdOverwritingException
      */
-    public static function create(string $table, EntityInterface &$entity): bool {
+    public static function create(string $table, EntityInterface &$entity): bool
+    {
         if (!self::runTests($entity)) return false;
 
         $fields = '';
@@ -235,7 +247,8 @@ class Database
      *
      * @return int
      */
-    public static function getLastInsertedId(): int {
+    public static function getLastInsertedId(): int
+    {
         $q = 'SELECT LAST_INSERT_ID();';
         return self::getDB()->query($q)->fetch_row()[0];
     }
@@ -243,14 +256,15 @@ class Database
     /**
      * Enregistrer une liste d'entités dans la base de données
      *
-     * @param string            $table    Le nom de la table
+     * @param string $table Le nom de la table
      * @param EntityInterface[] $entities Les ressources à enregistrer
      *
      * @return bool
      * @throws NoIdOverwritingException
      * @throws UnsupportedOperationException
      */
-    public static function createBatch(string $table, array &$entities): bool {
+    public static function createBatch(string $table, array &$entities): bool
+    {
 
         foreach ($entities as $entity) {
             if (!self::runTests($entity)) return false;
@@ -290,7 +304,8 @@ class Database
      *
      * @return string
      */
-    private static function insertValues(array $entities): string {
+    private static function insertValues(array $entities): string
+    {
         $res = '';
         foreach ($entities as $entity) {
             $fields = [];
@@ -305,12 +320,13 @@ class Database
     /**
      * Modifie une ressource dans la base de donnée
      *
-     * @param string          $table  Le nom de la table
+     * @param string $table Le nom de la table
      * @param EntityInterface $entity La ressource modifiée
      *
      * @return bool Faux en cas d'erreur
      */
-    public static function edit(string $table, EntityInterface &$entity): bool {
+    public static function edit(string $table, EntityInterface &$entity): bool
+    {
         if (!self::runTests($entity)) return false;
 
         $sets = self::buildEditSet($entity);
@@ -330,7 +346,8 @@ class Database
      *
      * @return string
      */
-    private static function buildEditSet(EntityInterface $entity): string {
+    private static function buildEditSet(EntityInterface $entity): string
+    {
         $res = '';
         foreach ($entity->getFieldsToSave() as $key => $value) {
             $value = self::normalizeValue($value);

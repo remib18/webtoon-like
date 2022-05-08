@@ -22,20 +22,21 @@ class User implements EntityInterface
     private bool $deleted;
 
     public function __construct(
-        ?int $userID,
-        string $username,
-        string $email,
-        string $password,
+        ?int            $userID,
+        string          $username,
+        string          $email,
+        string          $password,
         DateTime|string $registeredAt,
-        bool $fromDB = true,
-        bool $deleted = false
-    ){
+        bool            $fromDB = true,
+        bool            $deleted = false
+    )
+    {
         $this->id = $userID;
         $this->setUsername($username);
         $this->setEmail($email);
         $this->setPassword($password);
         $this->setDeleted($deleted);
-        if(is_string($registeredAt)) {
+        if (is_string($registeredAt)) {
             $registeredAt = new DateTime($registeredAt);
         }
         $this->registeredAt = $registeredAt;
@@ -78,7 +79,8 @@ class User implements EntityInterface
         return $this->password;
     }
 
-    public function setPassword(string $password): void {
+    public function setPassword(string $password): void
+    {
         $this->fieldsToSave['password'] = $password;
         $this->password = $password;
     }
@@ -117,7 +119,8 @@ class User implements EntityInterface
         $this->deleted = $deleted;
     }
 
-    public function isDeleted(): bool {
+    public function isDeleted(): bool
+    {
         return $this->deleted;
     }
 
@@ -132,7 +135,8 @@ class User implements EntityInterface
         'registeredAt' => "\DateTime",
         'deleted' => "bool"
     ])]
-    public function __toArray(): array {
+    public function __toArray(): array
+    {
         return [
             'userID' => $this->id,
             'username' => $this->username,
@@ -146,7 +150,8 @@ class User implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array {
+    public static function getColumnsKeys(): array
+    {
         return [
             'userID',
             'username',
@@ -199,7 +204,8 @@ class User implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

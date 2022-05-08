@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class InvalidRequestException extends \Exception
+use Exception;
+
+class InvalidRequestException extends Exception
 {
 
 }

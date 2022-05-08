@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\controller;
 
 use WebtoonLike\Site\entities\LoginToken;
+use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\utils\Database;
 
 class LoginTokenController
@@ -19,7 +20,7 @@ class LoginTokenController
     /**
      * @param LoginToken $entity
      * @return bool
-     * @throws \WebtoonLike\Site\entities\NoIdOverwritingException
+     * @throws NoIdOverwritingException
      */
     public static function create(LoginToken &$entity): bool
     {

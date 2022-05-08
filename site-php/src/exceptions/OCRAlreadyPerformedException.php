@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class OCRAlreadyPerformedException extends \Exception
+use Exception;
+
+class OCRAlreadyPerformedException extends Exception
 {
 
 }

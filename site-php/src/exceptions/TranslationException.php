@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class TranslationException extends \Exception
+use Exception;
+
+class TranslationException extends Exception
 {
 
 }

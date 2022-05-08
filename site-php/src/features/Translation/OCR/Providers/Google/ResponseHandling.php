@@ -21,9 +21,10 @@ class ResponseHandling
 
     /**
      * @param AnnotateImageResponse $response
-     * @param Image                 $image
+     * @param Image $image
      */
-    public function __construct(private AnnotateImageResponse $response, private Image $image) {
+    public function __construct(private AnnotateImageResponse $response, private Image $image)
+    {
         $this->result = new Result($this->image->getPath(), $this->image->getOriginalLanguage());
     }
 
@@ -33,7 +34,8 @@ class ResponseHandling
      * @return void
      * @throws NoIdOverwritingException
      */
-    public function handle(): void {
+    public function handle(): void
+    {
         $this->setFontSize();
         $this->setTexts();
         $this->makeBlocs();
@@ -47,7 +49,8 @@ class ResponseHandling
      *
      * @return void
      */
-    private function setFontSize() {
+    private function setFontSize()
+    {
         $charVertices = $this->response
             ->getFullTextAnnotation()
             ->getPages()[0]
@@ -67,7 +70,8 @@ class ResponseHandling
      *
      * @return void
      */
-    private function setTexts() {
+    private function setTexts()
+    {
         $textAnnotations = $this->response->getTextAnnotations();
         for ($i = 1; $i < sizeof($textAnnotations); $i++) {
             $this->texts[] = $textAnnotations[$i]->getDescription();
@@ -79,7 +83,8 @@ class ResponseHandling
      *
      * @return void
      */
-    private function makeBlocs() {
+    private function makeBlocs()
+    {
         foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
             foreach ($page->getBlocks() as $block) {
                 $text = '';
@@ -113,7 +118,8 @@ class ResponseHandling
      *
      * @return void
      */
-    private function fixBlocs() {
+    private function fixBlocs()
+    {
         $initialBlocks = $this->result->getBlocks();
         $blocks = [];
         for ($i = 0; $i < sizeof($initialBlocks); $i++) {
@@ -140,7 +146,8 @@ class ResponseHandling
      * @return void
      * @throws NoIdOverwritingException
      */
-    private function saveInDB(): void {
+    private function saveInDB(): void
+    {
         // Enregistrement des blocs
         $blocks = $this->result->getBlocks();
         BlockController::createBatch($blocks);

@@ -23,8 +23,8 @@ class GoogleOCR implements OCRInterface
     /** @var array<?Image> */
     private array $images = [];
 
-    /** @var Result[]  */
-    private array $results= [];
+    /** @var Result[] */
+    private array $results = [];
 
     /** @var Image[] $toGetFromDB Buffer pour les images à aller chercher dans la db */
     private array $toGetFromDB = [];
@@ -52,7 +52,8 @@ class GoogleOCR implements OCRInterface
         return $this;
     }
 
-    public function registerChapterId(int $chapterId): void {
+    public function registerChapterId(int $chapterId): void
+    {
         $this->chapterId = $chapterId;
     }
 
@@ -81,7 +82,8 @@ class GoogleOCR implements OCRInterface
      *
      * @throws \Google\ApiCore\ApiException
      */
-    private function runBatch(): void {
+    private function runBatch(): void
+    {
         try {
             $textDetection = (new Feature())
                 ->setType(Feature\Type::TEXT_DETECTION);
@@ -94,7 +96,7 @@ class GoogleOCR implements OCRInterface
                 if ($image->doesNeedOCR()) {
                     $path = Settings::get('WEBTOONS_IMAGES_FOLDER') . '/' . $image->getPath();
                     $gcImage = (new GCImage())
-                        ->setContent(file_get_contents($path,"r"));
+                        ->setContent(file_get_contents($path, "r"));
 
                     $requests[] = (new AnnotateImageRequest())
                         ->setImage($gcImage)
@@ -107,7 +109,7 @@ class GoogleOCR implements OCRInterface
 
             $results = $this->ocrClient->batchAnnotateImages($requests);
             $i = 0;
-            foreach($results->getResponses() as $result){
+            foreach ($results->getResponses() as $result) {
                 $image = $imagesToHandle[$i];
                 // Traite l'image, Obtention par la suite via BDD
                 (new ResponseHandling($result, $image))->handle();
@@ -119,7 +121,8 @@ class GoogleOCR implements OCRInterface
         }
     }
 
-    private function getResults(): void {
+    private function getResults(): void
+    {
         $chapterId = $this->chapterId;
         $q = "SELECT Block.blockID, Block.originalContent, Block.startX, Block.startY, Block.endX, Block.endY, Block.imageID FROM Chapter INNER JOIN Image USING (chapterID) INNER JOIN Block USING (imageID) WHERE chapterID = $chapterId;";
         $blocks = Database::responseToObjects(
@@ -134,7 +137,8 @@ class GoogleOCR implements OCRInterface
         }
     }
 
-    private function getBlockForImage(array $blocks, Image $image): array {
+    private function getBlockForImage(array $blocks, Image $image): array
+    {
         $res = [];
         foreach ($blocks as $block) {
             if ($block->getImageId() === $image->getId()) {

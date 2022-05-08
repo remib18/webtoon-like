@@ -22,7 +22,7 @@ $res = Authentication::editPassword(
     $_POST['confirmation_new_password']
 );
 
-if(is_bool($res) && $res) {
+if (is_bool($res) && $res) {
     Router::redirect("/changePassword", 301, ['msg' => 'Votre mot de passe a bien été modifié']);
 } else {
     Router::redirect('/changePassword', 301, ['error' => $res]);

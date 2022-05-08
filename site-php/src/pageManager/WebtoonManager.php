@@ -9,24 +9,31 @@ use WebtoonLike\Site\entities\Webtoon;
 
 class WebtoonManager
 {
-    public static function CheckNull(): void{
-        if(is_null(self::getWebtoon())){
+    public static function CheckNull(): void
+    {
+        if (is_null(self::getWebtoon())) {
             Router::redirect('/error', 301, ['msg' => 'Nous n\'avons pas réussie à trouver le Webtoon']);
         }
     }
-    private static function getWebtoon(): ?Webtoon {
+
+    private static function getWebtoon(): ?Webtoon
+    {
         return WebtoonController::getById((int)$_GET['id']);
     }
 
-    public static function getName(): string {
+    public static function getName(): string
+    {
         return self::getWebtoon()->getName();
     }
-    public static function getId(): ?int {
+
+    public static function getId(): ?int
+    {
         return self::getWebtoon()->getId();
     }
 
-    public static function getChapters(): string {
-        $requestedIndex = (int)( $_GET['chapter'] ?? 1 );
+    public static function getChapters(): string
+    {
+        $requestedIndex = (int)($_GET['chapter'] ?? 1);
         $res = '';
 
         foreach (ChapterController::getAllForWebtoon(self::getWebtoon()->getId()) as $chapter) {
@@ -42,7 +49,8 @@ class WebtoonManager
         return $res;
     }
 
-    public static function getDescription(): string {
+    public static function getDescription(): string
+    {
         return self::getWebtoon()->getDescription();
     }
 

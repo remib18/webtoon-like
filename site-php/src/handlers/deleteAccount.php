@@ -5,7 +5,7 @@ namespace WebtoonLike\Site\handler;
 use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\core\Router;
 
-if ( !isset($_POST['deleteAccount'], $_POST['password'], $_SESSION['id'])
+if (!isset($_POST['deleteAccount'], $_POST['password'], $_SESSION['id'])
     || empty($_POST['deleteAccount'])
     || empty($_POST['password'])) {
 
@@ -14,7 +14,7 @@ if ( !isset($_POST['deleteAccount'], $_POST['password'], $_SESSION['id'])
 
 $res = Authentication::deleteAccount($_SESSION['id'], $_POST['password']);
 
-if(is_bool($res) && $res) {
+if (is_bool($res) && $res) {
     Authentication::logout();
 } else {
     Router::redirect('/deleteAccount', 301, ['errorDeletion' => $res]);

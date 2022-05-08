@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class InvalidProtocolException extends \Exception
+use Exception;
+
+class InvalidProtocolException extends Exception
 {
 
 }

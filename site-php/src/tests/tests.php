@@ -40,14 +40,16 @@ while ($file = readdir($handle)) {
 <h1>WebtoonLike — Tests</h1>
 <table>
     <thead>
-        <tr>
-            <th>Test</th>
-        </tr>
+    <tr>
+        <th>Test</th>
+    </tr>
     </thead>
     <tbody>
-        <?php foreach ($files as $file): ?>
-            <tr><td><a href="<?= 'src/tests/' . $file ?>"><?= $file ?></a></td></tr>
-        <?php endforeach ?>
+    <?php foreach ($files as $file): ?>
+        <tr>
+            <td><a href="<?= 'src/tests/' . $file ?>"><?= $file ?></a></td>
+        </tr>
+    <?php endforeach ?>
     </tbody>
 </table>
 

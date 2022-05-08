@@ -2,11 +2,13 @@
 
 namespace WebtoonLike\Site;
 
+use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
 
 define("WebtoonLike\Site\baseDirectory", dirname(__DIR__));
 
-class Settings {
+class Settings
+{
 
     private static array $settings = [
         'GT_API_KEY_FILE' => baseDirectory . '/google-key.json',
@@ -35,9 +37,10 @@ class Settings {
         'webtoonsChapterImage' => '../assets/webtoons-imgs/chapters/'
     ];
 
-    public static function get(string $key): mixed {
+    public static function get(string $key): mixed
+    {
         if (!isset(self::$settings[$key]))
-            throw new \InvalidArgumentException('Key ' . $key . 'does not exist.');
+            throw new InvalidArgumentException('Key ' . $key . 'does not exist.');
         return self::$settings[$key];
     }
 
@@ -51,7 +54,8 @@ class Settings {
         'AZURE_API_KEY' => "string",
         'AZURE_API_LOCATION' => 'string'
     ])]
-    public static function getAll(): array {
+    public static function getAll(): array
+    {
         return self::$settings;
     }
 

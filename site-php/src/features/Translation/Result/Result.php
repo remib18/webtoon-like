@@ -25,15 +25,18 @@ class Result
      * @param ?Language $originalLanguage Le langage d'origine de l'image, null si inconnu.
      */
     public function __construct(
-        private ?string $imagePath,
+        private ?string   $imagePath,
         private ?Language $originalLanguage
-    ) {}
+    )
+    {
+    }
 
     /**
      * @param Block $block
      * @return void
      */
-    public function appendBlock(Block $block): void {
+    public function appendBlock(Block $block): void
+    {
         if (is_null($block->getId())) {
             $this->blocks[] = $block;
         } else {
@@ -90,32 +93,35 @@ class Result
     /**
      * @return Language|null
      */
-    public function getOriginalLanguage(): ?Language {
+    public function getOriginalLanguage(): ?Language
+    {
         return $this->originalLanguage;
     }
 
     /**
-     * @param array    $translations
+     * @param array $translations
      * @param Language $target
      *
      * @return void
      * @throws TranslationException
      */
-    public function setTranslations(array $translations, Language $target): void {
+    public function setTranslations(array $translations, Language $target): void
+    {
         foreach ($translations as $blockId => $translation) {
             $this->setTranslationForBlock($blockId, $translation, $target->getIdentifier());
         }
     }
 
     /**
-     * @param int    $id
+     * @param int $id
      * @param string $translation
      * @param string $languageId
      *
      * @return void
      * @throws TranslationException
      */
-    private function setTranslationForBlock(int $id, string $translation, string $languageId): void {
+    private function setTranslationForBlock(int $id, string $translation, string $languageId): void
+    {
         if (isset($this->mappedBlocks[$id])) {
             $this->mappedBlocks[$id]->registerTranslation($languageId, $translation);
             return;
