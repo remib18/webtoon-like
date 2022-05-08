@@ -24,15 +24,16 @@ class Image implements EntityInterface
     private bool $needOCR;
 
     public function __construct(
-        ?int $imageID,
-        int $index,
+        ?int   $imageID,
+        int    $index,
         string $path,
-        int $chapterID,
+        int    $chapterID,
         string $originalLanguage,
-        ?int $fontSize,
-        bool $needOCR = true,
-        bool $fromDB = true
-    ) {
+        ?int   $fontSize,
+        bool   $needOCR = true,
+        bool   $fromDB = true
+    )
+    {
         $this->id = $imageID;
         $this->setIndex($index);
         $this->setPath($path);
@@ -47,14 +48,16 @@ class Image implements EntityInterface
     /**
      * @return int|null
      */
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
     /**
      * @return int
      */
-    public function getIndex(): int {
+    public function getIndex(): int
+    {
         return $this->index;
     }
 
@@ -70,7 +73,8 @@ class Image implements EntityInterface
     /**
      * @return string
      */
-    public function getPath(): string {
+    public function getPath(): string
+    {
         return $this->path;
     }
 
@@ -120,28 +124,32 @@ class Image implements EntityInterface
     /**
      * @return string
      */
-    public function getOriginalLanguageIdentifier(): string {
+    public function getOriginalLanguageIdentifier(): string
+    {
         return $this->originalLanguage;
     }
 
     /**
      * @return Language
      */
-    public function getOriginalLanguage(): Language {
+    public function getOriginalLanguage(): Language
+    {
         return LanguageController::getById($this->originalLanguage);
     }
 
     /**
      * @return int|null
      */
-    public function getFontSize(): ?int {
+    public function getFontSize(): ?int
+    {
         return $this->fontSize;
     }
 
     /**
      * @param int|null $fontSize
      */
-    public function setFontSize(?int $fontSize): void {
+    public function setFontSize(?int $fontSize): void
+    {
         $this->fieldsToSave['fontSize'] = $fontSize;
         $this->fontSize = $fontSize;
     }
@@ -149,7 +157,8 @@ class Image implements EntityInterface
     /**
      * @param string $originalLanguage
      */
-    public function setOriginalLanguage(string $originalLanguage): void {
+    public function setOriginalLanguage(string $originalLanguage): void
+    {
         $this->fieldsToSave['originalLanguage'] = $originalLanguage;
         $this->originalLanguage = $originalLanguage;
     }
@@ -210,7 +219,8 @@ class Image implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array {
+    public static function getColumnsKeys(): array
+    {
         return [
             'imageID',
             'index',
@@ -236,9 +246,9 @@ class Image implements EntityInterface
     public function getTypes(): array
     {
         return [
-            'imageID' =>  new DataField($this->id, DataType::int, true),
-            'index' =>  new DataField($this->index, DataType::int),
-            'path' => new DataField($this->path, DataType::string,false,null,null, '/^[\w._\-\\/]+$/'),
+            'imageID' => new DataField($this->id, DataType::int, true),
+            'index' => new DataField($this->index, DataType::int),
+            'path' => new DataField($this->path, DataType::string, false, null, null, '/^[\w._\-\\/]+$/'),
             'chapterID' => new DataField($this->chapterId, DataType::int),
             'originalLanguage' => new DataField($this->originalLanguage, DataType::string, false, 2, 256, null),
             'fontSize' => new DataField($this->fontSize, DataType::int, true),
@@ -265,7 +275,8 @@ class Image implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

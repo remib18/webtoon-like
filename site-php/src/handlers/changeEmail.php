@@ -12,7 +12,7 @@ if (!isset($_POST['email']) || empty($_POST['email'])) {
 
 $res = Authentication::editEmail($_SESSION['id'], $_POST['email']);
 
-if(is_bool($res) && $res) {
+if (is_bool($res) && $res) {
     header("Location: /user");
 } else {
     Router::redirect('/user', 301, ['error' => $res]);
