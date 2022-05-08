@@ -6,7 +6,8 @@ use InvalidArgumentException;
 use JetBrains\PhpStorm\ArrayShape;
 use WebtoonLike\Site\Settings;
 
-class CurlHelper {
+class CurlHelper
+{
 
     /**
      * Retourne la réponse d'une requête GET.
@@ -25,22 +26,21 @@ class CurlHelper {
         }
         $url = $params['url'];
         $curlSession = curl_init($url);
-            curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-            // if a userAgent is specified, use it.
-            if(isset($params['userAgent']))
-            {
-                curl_setopt($curlSession, CURLOPT_HTTPHEADER, $params['userAgent']);
-            }
+        curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+        // if a userAgent is specified, use it.
+        if (isset($params['userAgent'])) {
+            curl_setopt($curlSession, CURLOPT_HTTPHEADER, $params['userAgent']);
+        }
 
-            // use while testing
-            if( Settings::get('production') === false ) {
-                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
-            }
+        // use while testing
+        if (Settings::get('production') === false) {
+            curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+        }
 
-            $response = curl_exec($curlSession);
-            $decodedResponse = json_decode( $response, true );
-            $responseCode = curl_getinfo($curlSession, CURLINFO_HTTP_CODE);
+        $response = curl_exec($curlSession);
+        $decodedResponse = json_decode($response, true);
+        $responseCode = curl_getinfo($curlSession, CURLINFO_HTTP_CODE);
         curl_close($curlSession);
 
         return ['httpCode' => $responseCode, 'response' => $decodedResponse];
@@ -65,24 +65,24 @@ class CurlHelper {
         }
         $jsonData = json_encode($params['query']);
         $curlSession = curl_init($params['url']);
-            curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($curlSession, CURLOPT_POST, true);
-            curl_setopt($curlSession, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlSession, CURLOPT_POST, true);
+        curl_setopt($curlSession, CURLOPT_POSTFIELDS, $jsonData);
 
-            $header[] = 'Content-Type: application/json';
-            $header[] = 'Content-Length: ' . strlen($jsonData);
+        $header[] = 'Content-Type: application/json';
+        $header[] = 'Content-Length: ' . strlen($jsonData);
 
-            curl_setopt($curlSession, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($curlSession, CURLOPT_HTTPHEADER, $header);
 
-            // use while testing
-            if( Settings::get('production') === false ) {
-                curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
-            }
+        // use while testing
+        if (Settings::get('production') === false) {
+            curl_setopt($curlSession, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($curlSession, CURLOPT_SSL_VERIFYHOST, false);
+        }
 
-            $response = curl_exec($curlSession);
-            $decodedResponse = json_decode( $response, true );
-            $responseCode = curl_getinfo($curlSession, CURLINFO_HTTP_CODE);
+        $response = curl_exec($curlSession);
+        $decodedResponse = json_decode($response, true);
+        $responseCode = curl_getinfo($curlSession, CURLINFO_HTTP_CODE);
         curl_close($curlSession);
 
         return ['httpCode' => $responseCode, 'response' => $decodedResponse];

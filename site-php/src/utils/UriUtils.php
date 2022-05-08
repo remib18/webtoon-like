@@ -14,11 +14,13 @@ class UriUtils
 
     private static ?UriUtils $instance = null;
 
-    private function __construct() {
+    private function __construct()
+    {
         $this->analyseUri();
     }
 
-    private static function getInstance(): UriUtils {
+    private static function getInstance(): UriUtils
+    {
         if (is_null(self::$instance)) {
             self::$instance = new UriUtils();
         }
@@ -30,7 +32,8 @@ class UriUtils
      *
      * @return void
      */
-    private function analyseUri(): void {
+    private function analyseUri(): void
+    {
 
         $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|login|register|deleteAccount|report|webtoon|error|user|changePassword|@[\w\-]+)?)(?:[?\/]([\w\-\/=&+%]*))?$/';
 
@@ -63,7 +66,8 @@ class UriUtils
         }*/
     }
 
-    public static function buildUriGetParamsFromArray(array $array): string {
+    public static function buildUriGetParamsFromArray(array $array): string
+    {
         if (sizeof($array) < 1) return '';
         $res = '';
         foreach ($array as $key => $value) {
@@ -78,21 +82,24 @@ class UriUtils
      *
      * @return string
      */
-    public static function getPageType(): string {
+    public static function getPageType(): string
+    {
         return self::getInstance()->pageType;
     }
 
     /**
      * Obtention des paramètres sous forme de tableau
      *
-     * @todo : Add GET / POST parameters
      * @return array<string, mixed>
+     * @todo : Add GET / POST parameters
      */
-    public static function getArrayOptions(): array {
+    public static function getArrayOptions(): array
+    {
         return self::getInstance()->options;
     }
 
-    public static function isHandler(): bool {
+    public static function isHandler(): bool
+    {
         return str_starts_with(self::getInstance()->pageType, '@');
     }
 
@@ -106,7 +113,8 @@ class UriUtils
         'protocol' => 'string',
         'ressource' => 'string'
     ])]
-    public static function uriProtocol(string $uri): array {
+    public static function uriProtocol(string $uri): array
+    {
         [$protocol, $ressource] = mb_split('://', $uri);
         return [
             'protocol' => $protocol,

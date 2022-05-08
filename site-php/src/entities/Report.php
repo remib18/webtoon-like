@@ -18,10 +18,11 @@ class Report implements EntityInterface
 
     public function __construct(
         ?int $reportID,
-        int $type,
-        int $userID,
+        int  $type,
+        int  $userID,
         bool $fromDB = true
-    ) {
+    )
+    {
         $this->id = $reportID;
         $this->setType($type);
         $this->setUserId($userID);
@@ -79,7 +80,8 @@ class Report implements EntityInterface
         'type' => "int",
         'userID' => "int"
     ])]
-    public function __toArray(): array {
+    public function __toArray(): array
+    {
         return [
             'reportID' => $this->id,
             'type' => $this->type,
@@ -90,7 +92,8 @@ class Report implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array {
+    public static function getColumnsKeys(): array
+    {
         return [
             'reportID',
             'type',
@@ -137,7 +140,8 @@ class Report implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {
+    public function setId(int $id): void
+    {
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }

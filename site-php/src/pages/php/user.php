@@ -1,13 +1,15 @@
-<?php require dirname(__DIR__, 2) . '/components/header.php';
+<?php use WebtoonLike\Site\controller\UserController;
 
-$user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
+require dirname(__DIR__, 2) . '/components/header.php';
+
+$user = UserController::getById($_SESSION['id']);
 
 ?>
 
 <section aria-describedby="#s1-title" id="app">
     <h3>Bienvenue <?= $user->getUsername() ?> !</h3>
     <?= WebtoonLike\Site\pageManager\MessageManager::getErrors() ?>
-    <p>Merci de nous faire confiance depuis le <?= $user->getRegisteredAt()->format('j M Y')?>.</p>
+    <p>Merci de nous faire confiance depuis le <?= $user->getRegisteredAt()->format('j M Y') ?>.</p>
     <div id="changeUserInformation">
         <form action="/@changeEmail" method="post" id="changeEmail">
             <label for="email">Votre email:
@@ -21,7 +23,7 @@ $user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
 
         <form action="/@changeUsername" method="post" id="changeUsername">
             <label for="email">Votre pseudonyme:
-                <input type="text" name="username" class='large'  id="username" value="<?= $user->getUsername() ?>"
+                <input type="text" name="username" class='large' id="username" value="<?= $user->getUsername() ?>"
                        pattern="^[a-zA-Z0-9_\-]{3,32}$"
                        title="Votre pseudo doit contenir entre 3 et 32 characters alphanumérique, underscore et tirets autorisés."
                        required>
@@ -35,7 +37,6 @@ $user = \WebtoonLike\Site\controller\UserController::getById($_SESSION['id']);
 
 
 </section>
-
 
 
 <?php require dirname(__DIR__, 2) . '/components/footer.php'; ?>

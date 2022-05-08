@@ -27,8 +27,7 @@ class LibreTranslateTranslation implements TranslationInterface
     public static function preparePostRequest(string $text, string $source, string $target, string $endpoint): array
     {
         $request = [];
-        foreach (self::$mirrors as $mirror)
-        {
+        foreach (self::$mirrors as $mirror) {
             $request[] = [
                 'url' => $mirror . $endpoint,
                 'query' => [
@@ -46,7 +45,7 @@ class LibreTranslateTranslation implements TranslationInterface
     /**
      * Traduit un texte
      *
-     * @param string   $text
+     * @param string $text
      * @param Language $source Langue d'origine
      * @param Language $target Langue vers laquelle traduire
      *
@@ -63,7 +62,7 @@ class LibreTranslateTranslation implements TranslationInterface
             $response = curlHelper::httpPost($data);
             $code = $response['httpCode'];
 
-            if($code === 200) {
+            if ($code === 200) {
                 return $response['response']['translatedText'];
             }
         }

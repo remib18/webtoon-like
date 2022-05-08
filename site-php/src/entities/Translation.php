@@ -17,10 +17,11 @@ class Translation implements EntityInterface
 
     public function __construct(
         string $languageIdentifier,
-        int $blockID,
+        int    $blockID,
         string $content,
-        bool $fromDB = true
-    ) {
+        bool   $fromDB = true
+    )
+    {
         $this->languageIdentifier = $languageIdentifier;
         $this->blockId = $blockID;
         $this->setContent($content);
@@ -73,7 +74,8 @@ class Translation implements EntityInterface
         'blockId' => "int",
         'content' => "string"
     ])]
-    public function __toArray(): array {
+    public function __toArray(): array
+    {
         return [
             'languageIdentifier' => $this->languageIdentifier,
             'blockId' => $this->blockId,
@@ -84,7 +86,8 @@ class Translation implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array {
+    public static function getColumnsKeys(): array
+    {
         return [
             'languageIdentifier',
             'blockID',
@@ -131,5 +134,7 @@ class Translation implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {}
+    public function setId(int $id): void
+    {
+    }
 }

@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class InvalidApiKeyException extends \Exception
+use Exception;
+
+class InvalidApiKeyException extends Exception
 {
 
 }

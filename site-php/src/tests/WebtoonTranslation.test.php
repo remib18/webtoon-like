@@ -5,6 +5,7 @@ namespace WebtoonLike\tests;
 ini_set('xdebug.var_display_max_depth', 10);
 require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
 
+use Exception;
 use WebtoonLike\Site\controller\ImageController;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\Language;
@@ -20,7 +21,8 @@ try { // Run this once and comment
         $image = new Image(null, $i - 1, "black-clover/2/$i.jpg", 1, 'en', null, true, false);
         ImageController::create($image);
     }
-} catch (\Exception) {}
+} catch (Exception) {
+}
 
 $ocr = new WebtoonTranslation(GoogleOCR::class, AzureTranslation::class);
 

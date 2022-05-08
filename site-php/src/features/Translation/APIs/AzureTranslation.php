@@ -40,9 +40,9 @@ class AzureTranslation implements TranslationInterface
      *
      * @return String
      */
-    public static function createGUID(): string {
-        if (function_exists('com_create_guid') === true)
-        {
+    public static function createGUID(): string
+    {
+        if (function_exists('com_create_guid') === true) {
             # dans {} par convention
             return trim(com_create_guid(), '{}');
         }
@@ -61,14 +61,15 @@ class AzureTranslation implements TranslationInterface
      * @return array
      */
     #[ArrayShape(['url' => "string", 'query' => "\string[][]"])]
-    public static function buildRequest(string $text, Language $source, Language $target): array {
+    public static function buildRequest(string $text, Language $source, Language $target): array
+    {
 
         $keyHeader = 'Ocp-Apim-Subscription-Key: ' . Settings::get('AZURE_API_KEY');
-        $guidHeader = 'X-ClientTraceId: '. self::createGUID();
+        $guidHeader = 'X-ClientTraceId: ' . self::createGUID();
 
         return [
             'url' => self::prepareURL($source, $target),
-            'query' =>  [['Text' => $text]]
+            'query' => [['Text' => $text]]
         ];
     }
 
@@ -77,10 +78,11 @@ class AzureTranslation implements TranslationInterface
      *
      * @return array
      */
-    public static function buildHeader(): array {
+    public static function buildHeader(): array
+    {
         $keyHeader = 'Ocp-Apim-Subscription-Key: ' . Settings::get('AZURE_API_KEY');
-        $guidHeader = 'X-ClientTraceId: '. self::createGUID();
-        $location = 'Ocp-Apim-Subscription-Region: '. Settings::get('AZURE_API_LOCATION');
+        $guidHeader = 'X-ClientTraceId: ' . self::createGUID();
+        $location = 'Ocp-Apim-Subscription-Region: ' . Settings::get('AZURE_API_LOCATION');
 
         return [$keyHeader, $guidHeader, $location];
     }
@@ -88,7 +90,7 @@ class AzureTranslation implements TranslationInterface
     /**
      * Traduit les textes.
      *
-     * @param string   $text
+     * @param string $text
      * @param Language $source
      * @param Language $target
      *
@@ -104,17 +106,17 @@ class AzureTranslation implements TranslationInterface
 
         $code = $response['httpCode'];
 
-        if($code === 200) {
+        if ($code === 200) {
             return $response['response'][0]['translations'][0]['text'];
         }
 
         $errorCode = $response['response']["error"]["code"];
         $errorMsg = $response['response']["error"]["message"];
-        if($code === 400) {
-            throw new UnsupportedLanguageException($errorCode . ' :' .  $errorMsg);
+        if ($code === 400) {
+            throw new UnsupportedLanguageException($errorCode . ' :' . $errorMsg);
         }
 
-        throw new TranslationException($errorCode . ' :' .  $errorMsg);
+        throw new TranslationException($errorCode . ' :' . $errorMsg);
     }
 
     /**

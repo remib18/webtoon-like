@@ -1,3 +1,5 @@
 <?php
 
-\WebtoonLike\Site\core\Authentication::logout();
+use WebtoonLike\Site\core\Authentication;
+
+Authentication::logout();

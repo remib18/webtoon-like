@@ -17,8 +17,9 @@ class Language implements EntityInterface
     public function __construct(
         string $identifier,
         string $name,
-        bool $fromDB = true
-    ){
+        bool   $fromDB = true
+    )
+    {
         $this->identifier = $identifier;
         $this->setName($name);
 
@@ -69,7 +70,8 @@ class Language implements EntityInterface
     /**
      * @inheritDoc
      */
-    public static function getColumnsKeys(): array {
+    public static function getColumnsKeys(): array
+    {
         return [
             'identifier',
             'name'
@@ -114,5 +116,7 @@ class Language implements EntityInterface
     /**
      * @inheritDoc
      */
-    public function setId(int $id): void {}
+    public function setId(int $id): void
+    {
+    }
 }

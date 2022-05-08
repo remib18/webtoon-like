@@ -2,7 +2,9 @@
 
 namespace WebtoonLike\Site\exceptions;
 
-class UnsupportedOperationException extends \Exception
+use Exception;
+
+class UnsupportedOperationException extends Exception
 {
 
 }
