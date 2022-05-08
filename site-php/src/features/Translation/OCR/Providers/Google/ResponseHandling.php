@@ -9,6 +9,7 @@ use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\features\Translation\Result\Result;
+use WebtoonLike\Site\Settings;
 use WebtoonLike\Site\utils\OCRUtils;
 
 class ResponseHandling
@@ -23,8 +24,23 @@ class ResponseHandling
      * @param AnnotateImageResponse $response
      * @param Image                 $image
      */
-    public function __construct(private AnnotateImageResponse $response, private Image $image) {
+    public function __construct(private readonly AnnotateImageResponse $response, private readonly Image $image) {
         $this->result = new Result($this->image->getPath(), $this->image->getOriginalLanguage());
+        $this->getImageDimensions();
+    }
+
+    /**
+     * Calcule et renvoie les dimensions de l'image
+     *
+     * @return array
+     */
+    public function getImageDimensions(): array {
+        $path = Settings::get('WEBTOONS_IMAGES_FOLDER') . $this->image->getPath();
+        $res = getimagesize($path);
+        return [
+            'width'  => $res[0],
+            'height' => $res[1]
+        ];
     }
 
     /**
@@ -95,15 +111,15 @@ class ResponseHandling
                     }
                 }
                 $this->result->appendBlock(new Block(
-                    null,
-                    $text,
-                    $start->getX(),
-                    $start->getY(),
-                    $end->getX(),
-                    $end->getY(),
-                    $this->image->getId(),
-                    false
-                ));
+                                               null,
+                                               $text,
+                                               $start->getX(),
+                                               $start->getY(),
+                                               $this->getImageDimensions()['width'] - $end->getX(),
+                                               $this->getImageDimensions()['height'] - $end->getY(),
+                                               $this->image->getId(),
+                                               false
+                                           ));
             }
         }
     }

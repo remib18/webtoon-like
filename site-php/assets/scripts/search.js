@@ -13,9 +13,9 @@ const WEBTOON_BASE_IMAGES_FOLDER = '/assets/webtoons-imgs/'
 // Si on est sur une page affichant les résultats par défaut, on charge automatiquement les données
 if (inPageSearchResultContainer) load().then(() => {
 }, () => {
-    const el = document.createElement('p')
+    `const el = document.createElement('p')
     el.style.position = 'absolute'
-    el.textContent = 'Erreur lors du chargement des webtoons. Vérifiez que vous êtes bien connecté à internet.'
+    el.textContent = 'Erreur lors du chargement des webtoons. Vérifiez que vous êtes bien connecté à internet.'`
     inPageSearchResultContainer.appendChild(el)
     inPageSearchResultContainer.style.position = 'relative'
     inPageSearchResultContainer.style.maxWidth = '100vw'  // Evite l'overflow

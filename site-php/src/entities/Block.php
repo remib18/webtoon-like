@@ -3,8 +3,6 @@
 namespace WebtoonLike\Site\entities;
 
 use JetBrains\PhpStorm\ArrayShape;
-use JetBrains\PhpStorm\Pure;
-use WebtoonLike\Site\features\Translation\Result\Bloc;
 
 class Block implements EntityInterface
 {
@@ -187,23 +185,25 @@ class Block implements EntityInterface
      * @inheritDoc
      */
     #[ArrayShape([
-        'blockID' => "int",
-        'startX' => "int",
-        'startY' => "int",
-        'endX' => "int",
-        'endY' => "int",
+        'blockID'         => "int",
+        'startX'          => "int",
+        'startY'          => "int",
+        'endX'            => "int",
+        'endY'            => "int",
         'originalContent' => "string",
-        'imageID' => "int"
+        'imageID'         => "int",
+        'translations'    => "array"
     ])]
     public function __toArray(): array {
         return [
-            'blockID' => $this->id,
-            'startX' => $this->startX,
-            'startY' => $this->startY,
-            'endX' => $this->endX,
-            'endY' => $this->endY,
+            'blockID'         => $this->id,
+            'startX'          => $this->startX,
+            'startY'          => $this->startY,
+            'endX'            => $this->endX,
+            'endY'            => $this->endY,
             'originalContent' => $this->originalContent,
-            'imageID' => $this->imageId
+            'imageID'         => $this->imageId,
+            'translations'    => $this->translations
         ];
     }
 
