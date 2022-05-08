@@ -12,21 +12,32 @@ class DatabaseLoader {
      *
      * @return void
      */
-    public static function loadLanguageFromAzure(): void {
+    public static function updateFromAzure(): void {
         $languages = AzureTranslation::availibleLanguageList();
-
         if(!$languages) return;
 
+        // ajout en bd
         foreach($languages as $identifier => $content) {
-
             $language = LanguageController::getById($identifier);
+
             if(is_null($language)) {
                 $language = new Language($identifier, $content['name'], false);
                 LanguageController::create($language);
             }
         }
+
+        // supression des données outdated.
+        $languageInDb = LanguageController::getAll();
+        foreach ($languageInDb as $language) {
+            if( !in_array($language->getIdentifier(), $languages)) {
+                LanguageController::remove($language);
+            }
+        }
+
     }
 }
+
+DatabaseLoader::updateFromAzure();
 
 
 

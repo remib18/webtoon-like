@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $clis = ["cgi", "cgi-fcgi", "cli", "cli-server"," fpm-fcgi"];
 if (in_array(php_sapi_name(), $clis)) {
-    DatabaseLoader::loadLanguageFromAzure();
+    DatabaseLoader::updateFromAzure();
 } else {
    Router::redirect('/');
 }
