@@ -430,7 +430,4 @@ pre {
 
 /* Only on Safari for better look */
 @media not all and (min-resolution:.001dpcm) {
-    @media {
-
-    }
 }
