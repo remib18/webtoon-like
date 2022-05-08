@@ -18,7 +18,7 @@ require dirname(__DIR__, 2) . '/components/header.php';
 
 <div id="app">
     <span class="logged-as">
-        <span>Connecté en tant que :</span><!-- TODO: @Yacine Profil à faire plus tard -->
+        <span>Connecté en tant que :</span>
         <label for="profile" class="profile">
             <input type="checkbox" name="profile" id="profile">
             <img src="https://via.placeholder.com/50" alt="profile">
