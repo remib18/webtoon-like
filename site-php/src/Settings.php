@@ -31,8 +31,9 @@ class Settings {
         'production' => false,
         'AZURE_API_KEY' => '...',
         'AZURE_API_LOCATION' => 'westeurope',
-        'webtoonsCovers' => baseDirectory . '/assets/webtoons-imgs/',
-        'webtoonsChapterImage' => baseDirectory . '/assets/webtoons-imgs/chapters/'
+        'webtoonsImage' => baseDirectory . '/assets/webtoons-imgs/',
+        'chapterFolder' => 'chapters/',
+        'coverFolder' => ''
     ];
 
     public static function get(string $key): mixed {
