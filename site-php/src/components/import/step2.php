@@ -26,18 +26,18 @@ use WebtoonLike\Site\pageManager\ImportManager;
                     <label >Language du chapitre:
                         <select name="language" id="langue">
                             <option value="">--Choisissez un langue--</option>
-                                <?= ImportManager::languageSelect()?>
+                                <?= ImportManager::languageSelect() ?>
                             <option value="autre">autre</option>
                         </select>
                     </label>
                 </div>
                 <input type="submit" value="Ajouter le chapitre">
-                <input type="hidden" name="id" value="<?=$_GET['id']?>">
+                <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
             </div>
             <div class="col">
                 <h3>Liste des chapitres importés</h3>
                 <ul class="list">
-                    <?=importManager::chaptersListForWebtoon()?>
+                    <?= importManager::chaptersListForWebtoon() ?>
                 </ul>
             </div>
         </div>
