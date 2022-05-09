@@ -31,9 +31,7 @@ class UriUtils
      * @return void
      */
     private function analyseUri(): void {
-
-        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|login|register|deleteAccount|report|webtoon|error|user|changePassword|@[\w-]+)?)(?:[?\/]([\w\-\/=&+%]*))?$/';
-
+        $re = '/^(\/(?:home|webtoons|index\.php|import|proposition|login|register|deleteAccount|report|webtoon|error|user|changePassword|@api\/[\w-]+|@[\w\-]+)?)\??((?:(?:\/?[\w\-\/=&%+]+)?)*)?$/';
         preg_match_all($re, $_SERVER['REQUEST_URI'], $matches);
         [$_, $pageType, $rawOptions] = $matches;    // Répartition du résultat
 
@@ -47,8 +45,8 @@ class UriUtils
         }
 
         // Obtention du type de page
-        $this->pageType = match ($pageType[0]) {
-            '/', '/home', '/webtoons', '/index.php' => 'home',
+        $this->pageType = match ( $pageType[0] ) {
+            '', '/', '/home', '/webtoons', '/index.php' => 'home',
             default => substr($pageType[0], 1),
         };
 

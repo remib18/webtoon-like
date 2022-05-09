@@ -124,6 +124,9 @@ class AzureTranslation implements TranslationInterface
      */
     public static function translateMany(array $texts, Language $source, Language $target): array
     {
+        if (sizeof($texts) < 1) {
+            return [];
+        }
         $res = self::translate(join("\n", $texts), $source, $target);
         $res = mb_split("\n", $res);
         return array_combine(array_keys($texts), array_values($res));
