@@ -3,10 +3,10 @@ const urlParams = buildUrlParamsObj()
 
 // Todo: Use preferred user language
 const API_ENDPOINT = `/@api/translations-blocks?webtoon=${urlParams.id}&chapter=${urlParams.chapter || 1}&language=${urlParams.language || 'en'}`
-// console.log('endpoint : ' + API_ENDPOINT)
+console.log('endpoint : ' + API_ENDPOINT)
 
 const data = await loadData()
-// console.log("data", data)
+console.log("data", data)
 
 data.forEach(image => {
     loadImageAndTranslate(image)

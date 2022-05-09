@@ -31,9 +31,6 @@ class WebtoonManager
     public static function getName(): string {
         return self::getWebtoon()->getName();
     }
-    public static function getId(): ?int {
-        return self::getWebtoon()->getId();
-    }
 
     /*
      * Obtenir l'id du webtoon
@@ -43,7 +40,7 @@ class WebtoonManager
     }
 
     /*
-     * Récupère les chapitre lié au webtoon
+     * Récupère les chapitres liés au webtoon
      */
     public static function getChapters(): string {
         $requestedIndex = (int)($_GET['chapter']) ?? 1;
@@ -66,22 +63,6 @@ class WebtoonManager
      * Obtient la description du webtoon
      */
     public static function getDescription(): string {
-        return self::getWebtoon()->getDescription();
-    }
-
-    public static function getNbChap():array {
-        return self::getWebtoon()->getNbChap();
-    }
-
-    public static function getDescription():stringSSSSSSSS {
-        return self::getWebtoon()->getDescription();
-    }
-
-    public static function getNbChap():array {
-        return self::getWebtoon()->getNbChap();
-    }
-
-    public static function getDescription():stringSSSSSSSS {
         return self::getWebtoon()->getDescription();
     }
 

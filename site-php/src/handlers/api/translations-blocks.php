@@ -11,7 +11,9 @@ use WebtoonLike\Site\features\Translation\APIs\AzureTranslation;
 use WebtoonLike\Site\features\Translation\OCR\Providers\Google\GoogleOCR;
 use WebtoonLike\Site\features\Translation\WebtoonTranslation;
 
-//header('Content-Type: application/json');
+// header('Content-Type: application/json');
+
+//try {
 
 // validate request
 if (!isset($_GET['webtoon'], $_GET['chapter'], $_GET['language'])) {
@@ -48,3 +50,12 @@ echo json_encode([
                      'errors' => sizeof($errors) > 0 ? $errors : null,
                      'data'   => sizeof($errors) > 0 ? null : $res
                  ]);
+
+/*} catch (Exception | Error $e) {
+    $prodError = 'Erreur serveur interne, si le problème persiste, contactez l\'administrateur';
+    echo json_encode(
+        [
+            'errors' => \WebtoonLike\Site\Settings::get('production') ? $prodError : $e
+        ]
+    );
+}*/

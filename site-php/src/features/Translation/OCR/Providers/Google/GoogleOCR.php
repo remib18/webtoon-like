@@ -10,6 +10,7 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\exceptions\ApiException;
+use WebtoonLike\Site\exceptions\NotFoundException;
 use WebtoonLike\Site\features\Translation\OCR\OCRInterface;
 use WebtoonLike\Site\features\Translation\Result\Result;
 use WebtoonLike\Site\Settings;
@@ -62,7 +63,7 @@ class GoogleOCR implements OCRInterface
             $this->runBatch();
         } catch (\Google\ApiCore\ApiException $e) {
             // TODO gérer les erreurs (nota too many images for request)
-            var_dump($e->getMessage());
+            // var_dump($e->getMessage());
             throw new ApiException('Internal server error. Please try again later, if the problem subsist, contact the administrator.');
         }
 
@@ -76,6 +77,7 @@ class GoogleOCR implements OCRInterface
      * @return void
      *
      * @throws \Google\ApiCore\ApiException
+     * @throws NotFoundException
      */
     private function runBatch(): void {
         try {
@@ -89,6 +91,7 @@ class GoogleOCR implements OCRInterface
             foreach ($this->images as $image) {
                 if ($image->doesNeedOCR()) {
                     $path = Settings::get('WEBTOONS_IMAGES_FOLDER') . '/' . $image->getPath();
+                    if (!file_exists($path)) throw new NotFoundException('Ressource not found (' . $path . ').');
                     $gcImage = (new GCImage())
                         ->setContent(file_get_contents($path,"r"));
 
