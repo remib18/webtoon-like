@@ -3,13 +3,12 @@ const urlParams = buildUrlParamsObj()
 
 // Todo: Use preferred user language
 const API_ENDPOINT = `/@api/translations-blocks?webtoon=${urlParams.id}&chapter=${urlParams.chapter || 1}&language=${urlParams.language || 'en'}`
-console.log('endpoint : ' + API_ENDPOINT)
+// console.log('endpoint : ' + API_ENDPOINT)
 
-const data = await loadData()
-console.log("data", data)
-
-data.forEach(image => {
-    loadImageAndTranslate(image)
+loadData().then(data => {
+    data.forEach(image => {
+        loadImageAndTranslate(image)
+    })
 })
 
 
@@ -35,7 +34,7 @@ function loadImageAndTranslate(image) {
 }
 
 function buildBlock(block, fontSize, cont) {
-    console.log(block)
+    // console.log(block)
     const el = document.createElement('p')
     el.style.top = block.startY + 'px'
     el.style.right = block.endX + 'px'
@@ -46,7 +45,7 @@ function buildBlock(block, fontSize, cont) {
     cont.appendChild(el)
 }
 
-function loadData() {
+async function loadData() {
     return fetch(API_ENDPOINT)
         .then(res => res.json())
         .then(data => {

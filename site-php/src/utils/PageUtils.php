@@ -10,7 +10,7 @@ require_once 'UriUtils.php';
 const SCRIPTS_PAGE_TYPE = [
     'all'     => ['search'],
     'import'  => ['importFormController'],
-    'webtoon' => ['webtoonLoader']
+    'webtoon' => ['webtoonLoader', 'chapterSelector']
 ];
 
 const PAGES = [
@@ -128,7 +128,7 @@ class PageUtils
         $scriptsName = [...SCRIPTS_PAGE_TYPE['all'], ...$custom];
         foreach ($scriptsName as $name) {
             if (file_exists(dirname(__DIR__, 2) . '/assets/scripts/' . $name . '.js')) {
-                $res .= '<script src="/assets/scripts/' . $name . '.js" defer type="module"></script>';
+                $res .= '<script src="/assets/scripts/' . $name . '.js" defer></script>';
             }
         }
         return $res;
