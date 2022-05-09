@@ -29,7 +29,7 @@ class Settings {
             'HANDLERS_FOLDER' => baseDirectory . '/src/handlers/'
         ],
         'production' => false,
-        'AZURE_API_KEY' => '9b975df258dc4e12a8605381a4fb4b4a',
+        'AZURE_API_KEY' => '3ef694084f4b4251a10522c18537ced7',
         'AZURE_API_LOCATION' => 'westeurope'
     ];
 

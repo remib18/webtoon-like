@@ -47,9 +47,9 @@ class DataVerification
 
         if ($this->field->getNullable() && empty($str)) return true;
 
-        if ($this->field->getMinLength() !== null && strlen($str) <= $this->field->getMinLength()) return false;
+        if ($this->field->getMinLength() !== null && strlen($str) < $this->field->getMinLength()) return false;
 
-        if ($this->field->getMaxLength() !== null && strlen($str) >= $this->field->getMaxLength()) return false;
+        if ($this->field->getMaxLength() !== null && strlen($str) > $this->field->getMaxLength()) return false;
 
         if (!$this->field->getNullable() && empty($str)) return false;
 
