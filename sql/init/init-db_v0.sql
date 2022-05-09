@@ -209,7 +209,7 @@ INSERT INTO `language` (`identifier`, `name`) VALUES
 ('yue', 'Cantonese (Traditional)'),
 ('zh-Hans', 'Chinese Simplified'),
 ('zh-Hant', 'Chinese Traditional'),
-('zu', 'Zulu')
+('zu', 'Zulu');
 
 
 
