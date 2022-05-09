@@ -147,7 +147,7 @@ class Chapter implements EntityInterface
         return [
             'chapterID' => new DataField($this->id, DataType::int, true),
             'index' => new DataField($this->index, DataType::int),
-            'title' =>  new DataField($this->title, DataType::string),
+            'title' =>  new DataField($this->title, DataType::string,false,1,256, '/^[\w_\- "\'?!.%;:,]+$/'),
             'webtoonID' => new DataField($this->webtoonId, DataType::int)
         ];
     }

@@ -18,10 +18,10 @@ class Image implements EntityInterface
     private ?int $id;
     private int $index;
     private string $path;
-    private bool $needOCR;
     private int $chapterId;
     private string $originalLanguage;
     private ?int $fontSize;
+    private bool $needOCR;
 
     public function __construct(
         ?int $imageID,
@@ -189,10 +189,10 @@ class Image implements EntityInterface
         'imageID' => "int|null",
         'index' => "int",
         'path' => "string",
-        'needOCR' => "bool",
         'chapterID' => "int",
         'originalLanguage' => "string",
-        'fontSize' => "int"
+        'fontSize' => "int",
+        'needOCR' => "bool"
     ])]
     public function __toArray(): array
     {
@@ -200,10 +200,10 @@ class Image implements EntityInterface
             'imageID' => $this->id,
             'index' => $this->index,
             'path' => $this->path,
-            'needOCR' => $this->needOCR,
             'chapterID' => $this->chapterId,
             'originalLanguage' => $this->originalLanguage,
-            'fontSize' => $this->fontSize
+            'fontSize' => $this->fontSize,
+            'needOCR' => $this->needOCR
         ];
     }
 
@@ -215,10 +215,10 @@ class Image implements EntityInterface
             'imageID',
             'index',
             'path',
-            'needOCR',
             'chapterID',
             'originalLanguage',
-            'fontSize'
+            'fontSize',
+            'needOCR'
         ];
     }
 
@@ -239,10 +239,10 @@ class Image implements EntityInterface
             'imageID' =>  new DataField($this->id, DataType::int, true),
             'index' =>  new DataField($this->index, DataType::int),
             'path' => new DataField($this->path, DataType::string),
-            'needOCR' => new DataField($this->needOCR, DataType::bool),
             'chapterID' => new DataField($this->chapterId, DataType::int),
-            'originalLanguage' => new DataField($this->chapterId, DataType::string, 2, 256, null),
-            'fontSize' => new DataField($this->fontSize, DataType::int, true)
+            'originalLanguage' => new DataField($this->originalLanguage, DataType::string, false, 2, 256, null),
+            'fontSize' => new DataField($this->fontSize, DataType::int, true),
+            'needOCR' => new DataField($this->needOCR, DataType::bool)
         ];
     }
 

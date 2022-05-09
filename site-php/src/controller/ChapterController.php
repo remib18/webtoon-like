@@ -25,6 +25,17 @@ class ChapterController
     }
 
     /**
+     * Retourne la liste des chapitres pour un Webtoon donnée
+     *
+     * @param int $webtoonId
+     * @param string|array $col
+     * @return array
+     */
+    public static function getAllForWebtoon(int $webtoonId, string|array $col = '*'): array {
+        return Database::getAll('Chapter', Chapter::class, $col, ['webtoonID' => "webtoonID = $webtoonId"]);
+    }
+
+    /**
      * Obtention du chapter avec l'identifiant correspondant.
      *
      * @param int $id Identifiant recherché

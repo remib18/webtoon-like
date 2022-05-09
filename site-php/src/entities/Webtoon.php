@@ -15,18 +15,21 @@ class Webtoon implements EntityInterface
     private string $name;
     private string $author;
     private string $description;
+    private string $cover;
 
     public function __construct(
-        ?int $webtoonID,
+        ?int   $webtoonID,
         string $name,
         string $author,
         string $description,
-        bool $fromDB = true
+        string $cover,
+        bool   $fromDB = true
     ) {
         $this->id = $webtoonID;
         $this->setName($name);
         $this->setAuthor($author);
         $this->setDescription($description);
+        $this->setCover($cover);
 
         if ($fromDB) $this->AllFieldsSaved();
     }
@@ -84,28 +87,38 @@ class Webtoon implements EntityInterface
     /**
      * @param string $name
      */
-    public function setName(string $name): void
-    {
+    public function setName(string $name): void {
         $this->fieldsToSave['name'] = $name;
         $this->name = $name;
+    }
+
+    public function getCover(): string {
+        return $this->cover;
+    }
+
+    public function setCover(string $path): void {
+        $this->fieldsToSave['cover'] = $path;
+        $this->cover = $path;
     }
 
     /**
      * @inheritDoc
      */
-    #[ArrayShape([
-        'webtoonID' => "int",
-        'name' => "string",
-        'author' => "string",
-        'description' => "string"
+    #[ArrayShape( [
+        'webtoonID'   => "int",
+        'name'        => "string",
+        'author'      => "string",
+        'description' => "string",
+        'cover'       => "string"
     ])]
     public function __toArray(): array
     {
         return [
-            'webtoonID' => $this->id,
-            'name' => $this->name,
-            'author' => $this->author,
-            'description' => $this->description
+            'webtoonID'   => $this->id,
+            'name'        => $this->name,
+            'author'      => $this->author,
+            'description' => $this->description,
+            'cover'       => $this->cover
         ];
     }
 
@@ -114,7 +127,7 @@ class Webtoon implements EntityInterface
      */
     public static function getColumnsKeys(): array
     {
-        return ['webtoonID', 'name', 'author', 'description'];
+        return ['webtoonID', 'name', 'author', 'description', 'cover'];
     }
 
     /**
@@ -148,9 +161,10 @@ class Webtoon implements EntityInterface
     {
         return [
             'webtoonID' => new DataField($this->id, DataType::int, true),
-            'name' => new DataField($this->name, DataType::string, false, 3, 256, null),
-            'author' => new DataField($this->author, DataType::string, false, 3, 128, null),
-            'description' => new DataField($this->description, DataType::string)
+            'name' => new DataField($this->name, DataType::string, false, 1, 256, '/^[\w_\- \'?!.]+$/'),
+            'author' => new DataField($this->author, DataType::string, false, 1, 128, '/^[\w_\- \'?!.]+$/'),
+            'description' => new DataField($this->description, DataType::string, false, 1, 128, '/^[\w_\- "\'?!.%;:,]+$/'),
+            'cover' => new DataField($this->cover, DataType::string, false,1,256, '/^[\w._\-]+$/')
         ];
     }
 
@@ -161,4 +175,5 @@ class Webtoon implements EntityInterface
         if (!is_null($this->id)) throw new NoIdOverwritingException();
         $this->id = $id;
     }
+
 }

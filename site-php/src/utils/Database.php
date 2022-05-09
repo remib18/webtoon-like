@@ -251,7 +251,17 @@ class Database
      * @throws UnsupportedOperationException
      */
     public static function createBatch(string $table, array &$entities): bool {
-        $fields = join(', ', array_keys($entities[0]->getFieldsToSave()));
+
+        foreach ($entities as $entity) {
+            if (!self::runTests($entity)) return false;
+        }
+
+        $fields = '';
+        foreach ($entities[0]->getFieldsToSave() as $field => $value) {
+            $fields .= "`$field`, ";
+        }
+        $fields = substr($fields, 0, -2);
+
         $values = self::insertValues($entities);
         $q = "INSERT INTO `$table`($fields) VALUES $values";
         $res = Database::getDB()->query($q);

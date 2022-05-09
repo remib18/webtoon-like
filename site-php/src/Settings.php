@@ -29,8 +29,10 @@ class Settings {
             'HANDLERS_FOLDER' => baseDirectory . '/src/handlers/'
         ],
         'production' => false,
-        'AZURE_API_KEY' => '3ef694084f4b4251a10522c18537ced7',
-        'AZURE_API_LOCATION' => 'westeurope'
+        'AZURE_API_KEY' => '...',
+        'AZURE_API_LOCATION' => 'westeurope',
+        'chapterFolder' => 'chapters/',
+        'coverFolder' => ''
     ];
 
     public static function get(string $key): mixed {
@@ -49,6 +51,7 @@ class Settings {
         'AZURE_API_KEY' => "string",
         'AZURE_API_LOCATION' => 'string'
     ])]
+
     public static function getAll(): array {
         return self::$settings;
     }

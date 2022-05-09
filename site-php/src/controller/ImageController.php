@@ -35,6 +35,16 @@ class ImageController
     }
 
     /**
+     * Obtention de l'image avec le chapter ID correspondant.
+     *
+     * @param int $id Identifiant recherché
+     */
+    public static function getByChapterId(int $id): array|null
+    {
+        return Database::getAll('Image', Image::class, '*', ['chapterID' => "chapterID = $id"]);
+    }
+
+    /**
      * Obtention de l'image avec l'identifiant correspondant (index, chapterId)
      *
      * @param Chapter $chapterID
@@ -84,6 +94,20 @@ class ImageController
     public static function create(Image &$entity): bool
     {
         return Database::create('Image', $entity);
+    }
+
+    /**
+     * Enregistre des images ou <code>false</code> en cas d'erreur.
+     *
+     * @param array $entity
+     *
+     * @return bool Faux en cas d'erreur
+     *
+     * @throws NoIdOverwritingException
+     */
+    public static function createBatch(array &$entities): bool
+    {
+        return Database::createBatch('Image', $entities);
     }
 
     /**
