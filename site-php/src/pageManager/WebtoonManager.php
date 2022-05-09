@@ -3,6 +3,7 @@
 namespace WebtoonLike\Site\pageManager;
 
 use WebtoonLike\Site\controller\ChapterController;
+use WebtoonLike\Site\controller\LanguageController;
 use WebtoonLike\Site\controller\WebtoonController;
 use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\entities\Webtoon;
@@ -64,6 +65,28 @@ class WebtoonManager
      */
     public static function getDescription(): string {
         return self::getWebtoon()->getDescription();
+    }
+
+    /**
+     * Obtient la liste des options
+     *
+     * @return string
+     */
+    public static function getLanguagesOptions(): string {
+        $requestedLang = $_GET['language'] ?? 'fr';
+        $res = '';
+
+        foreach (LanguageController::getAll() as $lang) {
+            $id = $lang->getIdentifier();
+            $title = $lang->getName();
+
+            if ($requestedLang === $id) {
+                $res .= "<a href='#'><option value='$id' selected>$title</option></a>";
+            } else {
+                $res .= "<a href='#'><option value='$id'>$title</option></a>";
+            }
+        }
+        return $res;
     }
 
 }
