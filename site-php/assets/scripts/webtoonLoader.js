@@ -3,9 +3,10 @@ const urlParams = buildUrlParamsObj()
 
 // Todo: Use preferred user language
 const API_ENDPOINT = `/@api/translations-blocks?webtoon=${urlParams.id}&chapter=${urlParams.chapter || 1}&language=${urlParams.language || 'en'}`
+// console.log('endpoint : ' + API_ENDPOINT)
 
 const data = await loadData()
-console.log(data)
+// console.log("data", data)
 
 data.forEach(image => {
     loadImageAndTranslate(image)
@@ -49,12 +50,21 @@ function loadData() {
     return fetch(API_ENDPOINT)
         .then(res => res.json())
         .then(data => {
-            if (data.error !== undefined) {
-                console.error(data.error)
+            if (data.data === null) {
                 const el = document.createElement('p')
                 el.textContent = 'Erreur lors du chargement du contenu.'
+                el.style.margin = '1rem'
                 container.appendChild(el)
-                throw new Error(data.error)
+                console.error(data.errors.join(', '))
+                throw new Error(data.errors)
+            }
+            if (data.data.length === 0) {
+                const el = document.createElement('p')
+                el.textContent = 'Le chapitre est vide.'
+                el.style.margin = '1rem'
+                container.appendChild(el)
+                console.error('Le chapitre ne contient aucune donnée.')
+                throw new Error('Le chapitre ne contient aucune donnée.')
             }
 
             // console.log(data)
