@@ -51,6 +51,7 @@ class Settings {
         'AZURE_API_KEY' => "string",
         'AZURE_API_LOCATION' => 'string'
     ])]
+
     public static function getAll(): array {
         return self::$settings;
     }
