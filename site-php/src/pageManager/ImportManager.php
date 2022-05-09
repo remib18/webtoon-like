@@ -91,7 +91,7 @@ class ImportManager
      *
      */
     static function saveCover(string $pic, int $Id): string {
-        $file = Settings::get('webtoonsCovers');
+        $file = Settings::get('webtoonsImages') . Settings::get('coverFolder');
         if (!file_exists($file)) {
             mkdir($file, 0777, true);
         }
@@ -199,22 +199,24 @@ class ImportManager
      */
     static function uploadImage(int $ChapterId, int $indexChapter): string|bool {
 
-        $folder = Settings::get('webtoonsChapterImage') . $ChapterId;
+        $folder = Settings::get('chapterFolder') . $ChapterId;
+        $path = Settings::get('webtoonsImages') . $folder;
 
         if (!self::checkLanguage($_POST['language'])) {
             return 'Le language choisi n\'est pas vérifiée';
         }
-        if (!file_exists($folder)) mkdir($folder, 0777, true);
+        if (!file_exists($path)) mkdir($path, 0777, true);
 
         $images = [];
         foreach ($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
             $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
-            $path = "$folder/$name";
-            if (!move_uploaded_file($tmp_name, $path)) return 'Verifiez le nom de votre image';
+            $imagePath = "$path/$name";
+            if (!move_uploaded_file($tmp_name, $imagePath)) return 'Verifiez le nom de votre image';
 
+            $BDDpath = "$folder/$name";
             $images[] = new Image(null,
                 $indexChapter,
-                $path,
+                $BDDpath,
                 $ChapterId,
                 $_POST["language"],
                 null,
