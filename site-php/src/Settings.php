@@ -31,7 +31,7 @@ class Settings {
         'production' => false,
         'AZURE_API_KEY' => '...',
         'AZURE_API_LOCATION' => 'westeurope',
-        'webtoonsImage' => baseDirectory . '/assets/webtoons-imgs/',
+        'webtoonsImages' => baseDirectory . '/assets/webtoons-imgs/',
         'chapterFolder' => 'chapters/',
         'coverFolder' => ''
     ];
