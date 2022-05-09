@@ -4,7 +4,6 @@ namespace WebtoonLike\Site;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use WebtoonLike\Site\core\Authentication;
 use WebtoonLike\Site\core\Router;
 use WebtoonLike\Site\core\RouterMode;
 
