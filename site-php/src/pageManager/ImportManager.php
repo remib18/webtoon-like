@@ -91,7 +91,7 @@ class ImportManager
      *
      */
     static function saveCover(string $pic, int $Id): string {
-        $file = Settings::get('webtoonsImages') . Settings::get('coverFolder');
+        $file = Settings::get('WEBTOONS_IMAGES_FOLDER') . Settings::get('coverFolder');
         if (!file_exists($file)) {
             mkdir($file, 0777, true);
         }
@@ -200,7 +200,7 @@ class ImportManager
     static function uploadImage(int $ChapterId, int $indexChapter): string|bool {
 
         $folder = Settings::get('chapterFolder') . $ChapterId;
-        $path = Settings::get('webtoonsImages') . $folder;
+        $path = Settings::get('WEBTOONS_IMAGES_FOLDER') . $folder;
 
         if (!self::checkLanguage($_POST['language'])) {
             return 'Le language choisi n\'est pas vérifiée';
