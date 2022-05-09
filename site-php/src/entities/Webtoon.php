@@ -164,7 +164,7 @@ class Webtoon implements EntityInterface
             'name' => new DataField($this->name, DataType::string, false, 1, 256, '/^[\w_\- \'?!.]+$/'),
             'author' => new DataField($this->author, DataType::string, false, 1, 128, '/^[\w_\- \'?!.]+$/'),
             'description' => new DataField($this->description, DataType::string, false, 1, 128, '/^[\w_\- "\'?!.%;:,]+$/'),
-            'cover' => new DataField($this->cover, DataType::string, false,1,256, '/^[\w._\-]+$/')
+            'cover' => new DataField($this->cover, DataType::string)
         ];
     }
 

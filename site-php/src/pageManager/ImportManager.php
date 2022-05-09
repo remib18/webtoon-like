@@ -51,6 +51,13 @@ class ImportManager
     }
 
     /*
+     * Nettoyage des chemin
+     */
+    private static function sanitizePath(string $path): string {
+        return preg_replace('/[^A-Za-z0-9._\-]/', '_', $path);
+    }
+
+    /*
      * Créer un Webtoon
      */
     static function newWebtoon(): void {
@@ -60,25 +67,26 @@ class ImportManager
                 || empty($_FILES['cover']['name'])
                 || empty($_POST['auteur']) )
             ){
-            $Webtoon = new Webtoon(
+           $imageName = self::sanitizePath($_FILES['cover']['name']);
+           $webtoon = new Webtoon(
                 null,
                 htmlentities($_POST['title']),
                 htmlentities($_POST['auteur']),
                 htmlentities($_POST['desc']),
-                $_FILES['cover']['name'],
+                $imageName,
                 false
             );
 
-            if (!WebtoonController::create($Webtoon)) {
+            if (!WebtoonController::create($webtoon)) {
                 Router::redirect('/import', 301,
                     ['step' => 1, 'error' => 'Nous n\'avons pas réussie à enregistrer le webtoon']
                 );
             }
-            $Id = $Webtoon->getId();
-            $path = self::saveCover('cover', $Id);
-            $Webtoon->setCover($path);
-            WebtoonController::edit($Webtoon);
-            Router::redirect('/import', 301, ['step' => 2, 'id' => $Id]);
+            $id = $webtoon->getId();
+            $path = self::saveCover('cover', $id);
+            $webtoon->setCover($path);
+            WebtoonController::edit($webtoon);
+            Router::redirect('/import', 301, ['step' => 2, 'id' => $id]);
         } else {
             Router::redirect('/import', 301,
                 ['step' => 1 , 'error' => 'Nous n\'avez pas remplis tous les champs']
@@ -97,7 +105,7 @@ class ImportManager
         }
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
-        $name = basename($_FILES[$pic]['name']);
+        $name = basename(self::sanitizePath($_FILES[$pic]['name']));
         $location = $file . $Id . "_" . $name;
         if (move_uploaded_file($tmp_name,$location)){
             return $Id . "_" . $name;
@@ -209,7 +217,7 @@ class ImportManager
 
         $images = [];
         foreach ($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
-            $name = basename($_FILES["chapter-x-parts"]["name"][$index]);
+            $name = basename(self::sanitizePath($_FILES["chapter-x-parts"]["name"][$index]));
             $imagePath = "$path/$name";
             if (!move_uploaded_file($tmp_name, $imagePath)) return 'Verifiez le nom de votre image';
 
