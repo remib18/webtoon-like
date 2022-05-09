@@ -40,7 +40,7 @@ class WebtoonManager
     }
 
     /*
-     * Récupère les chapitre lié au webtoon
+     * Récupère les chapitres liés au webtoon
      */
     public static function getChapters(): string {
         $requestedIndex = (int)($_GET['chapter']) ?? 1;

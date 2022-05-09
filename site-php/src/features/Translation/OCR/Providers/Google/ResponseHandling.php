@@ -2,6 +2,8 @@
 
 namespace WebtoonLike\Site\features\Translation\OCR\Providers\Google;
 
+use Error;
+use Exception;
 use Google\Cloud\Vision\V1\AnnotateImageResponse;
 use WebtoonLike\Site\controller\BlockController;
 use WebtoonLike\Site\controller\ImageController;
@@ -9,6 +11,7 @@ use WebtoonLike\Site\entities\Block;
 use WebtoonLike\Site\entities\Image;
 use WebtoonLike\Site\entities\NoIdOverwritingException;
 use WebtoonLike\Site\features\Translation\Result\Result;
+use WebtoonLike\Site\Settings;
 use WebtoonLike\Site\utils\OCRUtils;
 
 class ResponseHandling
@@ -23,8 +26,23 @@ class ResponseHandling
      * @param AnnotateImageResponse $response
      * @param Image                 $image
      */
-    public function __construct(private AnnotateImageResponse $response, private Image $image) {
+    public function __construct(private readonly AnnotateImageResponse $response, private readonly Image $image) {
         $this->result = new Result($this->image->getPath(), $this->image->getOriginalLanguage());
+        $this->getImageDimensions();
+    }
+
+    /**
+     * Calcule et renvoie les dimensions de l'image
+     *
+     * @return array
+     */
+    public function getImageDimensions(): array {
+        $path = Settings::get('WEBTOONS_IMAGES_FOLDER') . $this->image->getPath();
+        $res = getimagesize($path);
+        return [
+            'width'  => $res[0],
+            'height' => $res[1]
+        ];
     }
 
     /**
@@ -47,8 +65,8 @@ class ResponseHandling
      *
      * @return void
      */
-    private function setFontSize() {
-        $charVertices = $this->response
+    private function setFontSize(): void {
+        /*$charVertices = $this->response
             ->getFullTextAnnotation()
             ->getPages()[0]
             ->getBlocks()[0]
@@ -59,7 +77,8 @@ class ResponseHandling
             ->getVertices();
         $start = $charVertices[0]->getY();
         $end = $charVertices[2]->getY();
-        $this->result->setFontSize($end - $start);
+        $this->result->setFontSize($end - $start);*/
+        $this->result->setFontSize(16);
     }
 
     /**
@@ -80,31 +99,35 @@ class ResponseHandling
      * @return void
      */
     private function makeBlocs() {
-        foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
-            foreach ($page->getBlocks() as $block) {
-                $text = '';
-                $start = null;
-                $end = null;
-                foreach ($block->getParagraphs() as $paragraph) {
-                    foreach ($paragraph->getWords() as $word) {
-                        if ($start === null) {
-                            $start = $word->getBoundingBox()->getVertices()[0];
+        try {
+            foreach ($this->response->getFullTextAnnotation()->getPages() as $page) {
+                foreach ($page->getBlocks() as $block) {
+                    $text = '';
+                    $start = null;
+                    $end = null;
+                    foreach ($block->getParagraphs() as $paragraph) {
+                        foreach ($paragraph->getWords() as $word) {
+                            if ($start === null) {
+                                $start = $word->getBoundingBox()->getVertices()[0];
+                            }
+                            $end = $word->getBoundingBox()->getVertices()[2];
+                            $text .= ' ' . array_shift($this->texts);
                         }
-                        $end = $word->getBoundingBox()->getVertices()[2];
-                        $text .= ' ' . array_shift($this->texts);
                     }
+                    $this->result->appendBlock(new Block(
+                                                   null,
+                                                   $text,
+                                                   $start->getX(),
+                                                   $start->getY(),
+                                                   $this->getImageDimensions()['width'] - $end->getX(),
+                                                   $this->getImageDimensions()['height'] - $end->getY(),
+                                                   $this->image->getId(),
+                                                   false
+                                               ));
                 }
-                $this->result->appendBlock(new Block(
-                    null,
-                    $text,
-                    $start->getX(),
-                    $start->getY(),
-                    $end->getX(),
-                    $end->getY(),
-                    $this->image->getId(),
-                    false
-                ));
             }
+        } catch (Exception|Error) {
+
         }
     }
 
@@ -143,7 +166,7 @@ class ResponseHandling
     private function saveInDB(): void {
         // Enregistrement des blocs
         $blocks = $this->result->getBlocks();
-        BlockController::createBatch($blocks);
+        if (sizeof($blocks) > 0) BlockController::createBatch($blocks);
         $this->result->setBlocks($blocks, true);
 
         // Modification de l'image
