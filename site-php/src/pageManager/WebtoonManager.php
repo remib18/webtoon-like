@@ -51,9 +51,9 @@ class WebtoonManager
             $chapterTitle = $chapter->getTitle();
 
             if ($requestedIndex === $chapterIndex) {
-                $res .= "<option value='$chapterIndex' selected>Chapitre $chapterTitle</option>";
+                $res .= "<a href='#'><option value='$chapterIndex' selected>Chapitre $chapterTitle</option></a>";
             } else {
-                $res .= "<option value='$chapterIndex'>Chapitre $chapterTitle</option>";
+                $res .= "<a href='#'><option value='$chapterIndex'>Chapitre $chapterTitle</option></a>";
             }
         }
         return $res;
