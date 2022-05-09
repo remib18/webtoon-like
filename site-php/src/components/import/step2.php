@@ -16,7 +16,7 @@ use WebtoonLike\Site\pageManager\ImportManager;
                        required placeholder="Numéro" min="1" value="1">
                 <div class="form-group">
                     <label for="chapter-img" class="file">
-                        Importer une cover
+                        Changer la cover du webtoon
                         <input type="file" name="chapter-x-img" id="chapter-img" accept="image/jpeg,image/png" > <!--Pas obliger de mettre required par defaut je pense que c'est mieux de mettre la covers du webtoon-->
                     </label>
                     <label for="chapter-img" class="file">
