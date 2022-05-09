@@ -31,13 +31,24 @@ require dirname(__DIR__, 2) . '/components/header.php';
             </span>
         </fieldset>
         <hr>
+        <h3>Langue</h3>
+        <fieldset>
+            <label for="lang">Sélectionnez le chapitre</label>
+            <span class="select">
+                <select name="lang" id="lang" onchange="handleLangChange()">
+                    <?= WebtoonManager::getLanguagesOptions() ?>
+                </select>
+            </span>
+        </fieldset>
+        <hr>
         <h3>Description</h3>
         <pre><?= WebtoonManager::getDescription() ?></pre>
         <!--<h3>Genres</h3>
         <span class="genre">AAA</span>
         <span>•</span>
         <span class="genre">BBB</span>-->
-        <a href="/import?step=2&id=<?= WebtoonManager::getId()?>" class="button outlined">Importer un nouveau chapitre</a>
+        <a href="/import?step=2&id=<?= WebtoonManager::getId() ?>" class="button outlined">Importer un nouveau
+            chapitre</a>
     </aside>
     <section aria-describedby="content" data-container>
         <!-- Todo: Javascript to load the images of the webtoon -->
