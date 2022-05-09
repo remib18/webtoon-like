@@ -109,7 +109,7 @@ class ImportManager
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename(self::sanitizePath($_FILES[$pic]['name']));
-        $location = $file . $Id . "_" . $name;
+        $location = $file . $id . "_" . $name;
 
         $imageFormat = strtolower(pathinfo($name,PATHINFO_EXTENSION));
         if (!in_array($imageFormat, self::$acceptedFormat)) {
