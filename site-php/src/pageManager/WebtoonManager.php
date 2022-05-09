@@ -15,7 +15,7 @@ class WebtoonManager
         }
     }
     private static function getWebtoon(): ?Webtoon {
-        return WebtoonController::getById((int)$_GET['id']);
+        return (is_numeric($_GET['id'])) ? WebtoonController::getById((int)$_GET['id']) : null;
     }
 
     public static function getName(): string {
