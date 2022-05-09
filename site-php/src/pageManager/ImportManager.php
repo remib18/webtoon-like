@@ -23,7 +23,7 @@ class ImportManager
        if (
            !isset($_GET['step'])
            || ((int)$_GET['step'] !== 2 && (int)$_GET['step'] !== 1)
-           || (((int)$_GET['step'] === 2 && !isset($_GET['id'])) && is_null(self::getWebtoon()))
+           || (((int)$_GET['step'] === 2 && (!isset($_GET['id']) || !is_numeric($_GET['id']))) && is_null(self::getWebtoon()))
        ){
            Router::redirect('/import', 301, ['step'=>1,'error' => 'Opération impossible']);
        }
@@ -34,8 +34,7 @@ class ImportManager
      * Obtenir le Webtoon grace à son id
      */
     private static function getWebtoon(): ?Webtoon {
-        if (is_numeric($_GET['id'])) return WebtoonController::getById((int)$_GET['id']);
-        return null;
+        return (is_numeric($_GET['id'])) ? WebtoonController::getById((int)$_GET['id']) : null;
     }
 
     /*

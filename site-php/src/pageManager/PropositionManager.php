@@ -25,7 +25,7 @@ class PropositionManager
      * Vérifie si l'utilisateur à un compte
      */
     public static function ChecKUser(): void {
-        if (!(isset($_SESSION['id']))){
+        if (!(isset($_SESSION['id']) && is_numeric($_SESSION['id']))){
             Router::redirect('/login', 301, ['error' => 'Vous devez vous connecter pour faire des proposition']);
         }
     }
