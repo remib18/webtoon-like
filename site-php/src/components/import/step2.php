@@ -10,7 +10,7 @@ use WebtoonLike\Site\pageManager\ImportManager;
         <div class="cols-2">
             <div class="col">
                 <h2>Importer un nouveau chapitre</h2>
-                <input type="text" name="chapter-x-title" id="chapter-title" aria-label="Titre du chapitre" required
+                <input type="text" name="chapter-x-title" id="chapter-title" maxlength='256'  aria-label="Titre du chapitre" required
                        placeholder="Titre">
                 <input type="number" name="chapter-x-number" id="chapter-number" aria-label="Numéro du chapitre"
                        required placeholder="Numéro" min="1" value="1">

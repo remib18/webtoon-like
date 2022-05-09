@@ -15,6 +15,9 @@ use WebtoonLike\Site\Settings;
 
 class ImportManager
 {
+
+    private static array $acceptedFormat = ['png', 'jpeg', 'jpg'];
+
     /*
      * Verification de la validité des champs transmis.
      */
@@ -98,7 +101,7 @@ class ImportManager
      * Sauvegarde des covers en BDD.
      *
      */
-    static function saveCover(string $pic, int $Id): string {
+    static function saveCover(string $pic, int $id): string {
         $file = Settings::get('WEBTOONS_IMAGES_FOLDER') . Settings::get('coverFolder');
         if (!file_exists($file)) {
             mkdir($file, 0777, true);
@@ -106,9 +109,17 @@ class ImportManager
 
         $tmp_name = $_FILES[$pic]['tmp_name'];
         $name = basename(self::sanitizePath($_FILES[$pic]['name']));
-        $location = $file . $Id . "_" . $name;
+        $location = $file . $id . "_" . $name;
+
+        $imageFormat = strtolower(pathinfo($name,PATHINFO_EXTENSION));
+        if (!in_array($imageFormat, self::$acceptedFormat)) {
+            $webtoon = WebtoonController::getById($id);
+            if (!is_null($webtoon)) WebtoonController::remove($webtoon);
+            Router::redirect('/import', 301, ['step' => 1, 'error' => 'Format d\'image non-valide']);
+        }
+
         if (move_uploaded_file($tmp_name,$location)){
-            return $Id . "_" . $name;
+            return $id . "_" . $name;
         } else {
             Router::redirect('/error', 301,
                 ['msg' => 'Nous n\'avons pas réussie à enregistrer l\'image']
@@ -219,6 +230,10 @@ class ImportManager
         foreach ($_FILES["chapter-x-parts"]["tmp_name"] as $index => $tmp_name) {
             $name = basename(self::sanitizePath($_FILES["chapter-x-parts"]["name"][$index]));
             $imagePath = "$path/$name";
+
+            $imageFormat = strtolower(pathinfo($name,PATHINFO_EXTENSION));
+            if (!in_array($imageFormat, self::$acceptedFormat)) return 'L\'une de vos image à un formart invalide';
+
             if (!move_uploaded_file($tmp_name, $imagePath)) return 'Verifiez le nom de votre image';
 
             $BDDpath = "$folder/$name";
@@ -259,7 +274,3 @@ class ImportManager
         return false;
     }
 }
-
-
-
-
