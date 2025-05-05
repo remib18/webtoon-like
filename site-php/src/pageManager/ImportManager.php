@@ -202,10 +202,6 @@ class ImportManager
     static function deleteChapter(): void {
         $Chapter = ChapterController::getById((int)$_GET['chapterId']);
         if (!is_null($Chapter)) {
-            $images = ImageController::getByChapterId((int)$_GET['chapterId']);
-            foreach ($images as $image){
-                ImageController::remove($image);
-            }
             ChapterController::remove($Chapter);
         }
 

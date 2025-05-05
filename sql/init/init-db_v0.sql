@@ -37,7 +37,7 @@ CREATE TABLE Chapter (
     title VARCHAR(256) not null,
     webtoonID BIGINT NOT NULL,
     PRIMARY KEY (chapterID),
-    FOREIGN KEY (webtoonID) REFERENCES Webtoon(webtoonID)
+    FOREIGN KEY (webtoonID) REFERENCES Webtoon(webtoonID) ON DELETE CASCADE
 )  ENGINE=INNODB;
 
 CREATE TABLE `Language` (
@@ -55,7 +55,7 @@ CREATE TABLE Image (
     chapterID BIGINT NOT NULL,
     originalLanguage varchar(256) not null,
     FOREIGN KEY (originalLanguage) REFERENCES `Language`(identifier),
-    FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID)
+    FOREIGN KEY (chapterID) REFERENCES Chapter(chapterID) ON DELETE CASCADE
 )  ENGINE=INNODB;
 
 CREATE TABLE `Block` (
@@ -66,7 +66,7 @@ CREATE TABLE `Block` (
     endX int not null,
     endY int not null,
     imageID BIGINT NOT NULL,
-    FOREIGN KEY (imageID) REFERENCES Image(imageID)
+    FOREIGN KEY (imageID) REFERENCES Image(imageID) ON DELETE CASCADE
 )ENGINE=INNODB;
 
 CREATE TABLE `Translation` (
@@ -75,7 +75,7 @@ CREATE TABLE `Translation` (
     content TEXT not null,
     PRIMARY KEY (languageIdentifier, blockID),
     FOREIGN KEY (languageIdentifier) REFERENCES `Language`(identifier),
-    FOREIGN KEY (blockID) REFERENCES `Block`(blockID)
+    FOREIGN KEY (blockID) REFERENCES `Block`(blockID) ON DELETE CASCADE
 )  ENGINE=INNODB;
 
 CREATE TABLE TranslationProposition (
@@ -84,7 +84,7 @@ CREATE TABLE TranslationProposition (
     blockID BIGINT NOT NULL,
     userID BIGINT NOT NULL,
     PRIMARY KEY (translationPropositionID),
-    FOREIGN KEY (blockID) REFERENCES `Block`(blockID),
+    FOREIGN KEY (blockID) REFERENCES `Block`(blockID) ON DELETE CASCADE,
     FOREIGN KEY (userID) REFERENCES `User`(userID)
 )  ENGINE=INNODB;
 
@@ -216,6 +216,3 @@ INSERT INTO `language` (`identifier`, `name`) VALUES
 INSERT INTO `user` (`userID`, `username`, `email`, `password`, `registeredAt`, `deleted`) VALUES
 (1, 'betatesteur', 'betatesteur123@fakemail.com', '\'$2y$10$8rI4eDLzSj4EpP43oLhGzuBlfWcnkwg61H5.09P1mjlEHCftX9cMC\'', '2022-05-08 01:09:40', 0),
 (2, 'alphatesteur', 'alphatesteur123@fakemail.com', '\'$2y$10$uVttKWG49nQ1mu70cjWKp.KJS3Or1SMER7hdLdjtDzBaJaLJAwm/6\'', '2022-05-08 01:10:31', 0);
-
-
-
